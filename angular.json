@@ -33,9 +33,9 @@
               }
             ],
             "styles": [
-              {
-                "input": "src/styles/main.scss"
-              }
+              "src/styles/main.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css"
             ],
             "scripts": []
           },
@@ -85,9 +85,9 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              {
-                "input": "src/styles/main.scss"
-              }
+              "src/styles/main.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css"
             ],
             "scripts": [],
             "assets": [
@@ -104,13 +104,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
           }
         },
         "server": {
@@ -143,9 +138,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
