@@ -1,3 +1,4 @@
+import { GeoQueryComponent } from './geo-query/geo-query.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -21,12 +22,17 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Meta, Title } from '@angular/platform-browser';
 import { AgmCoreModule } from '@agm/core';
+import { environment } from '../environments/environment';
+import { AngularFireModule } from 'angularfire2';
+import { GeoService } from './geo.service';
+
 // import { PrebootModule } from 'preboot';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    GeoQueryComponent,
     TransferStateComponent,
     MenuComponent,
     DonorsComponent,
@@ -39,8 +45,9 @@ import { AgmCoreModule } from '@agm/core';
     MatMenuModule,
     TranslateModule.forChild(),
     CommonModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCg7TMPnEqXHPIU1mJqE3idl0WkUOO6aJ0'
+      apiKey: environment.googleMapsKey
     }),
     RouterModule.forRoot([
       {
@@ -93,6 +100,7 @@ import { AgmCoreModule } from '@agm/core';
     HitWithTransferStateResolver,
     HitWithoutTransferStateResolver,
     ExampleApi,
+    GeoService
     Title,
     Meta
   ],
