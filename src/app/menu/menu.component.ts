@@ -13,12 +13,9 @@ export class MenuComponent implements OnInit {
   public isSafari: boolean = false;
   public subscribeText: Subject<string> = new ReplaySubject();
   public menuElements: MenuElement[] = [
-    {link: '/donors', icon: 'attach_money', text: 'Donors'},
-    {link: '/', icon: 'home', text: 'Home'},
-    {link: '/lazy', icon: 'free_breakfast', text: 'Lazy module'},
-    // {link: '/external', icon: 'call_merge', text: 'External module'}, //not works because of https://github.com/angular/angular-cli/issues/8284
-    {link: '/transferState', icon: 'call_merge', text: 'TransferState (API calls)'},
-    {link: 'https://github.com/maciejtreder/angular-universal-pwa', icon: 'code', text: 'Fork on github'},
+    { link: '/', icon: 'home', text: 'Relief camps nearby' }
+    // { link: '/', icon: 'home', text: 'Volunteers' }
+    // { link: '/home', icon: 'free_breakfast', text: 'Lazy module' }
   ];
   @Input('contextual')
   @HostBinding('class.contextual')
@@ -31,14 +28,16 @@ export class MenuComponent implements OnInit {
   public ngOnInit(): void {
     this.isSafari = !!this.window.nativeWindow['safari'];
     this.ns.isSubscribed().subscribe((registered: boolean) => {
-      registered ? this.subscribeText.next('Unsubscribe from push') : this.subscribeText.next('Subscribe to push');
+      registered
+        ? this.subscribeText.next('Unsubscribe from push')
+        : this.subscribeText.next('Subscribe to push');
       this._isRegistered = registered;
     });
   }
 
   public isRegistrationAvailable(): Observable<boolean> {
     if (this.isSafari) {
-      return this.ns.isSubscribed().pipe(map((registered) => !registered));
+      return this.ns.isSubscribed().pipe(map(registered => !registered));
     } else if (this.ns.isPushAvailable()) {
       return of(true);
     } else {

@@ -45,9 +45,16 @@ import { GeoService } from './geo.service';
     MatMenuModule,
     TranslateModule.forChild(),
     CommonModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireModule.initializeApp({
+      apiKey: 'AIzaSyA4d00nt-C9EJ2VLtMoZTr5avzgtUbZ3e0',
+      authDomain: 'keralarescue-95468.firebaseapp.com',
+      databaseURL: 'https://keralarescue-95468.firebaseio.com',
+      projectId: 'keralarescue-95468',
+      storageBucket: 'keralarescue-95468.appspot.com',
+      messagingSenderId: '463184367063'
+    }),
     AgmCoreModule.forRoot({
-      apiKey: environment.googleMapsKey
+      apiKey: 'AIzaSyA4d00nt-C9EJ2VLtMoZTr5avzgtUbZ3e0'
     }),
     RouterModule.forRoot([
       {
@@ -100,7 +107,6 @@ import { GeoService } from './geo.service';
     HitWithTransferStateResolver,
     HitWithoutTransferStateResolver,
     ExampleApi,
-    GeoService
     Title,
     Meta
   ],
