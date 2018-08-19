@@ -22,13 +22,16 @@ import { environment } from '../environments/environment';
 import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './map/map.component';
 import { WindowRefService } from './window-ref.service';
+import { GroupBarChartComponent } from './group-bar-chart/group-bar-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     SidenavComponent,
-    MapComponent
+    MapComponent,
+    GroupBarChartComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import { WindowRefService } from './window-ref.service';
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
+    NgxChartsModule,
     MatIconModule,
     MatSnackBarModule,
     MatButtonModule,
