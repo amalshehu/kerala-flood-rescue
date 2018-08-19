@@ -1,11 +1,12 @@
 <html ⚡ lang="en">
+
 <head>
 
   <link rel="dns-prefetch" href="https://www.google-analytics.com">
   <script async src="https://cdn.ampproject.org/v0.js"></script>
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Progressive Web App created with Angular Universal, deployed on Amazon Lambda. Includes Angular Material, push notifications and external modules (for microservices purpose).">
+  <meta name="description" content="Realtime rescue noifier">
 
 
   <link rel="manifest" href="manifest.json">
@@ -13,12 +14,12 @@
   <meta name="theme-color" content="#000000">
 
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="Angular Universal - Serverless Demo by @maciejtreder">
+  <meta name="application-name" content="Kerala rescue realtime">
 
 
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Angular Universal">
+  <meta name="apple-mobile-web-app-title" content="Kerala rescue realtime">
 
   <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="assets/icons/favicon-192.png">
   <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="assets/icons/favicon-144.png">
@@ -51,60 +52,52 @@
   <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
 
 
-  <meta property="og:title" content="Angular Universal Serverless Demo">
-  <meta property="og:site_name" content="Angular Universal Serverless Demo by Maciej Treder">
+  <meta property="og:title" content="Kerala Flood Rescue">
+  <meta property="og:site_name" content="Kerala Flood Rescue ">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.angular-universal-serverless.maciejtreder.com/">
-  <meta property="og:description" content="Progressive Web App created with Angular Universal technology, deployed on Amazon Lambda and API gateway. Includes Angular Material and push notifications.">
-
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:creator" content="@maciejtreder">
-  <meta name="twitter:title" content="Angular Universal Serverless Demo by Maciej Treder">
-  <meta name="twitter:description" content="Progressive Web App created with Angular Universal technology, deployed on Amazon Lambda and API gateway. Includes Angular Material and push notifications.">
+  <meta property="og:description" content="Realtime rescue updates based on data from keralarescue.in and another relevent sources
+  ">
 
   <meta charset="UTF-8">
 
-  <base href="/" >
+  <base href="/">
 
-  <title>Angular Universal PWA - Progressive Web App deployed on AWS Lambda - starter/boilerplate</title>
+  <title>Kerala Flood Rescue</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script async custom-element="amp-install-serviceworker"
-          src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script>
+  <script async custom-element="amp-install-serviceworker" src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script>
 <link rel="stylesheet" href="styles.bf621719e786a9352246.css"></head>
+
 <body>
-<amp-install-serviceworker
-        src="ngsw-worker.js"
-        layout="nodisplay">
-</amp-install-serviceworker>
-<div id="content-wrapper">
-  <app-root></app-root>
-</div>
-<footer class="credentials">
-  <!-- Please respect MIT License and don't remove this footer. --->
-  <p class="built">Built with</p>
-  <p><a href="https://github.com/maciejtreder/ng-toolkit">@ng-toolkit</a> by <a href="https://www.maciejtreder.com">Maciej Treder</a></p>
-</footer>
-<noscript>
-  JavaScript is necessary to work with this application.
-</noscript>
-<noscript id="deferred-styles">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,300">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
-</noscript>
-<script>
-    var loadDeferredStyles = function() {
-        var addStylesNode = document.getElementById("deferred-styles");
-        var replacement = document.createElement("div");
-        replacement.innerHTML = addStylesNode.textContent;
-        document.body.appendChild(replacement)
-        addStylesNode.parentElement.removeChild(addStylesNode);
+  <amp-install-serviceworker src="ngsw-worker.js" layout="nodisplay">
+  </amp-install-serviceworker>
+  <div id="content-wrapper">
+    <app-root></app-root>
+  </div>
+  <footer class="credentials">
+    <!-- Please respect MIT License and don't remove this footer. --->
+    <p class="built">Waiting for data source...</p>
+  </footer>
+  <noscript>
+    JavaScript is necessary to work with this application.
+  </noscript>
+  <noscript id="deferred-styles">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,300">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
+  </noscript>
+  <script>
+    var loadDeferredStyles = function () {
+      var addStylesNode = document.getElementById("deferred-styles");
+      var replacement = document.createElement("div");
+      replacement.innerHTML = addStylesNode.textContent;
+      document.body.appendChild(replacement)
+      addStylesNode.parentElement.removeChild(addStylesNode);
     };
     var raf = requestAnimationFrame || mozRequestAnimationFrame ||
-        webkitRequestAnimationFrame || msRequestAnimationFrame;
-    if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
+      webkitRequestAnimationFrame || msRequestAnimationFrame;
+    if (raf) raf(function () { window.setTimeout(loadDeferredStyles, 0); });
     else window.addEventListener('load', loadDeferredStyles);
-</script>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-<script type="text/javascript" src="runtime.0cd0afdb03eb83001b6b.js"></script><script type="text/javascript" src="polyfills.70b1fb5f80dcac89c728.js"></script><script type="text/javascript" src="main.0246d27c3433acd199cd.js"></script></body>
+  </script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+<script type="text/javascript" src="runtime.0cd0afdb03eb83001b6b.js"></script><script type="text/javascript" src="polyfills.70b1fb5f80dcac89c728.js"></script><script type="text/javascript" src="main.0b0439aa9f0c496b5aed.js"></script></body>
+
 </html>

@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class GeoQueryComponent implements OnInit {
   public lat: number = 51.678418;
   public lng: number = 7.809007;
-  constructor(private geo: GeoService) {}
+  constructor() {}
 
   ngOnInit() {
     this.getUserLocation();
@@ -36,7 +36,7 @@ export class GeoQueryComponent implements OnInit {
     dummyPoints.forEach((val, idx) => {
       const name = `dummy-location-${idx}`;
       console.log(idx);
-      this.geo.setLocation(name, val);
+      // this.geo.setLocation(name, val);
     });
   }
 }

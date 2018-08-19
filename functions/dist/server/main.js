@@ -71,6 +71,1702 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@agm/core/directives/info-window.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@agm/core/directives/info-window.js ***!
+  \**********************************************************/
+/*! exports provided: AgmInfoWindow */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AgmInfoWindow", function() { return AgmInfoWindow; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "@angular/core");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_angular_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_managers_info_window_manager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/managers/info-window-manager */ "./node_modules/@agm/core/services/managers/info-window-manager.js");
+
+
+var infoWindowId = 0;
+/**
+ * AgmInfoWindow renders a info window inside a {@link AgmMarker} or standalone.
+ *
+ * ### Example
+ * ```typescript
+ * import { Component } from '@angular/core';
+ *
+ * @Component({
+ *  selector: 'my-map-cmp',
+ *  styles: [`
+ *    .agm-map-container {
+ *      height: 300px;
+ *    }
+ * `],
+ *  template: `
+ *    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+ *      <agm-marker [latitude]="lat" [longitude]="lng" [label]="'M'">
+ *        <agm-info-window [disableAutoPan]="true">
+ *          Hi, this is the content of the <strong>info window</strong>
+ *        </agm-info-window>
+ *      </agm-marker>
+ *    </agm-map>
+ *  `
+ * })
+ * ```
+ */
+var AgmInfoWindow = /** @class */ (function () {
+    function AgmInfoWindow(_infoWindowManager, _el) {
+        this._infoWindowManager = _infoWindowManager;
+        this._el = _el;
+        /**
+           * Sets the open state for the InfoWindow. You can also call the open() and close() methods.
+           */
+        this.isOpen = false;
+        /**
+           * Emits an event when the info window is closed.
+           */
+        this.infoWindowClose = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this._infoWindowAddedToManager = false;
+        this._id = (infoWindowId++).toString();
+    }
+    AgmInfoWindow.prototype.ngOnInit = function () {
+        this.content = this._el.nativeElement.querySelector('.agm-info-window-content');
+        this._infoWindowManager.addInfoWindow(this);
+        this._infoWindowAddedToManager = true;
+        this._updateOpenState();
+        this._registerEventListeners();
+    };
+    /** @internal */
+    /** @internal */
+    AgmInfoWindow.prototype.ngOnChanges = /** @internal */
+    function (changes) {
+        if (!this._infoWindowAddedToManager) {
+            return;
+        }
+        if ((changes['latitude'] || changes['longitude']) && typeof this.latitude === 'number' &&
+            typeof this.longitude === 'number') {
+            this._infoWindowManager.setPosition(this);
+        }
+        if (changes['zIndex']) {
+            this._infoWindowManager.setZIndex(this);
+        }
+        if (changes['isOpen']) {
+            this._updateOpenState();
+        }
+        this._setInfoWindowOptions(changes);
+    };
+    AgmInfoWindow.prototype._registerEventListeners = function () {
+        var _this = this;
+        this._infoWindowManager.createEventObservable('closeclick', this).subscribe(function () {
+            _this.isOpen = false;
+            _this.infoWindowClose.emit();
+        });
+    };
+    AgmInfoWindow.prototype._updateOpenState = function () {
+        this.isOpen ? this.open() : this.close();
+    };
+    AgmInfoWindow.prototype._setInfoWindowOptions = function (changes) {
+        var options = {};
+        var optionKeys = Object.keys(changes).filter(function (k) { return AgmInfoWindow._infoWindowOptionsInputs.indexOf(k) !== -1; });
+        optionKeys.forEach(function (k) { options[k] = changes[k].currentValue; });
+        this._infoWindowManager.setOptions(this, options);
+    };
+    /**
+     * Opens the info window.
+     */
+    /**
+       * Opens the info window.
+       */
+    AgmInfoWindow.prototype.open = /**
+       * Opens the info window.
+       */
+    function () { return this._infoWindowManager.open(this); };
+    /**
+     * Closes the info window.
+     */
+    /**
+       * Closes the info window.
+       */
+    AgmInfoWindow.prototype.close = /**
+       * Closes the info window.
+       */
+    function () {
+        var _this = this;
+        return this._infoWindowManager.close(this).then(function () { _this.infoWindowClose.emit(); });
+    };
+    /** @internal */
+    /** @internal */
+    AgmInfoWindow.prototype.id = /** @internal */
+    function () { return this._id; };
+    /** @internal */
+    /** @internal */
+    AgmInfoWindow.prototype.toString = /** @internal */
+    function () { return 'AgmInfoWindow-' + this._id.toString(); };
+    /** @internal */
+    /** @internal */
+    AgmInfoWindow.prototype.ngOnDestroy = /** @internal */
+    function () { this._infoWindowManager.deleteInfoWindow(this); };
+    AgmInfoWindow._infoWindowOptionsInputs = ['disableAutoPan', 'maxWidth'];
+    AgmInfoWindow.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{
+                    selector: 'agm-info-window',
+                    template: "<div class='agm-info-window-content'>\n      <ng-content></ng-content>\n    </div>\n  "
+                },] },
+    ];
+    /** @nocollapse */
+    AgmInfoWindow.ctorParameters = function () { return [
+        { type: _services_managers_info_window_manager__WEBPACK_IMPORTED_MODULE_1__["InfoWindowManager"], },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], },
+    ]; };
+    AgmInfoWindow.propDecorators = {
+        "latitude": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "longitude": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "disableAutoPan": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "zIndex": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "maxWidth": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "isOpen": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "infoWindowClose": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] },],
+    };
+    return AgmInfoWindow;
+}());
+
+//# sourceMappingURL=info-window.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@agm/core/directives/info-window.ngfactory.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@agm/core/directives/info-window.ngfactory.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * @fileoverview This file was generated by the Angular template compiler. Do not edit.
+ *
+ * @suppress {suspiciousCode,uselessCode,missingProperties,missingOverride,checkTypes}
+ * tslint:disable
+ */ 
+Object.defineProperty(exports, "__esModule", { value: true });
+var i0 = __webpack_require__(/*! @angular/core */ "@angular/core");
+var i1 = __webpack_require__(/*! ./info-window */ "./node_modules/@agm/core/directives/info-window.js");
+var i2 = __webpack_require__(/*! ../services/managers/info-window-manager */ "./node_modules/@agm/core/services/managers/info-window-manager.js");
+var styles_AgmInfoWindow = [];
+var RenderType_AgmInfoWindow = i0.ɵcrt({ encapsulation: 2, styles: styles_AgmInfoWindow, data: {} });
+exports.RenderType_AgmInfoWindow = RenderType_AgmInfoWindow;
+function View_AgmInfoWindow_0(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "div", [["class", "agm-info-window-content"]], null, null, null, null, null)), i0.ɵncd(null, 0)], null, null); }
+exports.View_AgmInfoWindow_0 = View_AgmInfoWindow_0;
+function View_AgmInfoWindow_Host_0(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "agm-info-window", [], null, null, null, View_AgmInfoWindow_0, RenderType_AgmInfoWindow)), i0.ɵdid(1, 770048, null, 0, i1.AgmInfoWindow, [i2.InfoWindowManager, i0.ElementRef], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
+exports.View_AgmInfoWindow_Host_0 = View_AgmInfoWindow_Host_0;
+var AgmInfoWindowNgFactory = i0.ɵccf("agm-info-window", i1.AgmInfoWindow, View_AgmInfoWindow_Host_0, { latitude: "latitude", longitude: "longitude", disableAutoPan: "disableAutoPan", zIndex: "zIndex", maxWidth: "maxWidth", isOpen: "isOpen" }, { infoWindowClose: "infoWindowClose" }, ["*"]);
+exports.AgmInfoWindowNgFactory = AgmInfoWindowNgFactory;
+
+
+/***/ }),
+
+/***/ "./node_modules/@agm/core/directives/map.js":
+/*!**************************************************!*\
+  !*** ./node_modules/@agm/core/directives/map.js ***!
+  \**************************************************/
+/*! exports provided: AgmMap */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AgmMap", function() { return AgmMap; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "@angular/core");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_angular_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/google-maps-api-wrapper */ "./node_modules/@agm/core/services/google-maps-api-wrapper.js");
+/* harmony import */ var _services_managers_circle_manager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/managers/circle-manager */ "./node_modules/@agm/core/services/managers/circle-manager.js");
+/* harmony import */ var _services_managers_info_window_manager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/managers/info-window-manager */ "./node_modules/@agm/core/services/managers/info-window-manager.js");
+/* harmony import */ var _services_managers_marker_manager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/managers/marker-manager */ "./node_modules/@agm/core/services/managers/marker-manager.js");
+/* harmony import */ var _services_managers_polygon_manager__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/managers/polygon-manager */ "./node_modules/@agm/core/services/managers/polygon-manager.js");
+/* harmony import */ var _services_managers_polyline_manager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/managers/polyline-manager */ "./node_modules/@agm/core/services/managers/polyline-manager.js");
+/* harmony import */ var _services_managers_kml_layer_manager__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./../services/managers/kml-layer-manager */ "./node_modules/@agm/core/services/managers/kml-layer-manager.js");
+/* harmony import */ var _services_managers_data_layer_manager__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./../services/managers/data-layer-manager */ "./node_modules/@agm/core/services/managers/data-layer-manager.js");
+
+
+
+
+
+
+
+
+
+/**
+ * AgmMap renders a Google Map.
+ * **Important note**: To be able see a map in the browser, you have to define a height for the
+ * element `agm-map`.
+ *
+ * ### Example
+ * ```typescript
+ * import { Component } from '@angular/core';
+ *
+ * @Component({
+ *  selector: 'my-map-cmp',
+ *  styles: [`
+ *    agm-map {
+ *      height: 300px;
+ *    }
+ * `],
+ *  template: `
+ *    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+ *    </agm-map>
+ *  `
+ * })
+ * ```
+ */
+var AgmMap = /** @class */ (function () {
+    function AgmMap(_elem, _mapsWrapper) {
+        this._elem = _elem;
+        this._mapsWrapper = _mapsWrapper;
+        /**
+           * The longitude that defines the center of the map.
+           */
+        this.longitude = 0;
+        /**
+           * The latitude that defines the center of the map.
+           */
+        this.latitude = 0;
+        /**
+           * The zoom level of the map. The default zoom level is 8.
+           */
+        this.zoom = 8;
+        /**
+           * Enables/disables if map is draggable.
+           */
+        // tslint:disable-next-line:no-input-rename
+        this.draggable = true;
+        /**
+           * Enables/disables zoom and center on double click. Enabled by default.
+           */
+        this.disableDoubleClickZoom = false;
+        /**
+           * Enables/disables all default UI of the Google map. Please note: When the map is created, this
+           * value cannot get updated.
+           */
+        this.disableDefaultUI = false;
+        /**
+           * If false, disables scrollwheel zooming on the map. The scrollwheel is enabled by default.
+           */
+        this.scrollwheel = true;
+        /**
+           * If false, prevents the map from being controlled by the keyboard. Keyboard shortcuts are
+           * enabled by default.
+           */
+        this.keyboardShortcuts = true;
+        /**
+           * The enabled/disabled state of the Zoom control.
+           */
+        this.zoomControl = true;
+        /**
+           * Styles to apply to each of the default map types. Note that for Satellite/Hybrid and Terrain
+           * modes, these styles will only apply to labels and geometry.
+           */
+        this.styles = [];
+        /**
+           * When true and the latitude and/or longitude values changes, the Google Maps panTo method is
+           * used to
+           * center the map. See: https://developers.google.com/maps/documentation/javascript/reference#Map
+           */
+        this.usePanning = false;
+        /**
+           * The initial enabled/disabled state of the Street View Pegman control.
+           * This control is part of the default UI, and should be set to false when displaying a map type
+           * on which the Street View road overlay should not appear (e.g. a non-Earth map type).
+           */
+        this.streetViewControl = true;
+        /**
+           * Sets the viewport to contain the given bounds.
+           */
+        this.fitBounds = null;
+        /**
+           * The initial enabled/disabled state of the Scale control. This is disabled by default.
+           */
+        this.scaleControl = false;
+        /**
+           * The initial enabled/disabled state of the Map type control.
+           */
+        this.mapTypeControl = false;
+        /**
+           * The initial enabled/disabled state of the Pan control.
+           */
+        this.panControl = false;
+        /**
+           * The initial enabled/disabled state of the Rotate control.
+           */
+        this.rotateControl = false;
+        /**
+           * The initial enabled/disabled state of the Fullscreen control.
+           */
+        this.fullscreenControl = false;
+        /**
+           * The map mapTypeId. Defaults to 'roadmap'.
+           */
+        this.mapTypeId = 'roadmap';
+        /**
+           * When false, map icons are not clickable. A map icon represents a point of interest,
+           * also known as a POI. By default map icons are clickable.
+           */
+        this.clickableIcons = true;
+        /**
+           * This setting controls how gestures on the map are handled.
+           * Allowed values:
+           * - 'cooperative' (Two-finger touch gestures pan and zoom the map. One-finger touch gestures are not handled by the map.)
+           * - 'greedy'      (All touch gestures pan or zoom the map.)
+           * - 'none'        (The map cannot be panned or zoomed by user gestures.)
+           * - 'auto'        [default] (Gesture handling is either cooperative or greedy, depending on whether the page is scrollable or not.
+           */
+        this.gestureHandling = 'auto';
+        this._observableSubscriptions = [];
+        /**
+           * This event emitter gets emitted when the user clicks on the map (but not when they click on a
+           * marker or infoWindow).
+           */
+        this.mapClick = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+           * This event emitter gets emitted when the user right-clicks on the map (but not when they click
+           * on a marker or infoWindow).
+           */
+        this.mapRightClick = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+           * This event emitter gets emitted when the user double-clicks on the map (but not when they click
+           * on a marker or infoWindow).
+           */
+        this.mapDblClick = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+           * This event emitter is fired when the map center changes.
+           */
+        this.centerChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+           * This event is fired when the viewport bounds have changed.
+           */
+        this.boundsChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+           * This event is fired when the mapTypeId property changes.
+           */
+        this.mapTypeIdChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+           * This event is fired when the map becomes idle after panning or zooming.
+           */
+        this.idle = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+           * This event is fired when the zoom level has changed.
+           */
+        this.zoomChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+           * This event is fired when the google map is fully initialized.
+           * You get the google.maps.Map instance as a result of this EventEmitter.
+           */
+        this.mapReady = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+    }
+    /** @internal */
+    /** @internal */
+    AgmMap.prototype.ngOnInit = /** @internal */
+    function () {
+        // todo: this should be solved with a new component and a viewChild decorator
+        var container = this._elem.nativeElement.querySelector('.agm-map-container-inner');
+        this._initMapInstance(container);
+    };
+    AgmMap.prototype._initMapInstance = function (el) {
+        var _this = this;
+        this._mapsWrapper.createMap(el, {
+            center: { lat: this.latitude || 0, lng: this.longitude || 0 },
+            zoom: this.zoom,
+            minZoom: this.minZoom,
+            maxZoom: this.maxZoom,
+            disableDefaultUI: this.disableDefaultUI,
+            disableDoubleClickZoom: this.disableDoubleClickZoom,
+            scrollwheel: this.scrollwheel,
+            backgroundColor: this.backgroundColor,
+            draggable: this.draggable,
+            draggableCursor: this.draggableCursor,
+            draggingCursor: this.draggingCursor,
+            keyboardShortcuts: this.keyboardShortcuts,
+            styles: this.styles,
+            zoomControl: this.zoomControl,
+            zoomControlOptions: this.zoomControlOptions,
+            streetViewControl: this.streetViewControl,
+            streetViewControlOptions: this.streetViewControlOptions,
+            scaleControl: this.scaleControl,
+            scaleControlOptions: this.scaleControlOptions,
+            mapTypeControl: this.mapTypeControl,
+            mapTypeControlOptions: this.mapTypeControlOptions,
+            panControl: this.panControl,
+            panControlOptions: this.panControlOptions,
+            rotateControl: this.rotateControl,
+            rotateControlOptions: this.rotateControlOptions,
+            fullscreenControl: this.fullscreenControl,
+            fullscreenControlOptions: this.fullscreenControlOptions,
+            mapTypeId: this.mapTypeId,
+            clickableIcons: this.clickableIcons,
+            gestureHandling: this.gestureHandling
+        })
+            .then(function () { return _this._mapsWrapper.getNativeMap(); })
+            .then(function (map) { return _this.mapReady.emit(map); });
+        // register event listeners
+        this._handleMapCenterChange();
+        this._handleMapZoomChange();
+        this._handleMapMouseEvents();
+        this._handleBoundsChange();
+        this._handleMapTypeIdChange();
+        this._handleIdleEvent();
+    };
+    /** @internal */
+    /** @internal */
+    AgmMap.prototype.ngOnDestroy = /** @internal */
+    function () {
+        // unsubscribe all registered observable subscriptions
+        this._observableSubscriptions.forEach(function (s) { return s.unsubscribe(); });
+        // remove all listeners from the map instance
+        this._mapsWrapper.clearInstanceListeners();
+    };
+    /* @internal */
+    /* @internal */
+    AgmMap.prototype.ngOnChanges = /* @internal */
+    function (changes) {
+        this._updateMapOptionsChanges(changes);
+        this._updatePosition(changes);
+    };
+    AgmMap.prototype._updateMapOptionsChanges = function (changes) {
+        var options = {};
+        var optionKeys = Object.keys(changes).filter(function (k) { return AgmMap._mapOptionsAttributes.indexOf(k) !== -1; });
+        optionKeys.forEach(function (k) { options[k] = changes[k].currentValue; });
+        this._mapsWrapper.setMapOptions(options);
+    };
+    /**
+     * Triggers a resize event on the google map instance.
+     * When recenter is true, the of the google map gets called with the current lat/lng values or fitBounds value to recenter the map.
+     * Returns a promise that gets resolved after the event was triggered.
+     */
+    /**
+       * Triggers a resize event on the google map instance.
+       * When recenter is true, the of the google map gets called with the current lat/lng values or fitBounds value to recenter the map.
+       * Returns a promise that gets resolved after the event was triggered.
+       */
+    AgmMap.prototype.triggerResize = /**
+       * Triggers a resize event on the google map instance.
+       * When recenter is true, the of the google map gets called with the current lat/lng values or fitBounds value to recenter the map.
+       * Returns a promise that gets resolved after the event was triggered.
+       */
+    function (recenter) {
+        var _this = this;
+        if (recenter === void 0) { recenter = true; }
+        // Note: When we would trigger the resize event and show the map in the same turn (which is a
+        // common case for triggering a resize event), then the resize event would not
+        // work (to show the map), so we trigger the event in a timeout.
+        return new Promise(function (resolve) {
+            setTimeout(function () {
+                return _this._mapsWrapper.triggerMapEvent('resize').then(function () {
+                    if (recenter) {
+                        _this.fitBounds != null ? _this._fitBounds() : _this._setCenter();
+                    }
+                    resolve();
+                });
+            });
+        });
+    };
+    AgmMap.prototype._updatePosition = function (changes) {
+        if (changes['latitude'] == null && changes['longitude'] == null &&
+            changes['fitBounds'] == null) {
+            // no position update needed
+            return;
+        }
+        // we prefer fitBounds in changes
+        if (changes['fitBounds'] && this.fitBounds != null) {
+            this._fitBounds();
+            return;
+        }
+        if (typeof this.latitude !== 'number' || typeof this.longitude !== 'number') {
+            return;
+        }
+        this._setCenter();
+    };
+    AgmMap.prototype._setCenter = function () {
+        var newCenter = {
+            lat: this.latitude,
+            lng: this.longitude,
+        };
+        if (this.usePanning) {
+            this._mapsWrapper.panTo(newCenter);
+        }
+        else {
+            this._mapsWrapper.setCenter(newCenter);
+        }
+    };
+    AgmMap.prototype._fitBounds = function () {
+        if (this.usePanning) {
+            this._mapsWrapper.panToBounds(this.fitBounds);
+            return;
+        }
+        this._mapsWrapper.fitBounds(this.fitBounds);
+    };
+    AgmMap.prototype._handleMapCenterChange = function () {
+        var _this = this;
+        var s = this._mapsWrapper.subscribeToMapEvent('center_changed').subscribe(function () {
+            _this._mapsWrapper.getCenter().then(function (center) {
+                _this.latitude = center.lat();
+                _this.longitude = center.lng();
+                _this.centerChange.emit({ lat: _this.latitude, lng: _this.longitude });
+            });
+        });
+        this._observableSubscriptions.push(s);
+    };
+    AgmMap.prototype._handleBoundsChange = function () {
+        var _this = this;
+        var s = this._mapsWrapper.subscribeToMapEvent('bounds_changed').subscribe(function () {
+            _this._mapsWrapper.getBounds().then(function (bounds) { _this.boundsChange.emit(bounds); });
+        });
+        this._observableSubscriptions.push(s);
+    };
+    AgmMap.prototype._handleMapTypeIdChange = function () {
+        var _this = this;
+        var s = this._mapsWrapper.subscribeToMapEvent('maptypeid_changed').subscribe(function () {
+            _this._mapsWrapper.getMapTypeId().then(function (mapTypeId) { _this.mapTypeIdChange.emit(mapTypeId); });
+        });
+        this._observableSubscriptions.push(s);
+    };
+    AgmMap.prototype._handleMapZoomChange = function () {
+        var _this = this;
+        var s = this._mapsWrapper.subscribeToMapEvent('zoom_changed').subscribe(function () {
+            _this._mapsWrapper.getZoom().then(function (z) {
+                _this.zoom = z;
+                _this.zoomChange.emit(z);
+            });
+        });
+        this._observableSubscriptions.push(s);
+    };
+    AgmMap.prototype._handleIdleEvent = function () {
+        var _this = this;
+        var s = this._mapsWrapper.subscribeToMapEvent('idle').subscribe(function () { _this.idle.emit(void 0); });
+        this._observableSubscriptions.push(s);
+    };
+    AgmMap.prototype._handleMapMouseEvents = function () {
+        var _this = this;
+        var events = [
+            { name: 'click', emitter: this.mapClick },
+            { name: 'rightclick', emitter: this.mapRightClick },
+            { name: 'dblclick', emitter: this.mapDblClick },
+        ];
+        events.forEach(function (e) {
+            var s = _this._mapsWrapper.subscribeToMapEvent(e.name).subscribe(function (event) {
+                var value = { coords: { lat: event.latLng.lat(), lng: event.latLng.lng() } };
+                e.emitter.emit(value);
+            });
+            _this._observableSubscriptions.push(s);
+        });
+    };
+    /**
+       * Map option attributes that can change over time
+       */
+    AgmMap._mapOptionsAttributes = [
+        'disableDoubleClickZoom', 'scrollwheel', 'draggable', 'draggableCursor', 'draggingCursor',
+        'keyboardShortcuts', 'zoomControl', 'zoomControlOptions', 'styles', 'streetViewControl',
+        'streetViewControlOptions', 'zoom', 'mapTypeControl', 'mapTypeControlOptions', 'minZoom',
+        'maxZoom', 'panControl', 'panControlOptions', 'rotateControl', 'rotateControlOptions',
+        'fullscreenControl', 'fullscreenControlOptions', 'scaleControl', 'scaleControlOptions',
+        'mapTypeId', 'clickableIcons', 'gestureHandling'
+    ];
+    AgmMap.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{
+                    selector: 'agm-map',
+                    providers: [
+                        _services_google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_1__["GoogleMapsAPIWrapper"], _services_managers_marker_manager__WEBPACK_IMPORTED_MODULE_4__["MarkerManager"], _services_managers_info_window_manager__WEBPACK_IMPORTED_MODULE_3__["InfoWindowManager"], _services_managers_circle_manager__WEBPACK_IMPORTED_MODULE_2__["CircleManager"], _services_managers_polyline_manager__WEBPACK_IMPORTED_MODULE_6__["PolylineManager"],
+                        _services_managers_polygon_manager__WEBPACK_IMPORTED_MODULE_5__["PolygonManager"], _services_managers_kml_layer_manager__WEBPACK_IMPORTED_MODULE_7__["KmlLayerManager"], _services_managers_data_layer_manager__WEBPACK_IMPORTED_MODULE_8__["DataLayerManager"]
+                    ],
+                    host: {
+                        // todo: deprecated - we will remove it with the next version
+                        '[class.sebm-google-map-container]': 'true'
+                    },
+                    styles: ["\n    .agm-map-container-inner {\n      width: inherit;\n      height: inherit;\n    }\n    .agm-map-content {\n      display:none;\n    }\n  "],
+                    template: "\n    <div class='agm-map-container-inner sebm-google-map-container-inner'></div>\n    <div class='agm-map-content'>\n      <ng-content></ng-content>\n    </div>\n  "
+                },] },
+    ];
+    /** @nocollapse */
+    AgmMap.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], },
+        { type: _services_google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_1__["GoogleMapsAPIWrapper"], },
+    ]; };
+    AgmMap.propDecorators = {
+        "longitude": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "latitude": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "zoom": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "minZoom": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "maxZoom": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "draggable": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"], args: ['mapDraggable',] },],
+        "disableDoubleClickZoom": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "disableDefaultUI": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "scrollwheel": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "backgroundColor": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "draggableCursor": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "draggingCursor": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "keyboardShortcuts": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "zoomControl": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "zoomControlOptions": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "styles": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "usePanning": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "streetViewControl": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "streetViewControlOptions": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "fitBounds": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "scaleControl": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "scaleControlOptions": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "mapTypeControl": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "mapTypeControlOptions": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "panControl": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "panControlOptions": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "rotateControl": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "rotateControlOptions": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "fullscreenControl": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "fullscreenControlOptions": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "mapTypeId": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "clickableIcons": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "gestureHandling": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "mapClick": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] },],
+        "mapRightClick": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] },],
+        "mapDblClick": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] },],
+        "centerChange": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] },],
+        "boundsChange": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] },],
+        "mapTypeIdChange": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] },],
+        "idle": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] },],
+        "zoomChange": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] },],
+        "mapReady": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] },],
+    };
+    return AgmMap;
+}());
+
+//# sourceMappingURL=map.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@agm/core/directives/map.ngfactory.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@agm/core/directives/map.ngfactory.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * @fileoverview This file was generated by the Angular template compiler. Do not edit.
+ *
+ * @suppress {suspiciousCode,uselessCode,missingProperties,missingOverride,checkTypes}
+ * tslint:disable
+ */ 
+Object.defineProperty(exports, "__esModule", { value: true });
+var i0 = __webpack_require__(/*! @angular/core */ "@angular/core");
+var i1 = __webpack_require__(/*! ../services/managers/marker-manager */ "./node_modules/@agm/core/services/managers/marker-manager.js");
+var i2 = __webpack_require__(/*! ../services/google-maps-api-wrapper */ "./node_modules/@agm/core/services/google-maps-api-wrapper.js");
+var i3 = __webpack_require__(/*! ../services/managers/info-window-manager */ "./node_modules/@agm/core/services/managers/info-window-manager.js");
+var i4 = __webpack_require__(/*! ../services/managers/circle-manager */ "./node_modules/@agm/core/services/managers/circle-manager.js");
+var i5 = __webpack_require__(/*! ../services/managers/polyline-manager */ "./node_modules/@agm/core/services/managers/polyline-manager.js");
+var i6 = __webpack_require__(/*! ../services/managers/polygon-manager */ "./node_modules/@agm/core/services/managers/polygon-manager.js");
+var i7 = __webpack_require__(/*! ../services/managers/kml-layer-manager */ "./node_modules/@agm/core/services/managers/kml-layer-manager.js");
+var i8 = __webpack_require__(/*! ../services/managers/data-layer-manager */ "./node_modules/@agm/core/services/managers/data-layer-manager.js");
+var i9 = __webpack_require__(/*! ../services/maps-api-loader/maps-api-loader */ "./node_modules/@agm/core/services/maps-api-loader/maps-api-loader.js");
+var i10 = __webpack_require__(/*! ./map */ "./node_modules/@agm/core/directives/map.js");
+var styles_AgmMap = [".agm-map-container-inner[_ngcontent-%COMP%] {\n      width: inherit;\n      height: inherit;\n    }\n    .agm-map-content[_ngcontent-%COMP%] {\n      display:none;\n    }"];
+var RenderType_AgmMap = i0.ɵcrt({ encapsulation: 0, styles: styles_AgmMap, data: {} });
+exports.RenderType_AgmMap = RenderType_AgmMap;
+function View_AgmMap_0(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 0, "div", [["class", "agm-map-container-inner sebm-google-map-container-inner"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "agm-map-content"]], null, null, null, null, null)), i0.ɵncd(null, 0)], null, null); }
+exports.View_AgmMap_0 = View_AgmMap_0;
+function View_AgmMap_Host_0(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 9, "agm-map", [], [[2, "sebm-google-map-container", null]], null, null, View_AgmMap_0, RenderType_AgmMap)), i0.ɵprd(4608, null, i1.MarkerManager, i1.MarkerManager, [i2.GoogleMapsAPIWrapper, i0.NgZone]), i0.ɵprd(4608, null, i3.InfoWindowManager, i3.InfoWindowManager, [i2.GoogleMapsAPIWrapper, i0.NgZone, i1.MarkerManager]), i0.ɵprd(4608, null, i4.CircleManager, i4.CircleManager, [i2.GoogleMapsAPIWrapper, i0.NgZone]), i0.ɵprd(4608, null, i5.PolylineManager, i5.PolylineManager, [i2.GoogleMapsAPIWrapper, i0.NgZone]), i0.ɵprd(4608, null, i6.PolygonManager, i6.PolygonManager, [i2.GoogleMapsAPIWrapper, i0.NgZone]), i0.ɵprd(4608, null, i7.KmlLayerManager, i7.KmlLayerManager, [i2.GoogleMapsAPIWrapper, i0.NgZone]), i0.ɵprd(4608, null, i8.DataLayerManager, i8.DataLayerManager, [i2.GoogleMapsAPIWrapper, i0.NgZone]), i0.ɵprd(512, null, i2.GoogleMapsAPIWrapper, i2.GoogleMapsAPIWrapper, [i9.MapsAPILoader, i0.NgZone]), i0.ɵdid(9, 770048, null, 0, i10.AgmMap, [i0.ElementRef, i2.GoogleMapsAPIWrapper], null, null)], function (_ck, _v) { _ck(_v, 9, 0); }, function (_ck, _v) { var currVal_0 = true; _ck(_v, 0, 0, currVal_0); }); }
+exports.View_AgmMap_Host_0 = View_AgmMap_Host_0;
+var AgmMapNgFactory = i0.ɵccf("agm-map", i10.AgmMap, View_AgmMap_Host_0, { longitude: "longitude", latitude: "latitude", zoom: "zoom", minZoom: "minZoom", maxZoom: "maxZoom", draggable: "mapDraggable", disableDoubleClickZoom: "disableDoubleClickZoom", disableDefaultUI: "disableDefaultUI", scrollwheel: "scrollwheel", backgroundColor: "backgroundColor", draggableCursor: "draggableCursor", draggingCursor: "draggingCursor", keyboardShortcuts: "keyboardShortcuts", zoomControl: "zoomControl", zoomControlOptions: "zoomControlOptions", styles: "styles", usePanning: "usePanning", streetViewControl: "streetViewControl", streetViewControlOptions: "streetViewControlOptions", fitBounds: "fitBounds", scaleControl: "scaleControl", scaleControlOptions: "scaleControlOptions", mapTypeControl: "mapTypeControl", mapTypeControlOptions: "mapTypeControlOptions", panControl: "panControl", panControlOptions: "panControlOptions", rotateControl: "rotateControl", rotateControlOptions: "rotateControlOptions", fullscreenControl: "fullscreenControl", fullscreenControlOptions: "fullscreenControlOptions", mapTypeId: "mapTypeId", clickableIcons: "clickableIcons", gestureHandling: "gestureHandling" }, { mapClick: "mapClick", mapRightClick: "mapRightClick", mapDblClick: "mapDblClick", centerChange: "centerChange", boundsChange: "boundsChange", mapTypeIdChange: "mapTypeIdChange", idle: "idle", zoomChange: "zoomChange", mapReady: "mapReady" }, ["*"]);
+exports.AgmMapNgFactory = AgmMapNgFactory;
+
+
+/***/ }),
+
+/***/ "./node_modules/@agm/core/services/google-maps-api-wrapper.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@agm/core/services/google-maps-api-wrapper.js ***!
+  \********************************************************************/
+/*! exports provided: GoogleMapsAPIWrapper */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GoogleMapsAPIWrapper", function() { return GoogleMapsAPIWrapper; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "@angular/core");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_angular_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _maps_api_loader_maps_api_loader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./maps-api-loader/maps-api-loader */ "./node_modules/@agm/core/services/maps-api-loader/maps-api-loader.js");
+
+
+
+/**
+ * Wrapper class that handles the communication with the Google Maps Javascript
+ * API v3
+ */
+var GoogleMapsAPIWrapper = /** @class */ (function () {
+    function GoogleMapsAPIWrapper(_loader, _zone) {
+        var _this = this;
+        this._loader = _loader;
+        this._zone = _zone;
+        this._map =
+            new Promise(function (resolve) { _this._mapResolver = resolve; });
+    }
+    GoogleMapsAPIWrapper.prototype.createMap = function (el, mapOptions) {
+        var _this = this;
+        return this._zone.runOutsideAngular(function () {
+            return _this._loader.load().then(function () {
+                var map = new google.maps.Map(el, mapOptions);
+                _this._mapResolver(map);
+                return;
+            });
+        });
+    };
+    GoogleMapsAPIWrapper.prototype.setMapOptions = function (options) {
+        this._map.then(function (m) { m.setOptions(options); });
+    };
+    /**
+     * Creates a google map marker with the map context
+     */
+    /**
+       * Creates a google map marker with the map context
+       */
+    GoogleMapsAPIWrapper.prototype.createMarker = /**
+       * Creates a google map marker with the map context
+       */
+    function (options, addToMap) {
+        if (options === void 0) { options = {}; }
+        if (addToMap === void 0) { addToMap = true; }
+        return this._map.then(function (map) {
+            if (addToMap) {
+                options.map = map;
+            }
+            return new google.maps.Marker(options);
+        });
+    };
+    GoogleMapsAPIWrapper.prototype.createInfoWindow = function (options) {
+        return this._map.then(function () { return new google.maps.InfoWindow(options); });
+    };
+    /**
+     * Creates a google.map.Circle for the current map.
+     */
+    /**
+       * Creates a google.map.Circle for the current map.
+       */
+    GoogleMapsAPIWrapper.prototype.createCircle = /**
+       * Creates a google.map.Circle for the current map.
+       */
+    function (options) {
+        return this._map.then(function (map) {
+            options.map = map;
+            return new google.maps.Circle(options);
+        });
+    };
+    GoogleMapsAPIWrapper.prototype.createPolyline = function (options) {
+        return this.getNativeMap().then(function (map) {
+            var line = new google.maps.Polyline(options);
+            line.setMap(map);
+            return line;
+        });
+    };
+    GoogleMapsAPIWrapper.prototype.createPolygon = function (options) {
+        return this.getNativeMap().then(function (map) {
+            var polygon = new google.maps.Polygon(options);
+            polygon.setMap(map);
+            return polygon;
+        });
+    };
+    /**
+     * Creates a new google.map.Data layer for the current map
+     */
+    /**
+       * Creates a new google.map.Data layer for the current map
+       */
+    GoogleMapsAPIWrapper.prototype.createDataLayer = /**
+       * Creates a new google.map.Data layer for the current map
+       */
+    function (options) {
+        return this._map.then(function (m) {
+            var data = new google.maps.Data(options);
+            data.setMap(m);
+            return data;
+        });
+    };
+    /**
+     * Determines if given coordinates are insite a Polygon path.
+     */
+    /**
+       * Determines if given coordinates are insite a Polygon path.
+       */
+    GoogleMapsAPIWrapper.prototype.containsLocation = /**
+       * Determines if given coordinates are insite a Polygon path.
+       */
+    function (latLng, polygon) {
+        return google.maps.geometry.poly.containsLocation(latLng, polygon);
+    };
+    GoogleMapsAPIWrapper.prototype.subscribeToMapEvent = function (eventName) {
+        var _this = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
+            _this._map.then(function (m) {
+                m.addListener(eventName, function (arg) { _this._zone.run(function () { return observer.next(arg); }); });
+            });
+        });
+    };
+    GoogleMapsAPIWrapper.prototype.clearInstanceListeners = function () {
+        this._map.then(function (map) {
+            google.maps.event.clearInstanceListeners(map);
+        });
+    };
+    GoogleMapsAPIWrapper.prototype.setCenter = function (latLng) {
+        return this._map.then(function (map) { return map.setCenter(latLng); });
+    };
+    GoogleMapsAPIWrapper.prototype.getZoom = function () { return this._map.then(function (map) { return map.getZoom(); }); };
+    GoogleMapsAPIWrapper.prototype.getBounds = function () {
+        return this._map.then(function (map) { return map.getBounds(); });
+    };
+    GoogleMapsAPIWrapper.prototype.getMapTypeId = function () {
+        return this._map.then(function (map) { return map.getMapTypeId(); });
+    };
+    GoogleMapsAPIWrapper.prototype.setZoom = function (zoom) {
+        return this._map.then(function (map) { return map.setZoom(zoom); });
+    };
+    GoogleMapsAPIWrapper.prototype.getCenter = function () {
+        return this._map.then(function (map) { return map.getCenter(); });
+    };
+    GoogleMapsAPIWrapper.prototype.panTo = function (latLng) {
+        return this._map.then(function (map) { return map.panTo(latLng); });
+    };
+    GoogleMapsAPIWrapper.prototype.panBy = function (x, y) {
+        return this._map.then(function (map) { return map.panBy(x, y); });
+    };
+    GoogleMapsAPIWrapper.prototype.fitBounds = function (latLng) {
+        return this._map.then(function (map) { return map.fitBounds(latLng); });
+    };
+    GoogleMapsAPIWrapper.prototype.panToBounds = function (latLng) {
+        return this._map.then(function (map) { return map.panToBounds(latLng); });
+    };
+    /**
+     * Returns the native Google Maps Map instance. Be careful when using this instance directly.
+     */
+    /**
+       * Returns the native Google Maps Map instance. Be careful when using this instance directly.
+       */
+    GoogleMapsAPIWrapper.prototype.getNativeMap = /**
+       * Returns the native Google Maps Map instance. Be careful when using this instance directly.
+       */
+    function () { return this._map; };
+    /**
+     * Triggers the given event name on the map instance.
+     */
+    /**
+       * Triggers the given event name on the map instance.
+       */
+    GoogleMapsAPIWrapper.prototype.triggerMapEvent = /**
+       * Triggers the given event name on the map instance.
+       */
+    function (eventName) {
+        return this._map.then(function (m) { return google.maps.event.trigger(m, eventName); });
+    };
+    GoogleMapsAPIWrapper.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"] },
+    ];
+    /** @nocollapse */
+    GoogleMapsAPIWrapper.ctorParameters = function () { return [
+        { type: _maps_api_loader_maps_api_loader__WEBPACK_IMPORTED_MODULE_2__["MapsAPILoader"], },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"], },
+    ]; };
+    return GoogleMapsAPIWrapper;
+}());
+
+//# sourceMappingURL=google-maps-api-wrapper.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@agm/core/services/managers/circle-manager.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@agm/core/services/managers/circle-manager.js ***!
+  \********************************************************************/
+/*! exports provided: CircleManager */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CircleManager", function() { return CircleManager; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "@angular/core");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_angular_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../google-maps-api-wrapper */ "./node_modules/@agm/core/services/google-maps-api-wrapper.js");
+
+
+
+var CircleManager = /** @class */ (function () {
+    function CircleManager(_apiWrapper, _zone) {
+        this._apiWrapper = _apiWrapper;
+        this._zone = _zone;
+        this._circles = new Map();
+    }
+    CircleManager.prototype.addCircle = function (circle) {
+        this._circles.set(circle, this._apiWrapper.createCircle({
+            center: { lat: circle.latitude, lng: circle.longitude },
+            clickable: circle.clickable,
+            draggable: circle.draggable,
+            editable: circle.editable,
+            fillColor: circle.fillColor,
+            fillOpacity: circle.fillOpacity,
+            radius: circle.radius,
+            strokeColor: circle.strokeColor,
+            strokeOpacity: circle.strokeOpacity,
+            strokePosition: circle.strokePosition,
+            strokeWeight: circle.strokeWeight,
+            visible: circle.visible,
+            zIndex: circle.zIndex
+        }));
+    };
+    /**
+     * Removes the given circle from the map.
+     */
+    /**
+       * Removes the given circle from the map.
+       */
+    CircleManager.prototype.removeCircle = /**
+       * Removes the given circle from the map.
+       */
+    function (circle) {
+        var _this = this;
+        return this._circles.get(circle).then(function (c) {
+            c.setMap(null);
+            _this._circles.delete(circle);
+        });
+    };
+    CircleManager.prototype.setOptions = function (circle, options) {
+        return this._circles.get(circle).then(function (c) { return c.setOptions(options); });
+    };
+    CircleManager.prototype.getBounds = function (circle) {
+        return this._circles.get(circle).then(function (c) { return c.getBounds(); });
+    };
+    CircleManager.prototype.getCenter = function (circle) {
+        return this._circles.get(circle).then(function (c) { return c.getCenter(); });
+    };
+    CircleManager.prototype.getRadius = function (circle) {
+        return this._circles.get(circle).then(function (c) { return c.getRadius(); });
+    };
+    CircleManager.prototype.setCenter = function (circle) {
+        return this._circles.get(circle).then(function (c) { return c.setCenter({ lat: circle.latitude, lng: circle.longitude }); });
+    };
+    CircleManager.prototype.setEditable = function (circle) {
+        return this._circles.get(circle).then(function (c) { return c.setEditable(circle.editable); });
+    };
+    CircleManager.prototype.setDraggable = function (circle) {
+        return this._circles.get(circle).then(function (c) { return c.setDraggable(circle.draggable); });
+    };
+    CircleManager.prototype.setVisible = function (circle) {
+        return this._circles.get(circle).then(function (c) { return c.setVisible(circle.visible); });
+    };
+    CircleManager.prototype.setRadius = function (circle) {
+        return this._circles.get(circle).then(function (c) { return c.setRadius(circle.radius); });
+    };
+    CircleManager.prototype.createEventObservable = function (eventName, circle) {
+        var _this = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
+            var listener = null;
+            _this._circles.get(circle).then(function (c) {
+                listener = c.addListener(eventName, function (e) { return _this._zone.run(function () { return observer.next(e); }); });
+            });
+            return function () {
+                if (listener !== null) {
+                    listener.remove();
+                }
+            };
+        });
+    };
+    CircleManager.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"] },
+    ];
+    /** @nocollapse */
+    CircleManager.ctorParameters = function () { return [
+        { type: _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__["GoogleMapsAPIWrapper"], },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"], },
+    ]; };
+    return CircleManager;
+}());
+
+//# sourceMappingURL=circle-manager.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@agm/core/services/managers/data-layer-manager.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/@agm/core/services/managers/data-layer-manager.js ***!
+  \************************************************************************/
+/*! exports provided: DataLayerManager */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataLayerManager", function() { return DataLayerManager; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "@angular/core");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_angular_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../google-maps-api-wrapper */ "./node_modules/@agm/core/services/google-maps-api-wrapper.js");
+
+
+
+/**
+ * Manages all Data Layers for a Google Map instance.
+ */
+var DataLayerManager = /** @class */ (function () {
+    function DataLayerManager(_wrapper, _zone) {
+        this._wrapper = _wrapper;
+        this._zone = _zone;
+        this._layers = new Map();
+    }
+    /**
+     * Adds a new Data Layer to the map.
+     */
+    /**
+       * Adds a new Data Layer to the map.
+       */
+    DataLayerManager.prototype.addDataLayer = /**
+       * Adds a new Data Layer to the map.
+       */
+    function (layer) {
+        var _this = this;
+        var newLayer = this._wrapper.createDataLayer({
+            style: layer.style
+        })
+            .then(function (d) {
+            if (layer.geoJson) {
+                _this.getDataFeatures(d, layer.geoJson).then(function (features) { return d.features = features; });
+            }
+            return d;
+        });
+        this._layers.set(layer, newLayer);
+    };
+    DataLayerManager.prototype.deleteDataLayer = function (layer) {
+        var _this = this;
+        this._layers.get(layer).then(function (l) {
+            l.setMap(null);
+            _this._layers.delete(layer);
+        });
+    };
+    DataLayerManager.prototype.updateGeoJson = function (layer, geoJson) {
+        var _this = this;
+        this._layers.get(layer).then(function (l) {
+            l.forEach(function (feature) {
+                l.remove(feature);
+                var index = l.features.indexOf(feature, 0);
+                if (index > -1) {
+                    l.features.splice(index, 1);
+                }
+            });
+            _this.getDataFeatures(l, geoJson).then(function (features) { return l.features = features; });
+        });
+    };
+    DataLayerManager.prototype.setDataOptions = function (layer, options) {
+        this._layers.get(layer).then(function (l) {
+            l.setControlPosition(options.controlPosition);
+            l.setControls(options.controls);
+            l.setDrawingMode(options.drawingMode);
+            l.setStyle(options.style);
+        });
+    };
+    /**
+     * Creates a Google Maps event listener for the given DataLayer as an Observable
+     */
+    /**
+       * Creates a Google Maps event listener for the given DataLayer as an Observable
+       */
+    DataLayerManager.prototype.createEventObservable = /**
+       * Creates a Google Maps event listener for the given DataLayer as an Observable
+       */
+    function (eventName, layer) {
+        var _this = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
+            _this._layers.get(layer).then(function (d) {
+                d.addListener(eventName, function (e) { return _this._zone.run(function () { return observer.next(e); }); });
+            });
+        });
+    };
+    /**
+     * Extract features from a geoJson using google.maps Data Class
+     * @param d : google.maps.Data class instance
+     * @param geoJson : url or geojson object
+     */
+    /**
+       * Extract features from a geoJson using google.maps Data Class
+       * @param d : google.maps.Data class instance
+       * @param geoJson : url or geojson object
+       */
+    DataLayerManager.prototype.getDataFeatures = /**
+       * Extract features from a geoJson using google.maps Data Class
+       * @param d : google.maps.Data class instance
+       * @param geoJson : url or geojson object
+       */
+    function (d, geoJson) {
+        return new Promise(function (resolve, reject) {
+            if (typeof geoJson === 'object') {
+                try {
+                    var features = d.addGeoJson(geoJson);
+                    resolve(features);
+                }
+                catch (e) {
+                    reject(e);
+                }
+            }
+            else if (typeof geoJson === 'string') {
+                d.loadGeoJson(geoJson, null, resolve);
+            }
+            else {
+                reject("Impossible to extract features from geoJson: wrong argument type");
+            }
+        });
+    };
+    DataLayerManager.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"] },
+    ];
+    /** @nocollapse */
+    DataLayerManager.ctorParameters = function () { return [
+        { type: _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__["GoogleMapsAPIWrapper"], },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"], },
+    ]; };
+    return DataLayerManager;
+}());
+
+//# sourceMappingURL=data-layer-manager.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@agm/core/services/managers/info-window-manager.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@agm/core/services/managers/info-window-manager.js ***!
+  \*************************************************************************/
+/*! exports provided: InfoWindowManager */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InfoWindowManager", function() { return InfoWindowManager; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "rxjs");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "@angular/core");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_angular_core__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../google-maps-api-wrapper */ "./node_modules/@agm/core/services/google-maps-api-wrapper.js");
+/* harmony import */ var _marker_manager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./marker-manager */ "./node_modules/@agm/core/services/managers/marker-manager.js");
+
+
+
+
+var InfoWindowManager = /** @class */ (function () {
+    function InfoWindowManager(_mapsWrapper, _zone, _markerManager) {
+        this._mapsWrapper = _mapsWrapper;
+        this._zone = _zone;
+        this._markerManager = _markerManager;
+        this._infoWindows = new Map();
+    }
+    InfoWindowManager.prototype.deleteInfoWindow = function (infoWindow) {
+        var _this = this;
+        var iWindow = this._infoWindows.get(infoWindow);
+        if (iWindow == null) {
+            // info window already deleted
+            return Promise.resolve();
+        }
+        return iWindow.then(function (i) {
+            return _this._zone.run(function () {
+                i.close();
+                _this._infoWindows.delete(infoWindow);
+            });
+        });
+    };
+    InfoWindowManager.prototype.setPosition = function (infoWindow) {
+        return this._infoWindows.get(infoWindow).then(function (i) {
+            return i.setPosition({
+                lat: infoWindow.latitude,
+                lng: infoWindow.longitude
+            });
+        });
+    };
+    InfoWindowManager.prototype.setZIndex = function (infoWindow) {
+        return this._infoWindows.get(infoWindow)
+            .then(function (i) { return i.setZIndex(infoWindow.zIndex); });
+    };
+    InfoWindowManager.prototype.open = function (infoWindow) {
+        var _this = this;
+        return this._infoWindows.get(infoWindow).then(function (w) {
+            if (infoWindow.hostMarker != null) {
+                return _this._markerManager.getNativeMarker(infoWindow.hostMarker).then(function (marker) {
+                    return _this._mapsWrapper.getNativeMap().then(function (map) { return w.open(map, marker); });
+                });
+            }
+            return _this._mapsWrapper.getNativeMap().then(function (map) { return w.open(map); });
+        });
+    };
+    InfoWindowManager.prototype.close = function (infoWindow) {
+        return this._infoWindows.get(infoWindow).then(function (w) { return w.close(); });
+    };
+    InfoWindowManager.prototype.setOptions = function (infoWindow, options) {
+        return this._infoWindows.get(infoWindow).then(function (i) { return i.setOptions(options); });
+    };
+    InfoWindowManager.prototype.addInfoWindow = function (infoWindow) {
+        var options = {
+            content: infoWindow.content,
+            maxWidth: infoWindow.maxWidth,
+            zIndex: infoWindow.zIndex,
+            disableAutoPan: infoWindow.disableAutoPan
+        };
+        if (typeof infoWindow.latitude === 'number' && typeof infoWindow.longitude === 'number') {
+            options.position = { lat: infoWindow.latitude, lng: infoWindow.longitude };
+        }
+        var infoWindowPromise = this._mapsWrapper.createInfoWindow(options);
+        this._infoWindows.set(infoWindow, infoWindowPromise);
+    };
+    /**
+     * Creates a Google Maps event listener for the given InfoWindow as an Observable
+     */
+    /**
+        * Creates a Google Maps event listener for the given InfoWindow as an Observable
+        */
+    InfoWindowManager.prototype.createEventObservable = /**
+        * Creates a Google Maps event listener for the given InfoWindow as an Observable
+        */
+    function (eventName, infoWindow) {
+        var _this = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"](function (observer) {
+            _this._infoWindows.get(infoWindow).then(function (i) {
+                i.addListener(eventName, function (e) { return _this._zone.run(function () { return observer.next(e); }); });
+            });
+        });
+    };
+    InfoWindowManager.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"] },
+    ];
+    /** @nocollapse */
+    InfoWindowManager.ctorParameters = function () { return [
+        { type: _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__["GoogleMapsAPIWrapper"], },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"], },
+        { type: _marker_manager__WEBPACK_IMPORTED_MODULE_3__["MarkerManager"], },
+    ]; };
+    return InfoWindowManager;
+}());
+
+//# sourceMappingURL=info-window-manager.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@agm/core/services/managers/kml-layer-manager.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@agm/core/services/managers/kml-layer-manager.js ***!
+  \***********************************************************************/
+/*! exports provided: KmlLayerManager */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "KmlLayerManager", function() { return KmlLayerManager; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "@angular/core");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_angular_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../google-maps-api-wrapper */ "./node_modules/@agm/core/services/google-maps-api-wrapper.js");
+
+
+
+/**
+ * Manages all KML Layers for a Google Map instance.
+ */
+var KmlLayerManager = /** @class */ (function () {
+    function KmlLayerManager(_wrapper, _zone) {
+        this._wrapper = _wrapper;
+        this._zone = _zone;
+        this._layers = new Map();
+    }
+    /**
+     * Adds a new KML Layer to the map.
+     */
+    /**
+       * Adds a new KML Layer to the map.
+       */
+    KmlLayerManager.prototype.addKmlLayer = /**
+       * Adds a new KML Layer to the map.
+       */
+    function (layer) {
+        var newLayer = this._wrapper.getNativeMap().then(function (m) {
+            return new google.maps.KmlLayer({
+                clickable: layer.clickable,
+                map: m,
+                preserveViewport: layer.preserveViewport,
+                screenOverlays: layer.screenOverlays,
+                suppressInfoWindows: layer.suppressInfoWindows,
+                url: layer.url,
+                zIndex: layer.zIndex
+            });
+        });
+        this._layers.set(layer, newLayer);
+    };
+    KmlLayerManager.prototype.setOptions = function (layer, options) {
+        this._layers.get(layer).then(function (l) { return l.setOptions(options); });
+    };
+    KmlLayerManager.prototype.deleteKmlLayer = function (layer) {
+        var _this = this;
+        this._layers.get(layer).then(function (l) {
+            l.setMap(null);
+            _this._layers.delete(layer);
+        });
+    };
+    /**
+     * Creates a Google Maps event listener for the given KmlLayer as an Observable
+     */
+    /**
+       * Creates a Google Maps event listener for the given KmlLayer as an Observable
+       */
+    KmlLayerManager.prototype.createEventObservable = /**
+       * Creates a Google Maps event listener for the given KmlLayer as an Observable
+       */
+    function (eventName, layer) {
+        var _this = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
+            _this._layers.get(layer).then(function (m) {
+                m.addListener(eventName, function (e) { return _this._zone.run(function () { return observer.next(e); }); });
+            });
+        });
+    };
+    KmlLayerManager.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"] },
+    ];
+    /** @nocollapse */
+    KmlLayerManager.ctorParameters = function () { return [
+        { type: _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__["GoogleMapsAPIWrapper"], },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"], },
+    ]; };
+    return KmlLayerManager;
+}());
+
+//# sourceMappingURL=kml-layer-manager.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@agm/core/services/managers/marker-manager.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@agm/core/services/managers/marker-manager.js ***!
+  \********************************************************************/
+/*! exports provided: MarkerManager */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkerManager", function() { return MarkerManager; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "@angular/core");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_angular_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../google-maps-api-wrapper */ "./node_modules/@agm/core/services/google-maps-api-wrapper.js");
+
+
+
+var MarkerManager = /** @class */ (function () {
+    function MarkerManager(_mapsWrapper, _zone) {
+        this._mapsWrapper = _mapsWrapper;
+        this._zone = _zone;
+        this._markers = new Map();
+    }
+    MarkerManager.prototype.deleteMarker = function (marker) {
+        var _this = this;
+        var m = this._markers.get(marker);
+        if (m == null) {
+            // marker already deleted
+            return Promise.resolve();
+        }
+        return m.then(function (m) {
+            return _this._zone.run(function () {
+                m.setMap(null);
+                _this._markers.delete(marker);
+            });
+        });
+    };
+    MarkerManager.prototype.updateMarkerPosition = function (marker) {
+        return this._markers.get(marker).then(function (m) { return m.setPosition({ lat: marker.latitude, lng: marker.longitude }); });
+    };
+    MarkerManager.prototype.updateTitle = function (marker) {
+        return this._markers.get(marker).then(function (m) { return m.setTitle(marker.title); });
+    };
+    MarkerManager.prototype.updateLabel = function (marker) {
+        return this._markers.get(marker).then(function (m) { m.setLabel(marker.label); });
+    };
+    MarkerManager.prototype.updateDraggable = function (marker) {
+        return this._markers.get(marker).then(function (m) { return m.setDraggable(marker.draggable); });
+    };
+    MarkerManager.prototype.updateIcon = function (marker) {
+        return this._markers.get(marker).then(function (m) { return m.setIcon(marker.iconUrl); });
+    };
+    MarkerManager.prototype.updateOpacity = function (marker) {
+        return this._markers.get(marker).then(function (m) { return m.setOpacity(marker.opacity); });
+    };
+    MarkerManager.prototype.updateVisible = function (marker) {
+        return this._markers.get(marker).then(function (m) { return m.setVisible(marker.visible); });
+    };
+    MarkerManager.prototype.updateZIndex = function (marker) {
+        return this._markers.get(marker).then(function (m) { return m.setZIndex(marker.zIndex); });
+    };
+    MarkerManager.prototype.updateClickable = function (marker) {
+        return this._markers.get(marker).then(function (m) { return m.setClickable(marker.clickable); });
+    };
+    MarkerManager.prototype.updateAnimation = function (marker) {
+        return this._markers.get(marker).then(function (m) {
+            if (typeof marker.animation === 'string') {
+                m.setAnimation(google.maps.Animation[marker.animation]);
+            }
+            else {
+                m.setAnimation(marker.animation);
+            }
+        });
+    };
+    MarkerManager.prototype.addMarker = function (marker) {
+        var markerPromise = this._mapsWrapper.createMarker({
+            position: { lat: marker.latitude, lng: marker.longitude },
+            label: marker.label,
+            draggable: marker.draggable,
+            icon: marker.iconUrl,
+            opacity: marker.opacity,
+            visible: marker.visible,
+            zIndex: marker.zIndex,
+            title: marker.title,
+            clickable: marker.clickable,
+            animation: (typeof marker.animation === 'string') ? google.maps.Animation[marker.animation] : marker.animation
+        });
+        this._markers.set(marker, markerPromise);
+    };
+    MarkerManager.prototype.getNativeMarker = function (marker) {
+        return this._markers.get(marker);
+    };
+    MarkerManager.prototype.createEventObservable = function (eventName, marker) {
+        var _this = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
+            _this._markers.get(marker).then(function (m) {
+                m.addListener(eventName, function (e) { return _this._zone.run(function () { return observer.next(e); }); });
+            });
+        });
+    };
+    MarkerManager.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"] },
+    ];
+    /** @nocollapse */
+    MarkerManager.ctorParameters = function () { return [
+        { type: _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__["GoogleMapsAPIWrapper"], },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"], },
+    ]; };
+    return MarkerManager;
+}());
+
+//# sourceMappingURL=marker-manager.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@agm/core/services/managers/polygon-manager.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@agm/core/services/managers/polygon-manager.js ***!
+  \*********************************************************************/
+/*! exports provided: PolygonManager */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PolygonManager", function() { return PolygonManager; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "@angular/core");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_angular_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../google-maps-api-wrapper */ "./node_modules/@agm/core/services/google-maps-api-wrapper.js");
+
+
+
+var PolygonManager = /** @class */ (function () {
+    function PolygonManager(_mapsWrapper, _zone) {
+        this._mapsWrapper = _mapsWrapper;
+        this._zone = _zone;
+        this._polygons = new Map();
+    }
+    PolygonManager.prototype.addPolygon = function (path) {
+        var polygonPromise = this._mapsWrapper.createPolygon({
+            clickable: path.clickable,
+            draggable: path.draggable,
+            editable: path.editable,
+            fillColor: path.fillColor,
+            fillOpacity: path.fillOpacity,
+            geodesic: path.geodesic,
+            paths: path.paths,
+            strokeColor: path.strokeColor,
+            strokeOpacity: path.strokeOpacity,
+            strokeWeight: path.strokeWeight,
+            visible: path.visible,
+            zIndex: path.zIndex,
+        });
+        this._polygons.set(path, polygonPromise);
+    };
+    PolygonManager.prototype.updatePolygon = function (polygon) {
+        var _this = this;
+        var m = this._polygons.get(polygon);
+        if (m == null) {
+            return Promise.resolve();
+        }
+        return m.then(function (l) { return _this._zone.run(function () { l.setPaths(polygon.paths); }); });
+    };
+    PolygonManager.prototype.setPolygonOptions = function (path, options) {
+        return this._polygons.get(path).then(function (l) { l.setOptions(options); });
+    };
+    PolygonManager.prototype.deletePolygon = function (paths) {
+        var _this = this;
+        var m = this._polygons.get(paths);
+        if (m == null) {
+            return Promise.resolve();
+        }
+        return m.then(function (l) {
+            return _this._zone.run(function () {
+                l.setMap(null);
+                _this._polygons.delete(paths);
+            });
+        });
+    };
+    PolygonManager.prototype.createEventObservable = function (eventName, path) {
+        var _this = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
+            _this._polygons.get(path).then(function (l) {
+                l.addListener(eventName, function (e) { return _this._zone.run(function () { return observer.next(e); }); });
+            });
+        });
+    };
+    PolygonManager.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"] },
+    ];
+    /** @nocollapse */
+    PolygonManager.ctorParameters = function () { return [
+        { type: _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__["GoogleMapsAPIWrapper"], },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"], },
+    ]; };
+    return PolygonManager;
+}());
+
+//# sourceMappingURL=polygon-manager.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@agm/core/services/managers/polyline-manager.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@agm/core/services/managers/polyline-manager.js ***!
+  \**********************************************************************/
+/*! exports provided: PolylineManager */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PolylineManager", function() { return PolylineManager; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "@angular/core");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_angular_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../google-maps-api-wrapper */ "./node_modules/@agm/core/services/google-maps-api-wrapper.js");
+
+
+
+var PolylineManager = /** @class */ (function () {
+    function PolylineManager(_mapsWrapper, _zone) {
+        this._mapsWrapper = _mapsWrapper;
+        this._zone = _zone;
+        this._polylines = new Map();
+    }
+    PolylineManager._convertPoints = function (line) {
+        var path = line._getPoints().map(function (point) {
+            return { lat: point.latitude, lng: point.longitude };
+        });
+        return path;
+    };
+    PolylineManager.prototype.addPolyline = function (line) {
+        var path = PolylineManager._convertPoints(line);
+        var polylinePromise = this._mapsWrapper.createPolyline({
+            clickable: line.clickable,
+            draggable: line.draggable,
+            editable: line.editable,
+            geodesic: line.geodesic,
+            strokeColor: line.strokeColor,
+            strokeOpacity: line.strokeOpacity,
+            strokeWeight: line.strokeWeight,
+            visible: line.visible,
+            zIndex: line.zIndex,
+            path: path
+        });
+        this._polylines.set(line, polylinePromise);
+    };
+    PolylineManager.prototype.updatePolylinePoints = function (line) {
+        var _this = this;
+        var path = PolylineManager._convertPoints(line);
+        var m = this._polylines.get(line);
+        if (m == null) {
+            return Promise.resolve();
+        }
+        return m.then(function (l) { return _this._zone.run(function () { l.setPath(path); }); });
+    };
+    PolylineManager.prototype.setPolylineOptions = function (line, options) {
+        return this._polylines.get(line).then(function (l) { l.setOptions(options); });
+    };
+    PolylineManager.prototype.deletePolyline = function (line) {
+        var _this = this;
+        var m = this._polylines.get(line);
+        if (m == null) {
+            return Promise.resolve();
+        }
+        return m.then(function (l) {
+            return _this._zone.run(function () {
+                l.setMap(null);
+                _this._polylines.delete(line);
+            });
+        });
+    };
+    PolylineManager.prototype.createEventObservable = function (eventName, line) {
+        var _this = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
+            _this._polylines.get(line).then(function (l) {
+                l.addListener(eventName, function (e) { return _this._zone.run(function () { return observer.next(e); }); });
+            });
+        });
+    };
+    PolylineManager.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"] },
+    ];
+    /** @nocollapse */
+    PolylineManager.ctorParameters = function () { return [
+        { type: _google_maps_api_wrapper__WEBPACK_IMPORTED_MODULE_2__["GoogleMapsAPIWrapper"], },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"], },
+    ]; };
+    return PolylineManager;
+}());
+
+//# sourceMappingURL=polyline-manager.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@agm/core/services/maps-api-loader/maps-api-loader.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/@agm/core/services/maps-api-loader/maps-api-loader.js ***!
+  \****************************************************************************/
+/*! exports provided: MapsAPILoader */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MapsAPILoader", function() { return MapsAPILoader; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "@angular/core");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_angular_core__WEBPACK_IMPORTED_MODULE_0__);
+
+var MapsAPILoader = /** @class */ (function () {
+    function MapsAPILoader() {
+    }
+    MapsAPILoader.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"] },
+    ];
+    return MapsAPILoader;
+}());
+
+//# sourceMappingURL=maps-api-loader.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@angular/material/button/typings/index.ngfactory.js":
 /*!**************************************************************************!*\
   !*** ./node_modules/@angular/material/button/typings/index.ngfactory.js ***!
@@ -435,7 +2131,13 @@ exports.AppComponent = AppComponent;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ɵ0 = { title: 'Home', description: 'Homepage - quick overview.' }, ɵ1 = { title: 'Donors', description: 'List of donations. Became a donor!' }, ɵ2 = { title: 'Lazy module', description: 'Lazy module example.' }, ɵ3 = { title: 'Transfer state (API)', description: 'Angular TransferState example.' };
+var ɵ0 = { title: 'Home', description: 'Homepage - quick overview.' }, ɵ1 = {
+    title: 'Donors',
+    description: 'List of donations. Became a donor!'
+}, ɵ2 = { title: 'Lazy module', description: 'Lazy module example.' }, ɵ3 = {
+    title: 'Transfer state (API)',
+    description: 'Angular TransferState example.'
+};
 exports.ɵ0 = ɵ0;
 exports.ɵ1 = ɵ1;
 exports.ɵ2 = ɵ2;
@@ -486,35 +2188,40 @@ var i15 = __webpack_require__(/*! @angular/platform-browser/animations */ "@angu
 var i16 = __webpack_require__(/*! @angular/cdk/overlay */ "@angular/cdk/overlay");
 var i17 = __webpack_require__(/*! @angular/cdk/bidi */ "@angular/cdk/bidi");
 var i18 = __webpack_require__(/*! @angular/material/menu */ "@angular/material/menu");
-var i19 = __webpack_require__(/*! @angular/common/http */ "@angular/common/http");
-var i20 = __webpack_require__(/*! @ngx-translate/core */ "@ngx-translate/core");
-var i21 = __webpack_require__(/*! @angular/router */ "@angular/router");
-var i22 = __webpack_require__(/*! ./services/snack-bar.service */ "./src/app/services/snack-bar.service.ts");
-var i23 = __webpack_require__(/*! @angular/material/snack-bar */ "@angular/material/snack-bar");
-var i24 = __webpack_require__(/*! ./window-ref.service */ "./src/app/window-ref.service.ts");
-var i25 = __webpack_require__(/*! ./services/notifications.service */ "./src/app/services/notifications.service.ts");
-var i26 = __webpack_require__(/*! ./services/exampleApi.service */ "./src/app/services/exampleApi.service.ts");
-var i27 = __webpack_require__(/*! ./services/resolvers/hitWithTransferState.resolver */ "./src/app/services/resolvers/hitWithTransferState.resolver.ts");
-var i28 = __webpack_require__(/*! ./services/resolvers/hitWithoutTransferState.resolver */ "./src/app/services/resolvers/hitWithoutTransferState.resolver.ts");
-var i29 = __webpack_require__(/*! @angular/http */ "@angular/http");
-var i30 = __webpack_require__(/*! @angular/animations */ "@angular/animations");
-var i31 = __webpack_require__(/*! @angular/service-worker */ "@angular/service-worker");
-var i32 = __webpack_require__(/*! ./services/swUpdate-server.mock.service */ "./src/app/services/swUpdate-server.mock.service.ts");
-var i33 = __webpack_require__(/*! ./services/swPush-server.mock.service */ "./src/app/services/swPush-server.mock.service.ts");
-var i34 = __webpack_require__(/*! @angular/material/core */ "@angular/material/core");
-var i35 = __webpack_require__(/*! @angular/cdk/platform */ "@angular/cdk/platform");
-var i36 = __webpack_require__(/*! @angular/material/button */ "@angular/material/button");
-var i37 = __webpack_require__(/*! @angular/cdk/portal */ "@angular/cdk/portal");
-var i38 = __webpack_require__(/*! @angular/cdk/scrolling */ "@angular/cdk/scrolling");
-var i39 = __webpack_require__(/*! @nguniversal/module-map-ngfactory-loader */ "@nguniversal/module-map-ngfactory-loader");
-var i40 = __webpack_require__(/*! ./home/home.component */ "./src/app/home/home.component.ts");
-var i41 = __webpack_require__(/*! ./app.module */ "./src/app/app.module.ts");
-var i42 = __webpack_require__(/*! ./donors/donors.component */ "./src/app/donors/donors.component.ts");
-var i43 = __webpack_require__(/*! ./transfer-state/transfer-state.component */ "./src/app/transfer-state/transfer-state.component.ts");
-var i44 = __webpack_require__(/*! ./transfer-state/with-transfer-state.component */ "./src/app/transfer-state/with-transfer-state.component.ts");
-var i45 = __webpack_require__(/*! ./transfer-state/without-transfer-state.component */ "./src/app/transfer-state/without-transfer-state.component.ts");
-var i46 = __webpack_require__(/*! ./services/service-worker.mock.module */ "./src/app/services/service-worker.mock.module.ts");
-var AppServerModuleNgFactory = i0.ɵcmf(i1.AppServerModule, [i2.AppComponent], function (_l) { return i0.ɵmod([i0.ɵmpd(512, i0.ComponentFactoryResolver, i0.ɵCodegenComponentFactoryResolver, [[8, [i3.MatSnackBarContainerNgFactory, i3.SimpleSnackBarNgFactory, i4.ɵEmptyOutletComponentNgFactory, i5.HomeComponentNgFactory, i6.DonorsComponentNgFactory, i7.TransferStateComponentNgFactory, i8.WithTransferStateComponentNgFactory, i9.WithoutTransferStateComponentNgFactory, i10.AppComponentNgFactory]], [3, i0.ComponentFactoryResolver], i0.NgModuleRef]), i0.ɵmpd(5120, i0.LOCALE_ID, i0.ɵangular_packages_core_core_k, [[3, i0.LOCALE_ID]]), i0.ɵmpd(4608, i11.NgLocalization, i11.NgLocaleLocalization, [i0.LOCALE_ID, [2, i11.ɵangular_packages_common_common_a]]), i0.ɵmpd(5120, i0.IterableDiffers, i0.ɵangular_packages_core_core_i, []), i0.ɵmpd(5120, i0.KeyValueDiffers, i0.ɵangular_packages_core_core_j, []), i0.ɵmpd(4608, i12.DomSanitizer, i12.ɵDomSanitizerImpl, [i11.DOCUMENT]), i0.ɵmpd(6144, i0.Sanitizer, null, [i12.DomSanitizer]), i0.ɵmpd(4608, i12.HAMMER_GESTURE_CONFIG, i12.HammerGestureConfig, []), i0.ɵmpd(5120, i12.EVENT_MANAGER_PLUGINS, function (p0_0, p0_1, p0_2, p1_0, p2_0, p2_1, p2_2, p2_3, p3_0) { return [new i12.ɵDomEventsPlugin(p0_0, p0_1, p0_2), new i12.ɵKeyEventsPlugin(p1_0), new i12.ɵHammerGesturesPlugin(p2_0, p2_1, p2_2, p2_3), new i13.ɵangular_packages_platform_server_platform_server_d(p3_0)]; }, [i11.DOCUMENT, i0.NgZone, i0.PLATFORM_ID, i11.DOCUMENT, i11.DOCUMENT, i12.HAMMER_GESTURE_CONFIG, i0.ɵConsole, [2, i12.HAMMER_LOADER], i12.DOCUMENT]), i0.ɵmpd(4608, i12.EventManager, i12.EventManager, [i12.EVENT_MANAGER_PLUGINS, i0.NgZone]), i0.ɵmpd(135680, i12.ɵDomSharedStylesHost, i12.ɵDomSharedStylesHost, [i11.DOCUMENT]), i0.ɵmpd(4608, i12.ɵDomRendererFactory2, i12.ɵDomRendererFactory2, [i12.EventManager, i12.ɵDomSharedStylesHost]), i0.ɵmpd(4608, i13.ɵangular_packages_platform_server_platform_server_c, i13.ɵangular_packages_platform_server_platform_server_c, [i12.DOCUMENT, [2, i12.ɵTRANSITION_ID]]), i0.ɵmpd(6144, i12.ɵSharedStylesHost, null, [i13.ɵangular_packages_platform_server_platform_server_c]), i0.ɵmpd(4608, i13.ɵServerRendererFactory2, i13.ɵServerRendererFactory2, [i12.EventManager, i0.NgZone, i12.DOCUMENT, i12.ɵSharedStylesHost]), i0.ɵmpd(4608, i14.AnimationDriver, i14.ɵNoopAnimationDriver, []), i0.ɵmpd(5120, i14.ɵAnimationStyleNormalizer, i15.ɵangular_packages_platform_browser_animations_animations_c, []), i0.ɵmpd(4608, i14.ɵAnimationEngine, i15.ɵangular_packages_platform_browser_animations_animations_a, [i11.DOCUMENT, i14.AnimationDriver, i14.ɵAnimationStyleNormalizer]), i0.ɵmpd(5120, i0.RendererFactory2, i13.ɵangular_packages_platform_server_platform_server_a, [i13.ɵServerRendererFactory2, i14.ɵAnimationEngine, i0.NgZone]), i0.ɵmpd(4352, i0.Testability, null, []), i0.ɵmpd(4608, i16.Overlay, i16.Overlay, [i16.ScrollStrategyOptions, i16.OverlayContainer, i0.ComponentFactoryResolver, i16.OverlayPositionBuilder, i16.OverlayKeyboardDispatcher, i0.Injector, i0.NgZone, i11.DOCUMENT, i17.Directionality]), i0.ɵmpd(5120, i16.ɵc, i16.ɵd, [i16.Overlay]), i0.ɵmpd(5120, i18.MAT_MENU_SCROLL_STRATEGY, i18.ɵd23, [i16.Overlay]), i0.ɵmpd(4608, i19.HttpXsrfTokenExtractor, i19.ɵangular_packages_common_http_http_g, [i11.DOCUMENT, i0.PLATFORM_ID, i19.ɵangular_packages_common_http_http_e]), i0.ɵmpd(4608, i19.ɵangular_packages_common_http_http_h, i19.ɵangular_packages_common_http_http_h, [i19.HttpXsrfTokenExtractor, i19.ɵangular_packages_common_http_http_f]), i0.ɵmpd(5120, i19.HTTP_INTERCEPTORS, function (p0_0) { return [p0_0]; }, [i19.ɵangular_packages_common_http_http_h]), i0.ɵmpd(4608, i19.XhrFactory, i13.ɵangular_packages_platform_server_platform_server_e, []), i0.ɵmpd(4608, i19.HttpXhrBackend, i19.HttpXhrBackend, [i19.XhrFactory]), i0.ɵmpd(6144, i19.HttpBackend, null, [i19.HttpXhrBackend]), i0.ɵmpd(5120, i19.HttpHandler, i13.ɵangular_packages_platform_server_platform_server_h, [i19.HttpBackend, i0.Injector]), i0.ɵmpd(4608, i19.HttpClient, i19.HttpClient, [i19.HttpHandler]), i0.ɵmpd(4608, i19.ɵangular_packages_common_http_http_d, i19.ɵangular_packages_common_http_http_d, []), i0.ɵmpd(5120, i20.TranslateLoader, i1.universalLoader, []), i0.ɵmpd(4608, i20.TranslateCompiler, i20.TranslateFakeCompiler, []), i0.ɵmpd(4608, i20.TranslateParser, i20.TranslateDefaultParser, []), i0.ɵmpd(4608, i20.MissingTranslationHandler, i20.FakeMissingTranslationHandler, []), i0.ɵmpd(4608, i20.TranslateStore, i20.TranslateStore, []), i0.ɵmpd(4608, i20.TranslateService, i20.TranslateService, [i20.TranslateStore, i20.TranslateLoader, i20.TranslateCompiler, i20.TranslateParser, i20.MissingTranslationHandler, i20.USE_DEFAULT_LANG, i20.USE_STORE]), i0.ɵmpd(5120, i21.ActivatedRoute, i21.ɵangular_packages_router_router_g, [i21.Router]), i0.ɵmpd(4608, i21.NoPreloading, i21.NoPreloading, []), i0.ɵmpd(6144, i21.PreloadingStrategy, null, [i21.NoPreloading]), i0.ɵmpd(135680, i21.RouterPreloader, i21.RouterPreloader, [i21.Router, i0.NgModuleFactoryLoader, i0.Compiler, i0.Injector, i21.PreloadingStrategy]), i0.ɵmpd(4608, i21.PreloadAllModules, i21.PreloadAllModules, []), i0.ɵmpd(4608, i11.ViewportScroller, i11.ɵNullViewportScroller, []), i0.ɵmpd(5120, i21.ɵangular_packages_router_router_n, i21.ɵangular_packages_router_router_c, [i21.Router, i11.ViewportScroller, i21.ROUTER_CONFIGURATION]), i0.ɵmpd(5120, i21.ROUTER_INITIALIZER, i21.ɵangular_packages_router_router_j, [i21.ɵangular_packages_router_router_h]), i0.ɵmpd(5120, i0.APP_BOOTSTRAP_LISTENER, function (p0_0) { return [p0_0]; }, [i21.ROUTER_INITIALIZER]), i0.ɵmpd(4608, i22.SnackBar, i22.SnackBar, [i23.MatSnackBar]), i0.ɵmpd(4608, i24.WindowRef, i24.WindowRef, [i0.PLATFORM_ID, i0.Injector]), i0.ɵmpd(4608, i25.Notifications, i25.Notifications, [i24.WindowRef, i0.PLATFORM_ID, i19.HttpClient, i0.ApplicationRef, i0.Injector]), i0.ɵmpd(4608, i26.ExampleApi, i26.ExampleApi, [i19.HttpClient]), i0.ɵmpd(4608, i12.TransferState, i12.TransferState, []), i0.ɵmpd(4608, i27.HitWithTransferStateResolver, i27.HitWithTransferStateResolver, [i26.ExampleApi, i12.TransferState, i0.PLATFORM_ID]), i0.ɵmpd(4608, i28.HitWithoutTransferStateResolver, i28.HitWithoutTransferStateResolver, [i26.ExampleApi]), i0.ɵmpd(4608, i12.Title, i12.Title, [i11.DOCUMENT]), i0.ɵmpd(4608, i12.Meta, i12.Meta, [i11.DOCUMENT]), i0.ɵmpd(4608, i29.BrowserXhr, i13.ɵangular_packages_platform_server_platform_server_e, []), i0.ɵmpd(4608, i29.ResponseOptions, i29.BaseResponseOptions, []), i0.ɵmpd(4608, i29.XSRFStrategy, i13.ɵangular_packages_platform_server_platform_server_f, []), i0.ɵmpd(4608, i29.XHRBackend, i29.XHRBackend, [i29.BrowserXhr, i29.ResponseOptions, i29.XSRFStrategy]), i0.ɵmpd(4608, i29.RequestOptions, i29.BaseRequestOptions, []), i0.ɵmpd(5120, i29.Http, i13.ɵangular_packages_platform_server_platform_server_g, [i29.XHRBackend, i29.RequestOptions]), i0.ɵmpd(4608, i30.AnimationBuilder, i15.ɵBrowserAnimationBuilder, [i0.RendererFactory2, i12.DOCUMENT]), i0.ɵmpd(5120, i13.BEFORE_APP_SERIALIZED, function (p0_0, p0_1, p0_2) { return [i13.ɵangular_packages_platform_server_platform_server_b(p0_0, p0_1, p0_2)]; }, [i12.DOCUMENT, i0.APP_ID, i12.TransferState]), i0.ɵmpd(4608, i31.SwUpdate, i32.SwUpdateServerMock, []), i0.ɵmpd(4608, i31.SwPush, i33.SwPushServerMock, []), i0.ɵmpd(1073742336, i11.CommonModule, i11.CommonModule, []), i0.ɵmpd(1024, i0.ErrorHandler, i12.ɵangular_packages_platform_browser_platform_browser_a, []), i0.ɵmpd(1024, i0.NgProbeToken, function () { return [i21.ɵangular_packages_router_router_b()]; }, []), i0.ɵmpd(512, i21.ɵangular_packages_router_router_h, i21.ɵangular_packages_router_router_h, [i0.Injector]), i0.ɵmpd(256, i0.APP_ID, "app-root", []), i0.ɵmpd(2048, i12.ɵTRANSITION_ID, null, [i0.APP_ID]), i0.ɵmpd(1024, i0.APP_INITIALIZER, function (p0_0, p1_0, p2_0, p2_1, p2_2) { return [i12.ɵangular_packages_platform_browser_platform_browser_j(p0_0), i21.ɵangular_packages_router_router_i(p1_0), i12.ɵangular_packages_platform_browser_platform_browser_h(p2_0, p2_1, p2_2)]; }, [[2, i0.NgProbeToken], i21.ɵangular_packages_router_router_h, i12.ɵTRANSITION_ID, i11.DOCUMENT, i0.Injector]), i0.ɵmpd(512, i0.ApplicationInitStatus, i0.ApplicationInitStatus, [[2, i0.APP_INITIALIZER]]), i0.ɵmpd(131584, i0.ApplicationRef, i0.ApplicationRef, [i0.NgZone, i0.ɵConsole, i0.Injector, i0.ErrorHandler, i0.ComponentFactoryResolver, i0.ApplicationInitStatus]), i0.ɵmpd(1073742336, i0.ApplicationModule, i0.ApplicationModule, [i0.ApplicationRef]), i0.ɵmpd(1073742336, i12.BrowserModule, i12.BrowserModule, [[3, i12.BrowserModule]]), i0.ɵmpd(1073742336, i17.BidiModule, i17.BidiModule, []), i0.ɵmpd(1073742336, i34.MatCommonModule, i34.MatCommonModule, [[2, i34.MATERIAL_SANITY_CHECKS]]), i0.ɵmpd(1073742336, i35.PlatformModule, i35.PlatformModule, []), i0.ɵmpd(1073742336, i34.MatRippleModule, i34.MatRippleModule, []), i0.ɵmpd(1073742336, i36.MatButtonModule, i36.MatButtonModule, []), i0.ɵmpd(1073742336, i37.PortalModule, i37.PortalModule, []), i0.ɵmpd(1073742336, i38.ScrollDispatchModule, i38.ScrollDispatchModule, []), i0.ɵmpd(1073742336, i16.OverlayModule, i16.OverlayModule, []), i0.ɵmpd(1073742336, i23.MatSnackBarModule, i23.MatSnackBarModule, []), i0.ɵmpd(1073742336, i18.MatMenuModule, i18.MatMenuModule, []), i0.ɵmpd(1073742336, i20.TranslateModule, i20.TranslateModule, []), i0.ɵmpd(1024, i21.ɵangular_packages_router_router_a, i21.ɵangular_packages_router_router_e, [[3, i21.Router]]), i0.ɵmpd(512, i21.UrlSerializer, i21.DefaultUrlSerializer, []), i0.ɵmpd(512, i21.ChildrenOutletContexts, i21.ChildrenOutletContexts, []), i0.ɵmpd(256, i21.ROUTER_CONFIGURATION, {}, []), i0.ɵmpd(1024, i11.LocationStrategy, i21.ɵangular_packages_router_router_d, [i11.PlatformLocation, [2, i11.APP_BASE_HREF], i21.ROUTER_CONFIGURATION]), i0.ɵmpd(512, i11.Location, i11.Location, [i11.LocationStrategy]), i0.ɵmpd(512, i0.Compiler, i0.Compiler, []), i0.ɵmpd(512, i0.NgModuleFactoryLoader, i39.ModuleMapNgFactoryLoader, [i0.Compiler, i39.MODULE_MAP]), i0.ɵmpd(1024, i21.ROUTES, function () { return [[{ path: "", component: i40.HomeComponent, data: i41.ɵ0 }, { path: "donors", component: i42.DonorsComponent, data: i41.ɵ1 }, { path: "lazy", loadChildren: "./lazy/lazy.module#LazyModule", data: i41.ɵ2 }, { path: "transferState", data: i41.ɵ3, children: [{ path: "", component: i43.TransferStateComponent }, { path: "with", component: i44.WithTransferStateComponent, resolve: { hits: i27.HitWithTransferStateResolver } }, { path: "without", component: i45.WithoutTransferStateComponent, resolve: { hits: i28.HitWithoutTransferStateResolver } }] }]]; }, []), i0.ɵmpd(1024, i21.Router, i21.ɵangular_packages_router_router_f, [i0.ApplicationRef, i21.UrlSerializer, i21.ChildrenOutletContexts, i11.Location, i0.Injector, i0.NgModuleFactoryLoader, i0.Compiler, i21.ROUTES, i21.ROUTER_CONFIGURATION, [2, i21.UrlHandlingStrategy], [2, i21.RouteReuseStrategy]]), i0.ɵmpd(1073742336, i21.RouterModule, i21.RouterModule, [[2, i21.ɵangular_packages_router_router_a], [2, i21.Router]]), i0.ɵmpd(1073742336, i19.HttpClientXsrfModule, i19.HttpClientXsrfModule, []), i0.ɵmpd(1073742336, i19.HttpClientModule, i19.HttpClientModule, []), i0.ɵmpd(1073742336, i41.AppModule, i41.AppModule, []), i0.ɵmpd(1073742336, i29.HttpModule, i29.HttpModule, []), i0.ɵmpd(1073742336, i15.NoopAnimationsModule, i15.NoopAnimationsModule, []), i0.ɵmpd(1073742336, i13.ServerModule, i13.ServerModule, []), i0.ɵmpd(1073742336, i39.ModuleMapLoaderModule, i39.ModuleMapLoaderModule, []), i0.ɵmpd(1073742336, i13.ServerTransferStateModule, i13.ServerTransferStateModule, []), i0.ɵmpd(1073742336, i46.ServiceWorkerModuleMock, i46.ServiceWorkerModuleMock, []), i0.ɵmpd(1073742336, i1.AppServerModule, i1.AppServerModule, []), i0.ɵmpd(256, i0.ɵAPP_ROOT, true, []), i0.ɵmpd(256, i19.ɵangular_packages_common_http_http_e, "XSRF-TOKEN", []), i0.ɵmpd(256, i19.ɵangular_packages_common_http_http_f, "X-XSRF-TOKEN", []), i0.ɵmpd(256, i20.USE_STORE, undefined, []), i0.ɵmpd(256, i20.USE_DEFAULT_LANG, undefined, []), i0.ɵmpd(256, i15.ANIMATION_MODULE_TYPE, "NoopAnimations", [])]); });
+var i19 = __webpack_require__(/*! angularfire2 */ "angularfire2");
+var i20 = __webpack_require__(/*! @angular/common/http */ "@angular/common/http");
+var i21 = __webpack_require__(/*! @ngx-translate/core */ "@ngx-translate/core");
+var i22 = __webpack_require__(/*! @agm/core/utils/browser-globals */ "@agm/core/utils/browser-globals");
+var i23 = __webpack_require__(/*! @agm/core/services/maps-api-loader/maps-api-loader */ "@agm/core/services/maps-api-loader/maps-api-loader");
+var i24 = __webpack_require__(/*! @agm/core/services/maps-api-loader/lazy-maps-api-loader */ "@agm/core/services/maps-api-loader/lazy-maps-api-loader");
+var i25 = __webpack_require__(/*! @angular/router */ "@angular/router");
+var i26 = __webpack_require__(/*! ./services/snack-bar.service */ "./src/app/services/snack-bar.service.ts");
+var i27 = __webpack_require__(/*! @angular/material/snack-bar */ "@angular/material/snack-bar");
+var i28 = __webpack_require__(/*! ./window-ref.service */ "./src/app/window-ref.service.ts");
+var i29 = __webpack_require__(/*! ./services/notifications.service */ "./src/app/services/notifications.service.ts");
+var i30 = __webpack_require__(/*! ./services/exampleApi.service */ "./src/app/services/exampleApi.service.ts");
+var i31 = __webpack_require__(/*! ./services/resolvers/hitWithTransferState.resolver */ "./src/app/services/resolvers/hitWithTransferState.resolver.ts");
+var i32 = __webpack_require__(/*! ./services/resolvers/hitWithoutTransferState.resolver */ "./src/app/services/resolvers/hitWithoutTransferState.resolver.ts");
+var i33 = __webpack_require__(/*! @angular/http */ "@angular/http");
+var i34 = __webpack_require__(/*! @angular/animations */ "@angular/animations");
+var i35 = __webpack_require__(/*! @angular/service-worker */ "@angular/service-worker");
+var i36 = __webpack_require__(/*! ./services/swUpdate-server.mock.service */ "./src/app/services/swUpdate-server.mock.service.ts");
+var i37 = __webpack_require__(/*! ./services/swPush-server.mock.service */ "./src/app/services/swPush-server.mock.service.ts");
+var i38 = __webpack_require__(/*! @angular/material/core */ "@angular/material/core");
+var i39 = __webpack_require__(/*! @angular/cdk/platform */ "@angular/cdk/platform");
+var i40 = __webpack_require__(/*! @angular/material/button */ "@angular/material/button");
+var i41 = __webpack_require__(/*! @angular/cdk/portal */ "@angular/cdk/portal");
+var i42 = __webpack_require__(/*! @angular/cdk/scrolling */ "@angular/cdk/scrolling");
+var i43 = __webpack_require__(/*! @agm/core/core.module */ "@agm/core/core.module");
+var i44 = __webpack_require__(/*! @nguniversal/module-map-ngfactory-loader */ "@nguniversal/module-map-ngfactory-loader");
+var i45 = __webpack_require__(/*! ./home/home.component */ "./src/app/home/home.component.ts");
+var i46 = __webpack_require__(/*! ./app.module */ "./src/app/app.module.ts");
+var i47 = __webpack_require__(/*! ./donors/donors.component */ "./src/app/donors/donors.component.ts");
+var i48 = __webpack_require__(/*! ./transfer-state/transfer-state.component */ "./src/app/transfer-state/transfer-state.component.ts");
+var i49 = __webpack_require__(/*! ./transfer-state/with-transfer-state.component */ "./src/app/transfer-state/with-transfer-state.component.ts");
+var i50 = __webpack_require__(/*! ./transfer-state/without-transfer-state.component */ "./src/app/transfer-state/without-transfer-state.component.ts");
+var i51 = __webpack_require__(/*! ./services/service-worker.mock.module */ "./src/app/services/service-worker.mock.module.ts");
+var AppServerModuleNgFactory = i0.ɵcmf(i1.AppServerModule, [i2.AppComponent], function (_l) { return i0.ɵmod([i0.ɵmpd(512, i0.ComponentFactoryResolver, i0.ɵCodegenComponentFactoryResolver, [[8, [i3.MatSnackBarContainerNgFactory, i3.SimpleSnackBarNgFactory, i4.ɵEmptyOutletComponentNgFactory, i5.HomeComponentNgFactory, i6.DonorsComponentNgFactory, i7.TransferStateComponentNgFactory, i8.WithTransferStateComponentNgFactory, i9.WithoutTransferStateComponentNgFactory, i10.AppComponentNgFactory]], [3, i0.ComponentFactoryResolver], i0.NgModuleRef]), i0.ɵmpd(5120, i0.LOCALE_ID, i0.ɵangular_packages_core_core_k, [[3, i0.LOCALE_ID]]), i0.ɵmpd(4608, i11.NgLocalization, i11.NgLocaleLocalization, [i0.LOCALE_ID, [2, i11.ɵangular_packages_common_common_a]]), i0.ɵmpd(5120, i0.IterableDiffers, i0.ɵangular_packages_core_core_i, []), i0.ɵmpd(5120, i0.KeyValueDiffers, i0.ɵangular_packages_core_core_j, []), i0.ɵmpd(4608, i12.DomSanitizer, i12.ɵDomSanitizerImpl, [i11.DOCUMENT]), i0.ɵmpd(6144, i0.Sanitizer, null, [i12.DomSanitizer]), i0.ɵmpd(4608, i12.HAMMER_GESTURE_CONFIG, i12.HammerGestureConfig, []), i0.ɵmpd(5120, i12.EVENT_MANAGER_PLUGINS, function (p0_0, p0_1, p0_2, p1_0, p2_0, p2_1, p2_2, p2_3, p3_0) { return [new i12.ɵDomEventsPlugin(p0_0, p0_1, p0_2), new i12.ɵKeyEventsPlugin(p1_0), new i12.ɵHammerGesturesPlugin(p2_0, p2_1, p2_2, p2_3), new i13.ɵangular_packages_platform_server_platform_server_d(p3_0)]; }, [i11.DOCUMENT, i0.NgZone, i0.PLATFORM_ID, i11.DOCUMENT, i11.DOCUMENT, i12.HAMMER_GESTURE_CONFIG, i0.ɵConsole, [2, i12.HAMMER_LOADER], i12.DOCUMENT]), i0.ɵmpd(4608, i12.EventManager, i12.EventManager, [i12.EVENT_MANAGER_PLUGINS, i0.NgZone]), i0.ɵmpd(135680, i12.ɵDomSharedStylesHost, i12.ɵDomSharedStylesHost, [i11.DOCUMENT]), i0.ɵmpd(4608, i12.ɵDomRendererFactory2, i12.ɵDomRendererFactory2, [i12.EventManager, i12.ɵDomSharedStylesHost]), i0.ɵmpd(4608, i13.ɵangular_packages_platform_server_platform_server_c, i13.ɵangular_packages_platform_server_platform_server_c, [i12.DOCUMENT, [2, i12.ɵTRANSITION_ID]]), i0.ɵmpd(6144, i12.ɵSharedStylesHost, null, [i13.ɵangular_packages_platform_server_platform_server_c]), i0.ɵmpd(4608, i13.ɵServerRendererFactory2, i13.ɵServerRendererFactory2, [i12.EventManager, i0.NgZone, i12.DOCUMENT, i12.ɵSharedStylesHost]), i0.ɵmpd(4608, i14.AnimationDriver, i14.ɵNoopAnimationDriver, []), i0.ɵmpd(5120, i14.ɵAnimationStyleNormalizer, i15.ɵangular_packages_platform_browser_animations_animations_c, []), i0.ɵmpd(4608, i14.ɵAnimationEngine, i15.ɵangular_packages_platform_browser_animations_animations_a, [i11.DOCUMENT, i14.AnimationDriver, i14.ɵAnimationStyleNormalizer]), i0.ɵmpd(5120, i0.RendererFactory2, i13.ɵangular_packages_platform_server_platform_server_a, [i13.ɵServerRendererFactory2, i14.ɵAnimationEngine, i0.NgZone]), i0.ɵmpd(4352, i0.Testability, null, []), i0.ɵmpd(4608, i16.Overlay, i16.Overlay, [i16.ScrollStrategyOptions, i16.OverlayContainer, i0.ComponentFactoryResolver, i16.OverlayPositionBuilder, i16.OverlayKeyboardDispatcher, i0.Injector, i0.NgZone, i11.DOCUMENT, i17.Directionality]), i0.ɵmpd(5120, i16.ɵc, i16.ɵd, [i16.Overlay]), i0.ɵmpd(5120, i18.MAT_MENU_SCROLL_STRATEGY, i18.ɵd23, [i16.Overlay]), i0.ɵmpd(5120, i19.FirebaseApp, i19._firebaseAppFactory, [i19.FirebaseOptionsToken, [2, i19.FirebaseNameOrConfigToken]]), i0.ɵmpd(4608, i20.HttpXsrfTokenExtractor, i20.ɵangular_packages_common_http_http_g, [i11.DOCUMENT, i0.PLATFORM_ID, i20.ɵangular_packages_common_http_http_e]), i0.ɵmpd(4608, i20.ɵangular_packages_common_http_http_h, i20.ɵangular_packages_common_http_http_h, [i20.HttpXsrfTokenExtractor, i20.ɵangular_packages_common_http_http_f]), i0.ɵmpd(5120, i20.HTTP_INTERCEPTORS, function (p0_0) { return [p0_0]; }, [i20.ɵangular_packages_common_http_http_h]), i0.ɵmpd(4608, i20.XhrFactory, i13.ɵangular_packages_platform_server_platform_server_e, []), i0.ɵmpd(4608, i20.HttpXhrBackend, i20.HttpXhrBackend, [i20.XhrFactory]), i0.ɵmpd(6144, i20.HttpBackend, null, [i20.HttpXhrBackend]), i0.ɵmpd(5120, i20.HttpHandler, i13.ɵangular_packages_platform_server_platform_server_h, [i20.HttpBackend, i0.Injector]), i0.ɵmpd(4608, i20.HttpClient, i20.HttpClient, [i20.HttpHandler]), i0.ɵmpd(4608, i20.ɵangular_packages_common_http_http_d, i20.ɵangular_packages_common_http_http_d, []), i0.ɵmpd(5120, i21.TranslateLoader, i1.universalLoader, []), i0.ɵmpd(4608, i21.TranslateCompiler, i21.TranslateFakeCompiler, []), i0.ɵmpd(4608, i21.TranslateParser, i21.TranslateDefaultParser, []), i0.ɵmpd(4608, i21.MissingTranslationHandler, i21.FakeMissingTranslationHandler, []), i0.ɵmpd(4608, i21.TranslateStore, i21.TranslateStore, []), i0.ɵmpd(4608, i21.TranslateService, i21.TranslateService, [i21.TranslateStore, i21.TranslateLoader, i21.TranslateCompiler, i21.TranslateParser, i21.MissingTranslationHandler, i21.USE_DEFAULT_LANG, i21.USE_STORE]), i0.ɵmpd(4608, i22.WindowRef, i22.WindowRef, []), i0.ɵmpd(4608, i22.DocumentRef, i22.DocumentRef, []), i0.ɵmpd(4608, i23.MapsAPILoader, i24.LazyMapsAPILoader, [[2, i24.LAZY_MAPS_API_CONFIG], i22.WindowRef, i22.DocumentRef]), i0.ɵmpd(5120, i25.ActivatedRoute, i25.ɵangular_packages_router_router_g, [i25.Router]), i0.ɵmpd(4608, i25.NoPreloading, i25.NoPreloading, []), i0.ɵmpd(6144, i25.PreloadingStrategy, null, [i25.NoPreloading]), i0.ɵmpd(135680, i25.RouterPreloader, i25.RouterPreloader, [i25.Router, i0.NgModuleFactoryLoader, i0.Compiler, i0.Injector, i25.PreloadingStrategy]), i0.ɵmpd(4608, i25.PreloadAllModules, i25.PreloadAllModules, []), i0.ɵmpd(4608, i11.ViewportScroller, i11.ɵNullViewportScroller, []), i0.ɵmpd(5120, i25.ɵangular_packages_router_router_n, i25.ɵangular_packages_router_router_c, [i25.Router, i11.ViewportScroller, i25.ROUTER_CONFIGURATION]), i0.ɵmpd(5120, i25.ROUTER_INITIALIZER, i25.ɵangular_packages_router_router_j, [i25.ɵangular_packages_router_router_h]), i0.ɵmpd(5120, i0.APP_BOOTSTRAP_LISTENER, function (p0_0) { return [p0_0]; }, [i25.ROUTER_INITIALIZER]), i0.ɵmpd(4608, i26.SnackBar, i26.SnackBar, [i27.MatSnackBar]), i0.ɵmpd(4608, i28.WindowRef, i28.WindowRef, [i0.PLATFORM_ID, i0.Injector]), i0.ɵmpd(4608, i29.Notifications, i29.Notifications, [i28.WindowRef, i0.PLATFORM_ID, i20.HttpClient, i0.ApplicationRef, i0.Injector]), i0.ɵmpd(4608, i30.ExampleApi, i30.ExampleApi, [i20.HttpClient]), i0.ɵmpd(4608, i12.TransferState, i12.TransferState, []), i0.ɵmpd(4608, i31.HitWithTransferStateResolver, i31.HitWithTransferStateResolver, [i30.ExampleApi, i12.TransferState, i0.PLATFORM_ID]), i0.ɵmpd(4608, i32.HitWithoutTransferStateResolver, i32.HitWithoutTransferStateResolver, [i30.ExampleApi]), i0.ɵmpd(4608, i12.Title, i12.Title, [i11.DOCUMENT]), i0.ɵmpd(4608, i12.Meta, i12.Meta, [i11.DOCUMENT]), i0.ɵmpd(4608, i33.BrowserXhr, i13.ɵangular_packages_platform_server_platform_server_e, []), i0.ɵmpd(4608, i33.ResponseOptions, i33.BaseResponseOptions, []), i0.ɵmpd(4608, i33.XSRFStrategy, i13.ɵangular_packages_platform_server_platform_server_f, []), i0.ɵmpd(4608, i33.XHRBackend, i33.XHRBackend, [i33.BrowserXhr, i33.ResponseOptions, i33.XSRFStrategy]), i0.ɵmpd(4608, i33.RequestOptions, i33.BaseRequestOptions, []), i0.ɵmpd(5120, i33.Http, i13.ɵangular_packages_platform_server_platform_server_g, [i33.XHRBackend, i33.RequestOptions]), i0.ɵmpd(4608, i34.AnimationBuilder, i15.ɵBrowserAnimationBuilder, [i0.RendererFactory2, i12.DOCUMENT]), i0.ɵmpd(5120, i13.BEFORE_APP_SERIALIZED, function (p0_0, p0_1, p0_2) { return [i13.ɵangular_packages_platform_server_platform_server_b(p0_0, p0_1, p0_2)]; }, [i12.DOCUMENT, i0.APP_ID, i12.TransferState]), i0.ɵmpd(4608, i35.SwUpdate, i36.SwUpdateServerMock, []), i0.ɵmpd(4608, i35.SwPush, i37.SwPushServerMock, []), i0.ɵmpd(1073742336, i11.CommonModule, i11.CommonModule, []), i0.ɵmpd(1024, i0.ErrorHandler, i12.ɵangular_packages_platform_browser_platform_browser_a, []), i0.ɵmpd(1024, i0.NgProbeToken, function () { return [i25.ɵangular_packages_router_router_b()]; }, []), i0.ɵmpd(512, i25.ɵangular_packages_router_router_h, i25.ɵangular_packages_router_router_h, [i0.Injector]), i0.ɵmpd(256, i0.APP_ID, "app-root", []), i0.ɵmpd(2048, i12.ɵTRANSITION_ID, null, [i0.APP_ID]), i0.ɵmpd(1024, i0.APP_INITIALIZER, function (p0_0, p1_0, p2_0, p2_1, p2_2) { return [i12.ɵangular_packages_platform_browser_platform_browser_j(p0_0), i25.ɵangular_packages_router_router_i(p1_0), i12.ɵangular_packages_platform_browser_platform_browser_h(p2_0, p2_1, p2_2)]; }, [[2, i0.NgProbeToken], i25.ɵangular_packages_router_router_h, i12.ɵTRANSITION_ID, i11.DOCUMENT, i0.Injector]), i0.ɵmpd(512, i0.ApplicationInitStatus, i0.ApplicationInitStatus, [[2, i0.APP_INITIALIZER]]), i0.ɵmpd(131584, i0.ApplicationRef, i0.ApplicationRef, [i0.NgZone, i0.ɵConsole, i0.Injector, i0.ErrorHandler, i0.ComponentFactoryResolver, i0.ApplicationInitStatus]), i0.ɵmpd(1073742336, i0.ApplicationModule, i0.ApplicationModule, [i0.ApplicationRef]), i0.ɵmpd(1073742336, i12.BrowserModule, i12.BrowserModule, [[3, i12.BrowserModule]]), i0.ɵmpd(1073742336, i17.BidiModule, i17.BidiModule, []), i0.ɵmpd(1073742336, i38.MatCommonModule, i38.MatCommonModule, [[2, i38.MATERIAL_SANITY_CHECKS]]), i0.ɵmpd(1073742336, i39.PlatformModule, i39.PlatformModule, []), i0.ɵmpd(1073742336, i38.MatRippleModule, i38.MatRippleModule, []), i0.ɵmpd(1073742336, i40.MatButtonModule, i40.MatButtonModule, []), i0.ɵmpd(1073742336, i41.PortalModule, i41.PortalModule, []), i0.ɵmpd(1073742336, i42.ScrollDispatchModule, i42.ScrollDispatchModule, []), i0.ɵmpd(1073742336, i16.OverlayModule, i16.OverlayModule, []), i0.ɵmpd(1073742336, i27.MatSnackBarModule, i27.MatSnackBarModule, []), i0.ɵmpd(1073742336, i18.MatMenuModule, i18.MatMenuModule, []), i0.ɵmpd(1073742336, i21.TranslateModule, i21.TranslateModule, []), i0.ɵmpd(1073742336, i19.AngularFireModule, i19.AngularFireModule, []), i0.ɵmpd(1073742336, i43.AgmCoreModule, i43.AgmCoreModule, []), i0.ɵmpd(1024, i25.ɵangular_packages_router_router_a, i25.ɵangular_packages_router_router_e, [[3, i25.Router]]), i0.ɵmpd(512, i25.UrlSerializer, i25.DefaultUrlSerializer, []), i0.ɵmpd(512, i25.ChildrenOutletContexts, i25.ChildrenOutletContexts, []), i0.ɵmpd(256, i25.ROUTER_CONFIGURATION, {}, []), i0.ɵmpd(1024, i11.LocationStrategy, i25.ɵangular_packages_router_router_d, [i11.PlatformLocation, [2, i11.APP_BASE_HREF], i25.ROUTER_CONFIGURATION]), i0.ɵmpd(512, i11.Location, i11.Location, [i11.LocationStrategy]), i0.ɵmpd(512, i0.Compiler, i0.Compiler, []), i0.ɵmpd(512, i0.NgModuleFactoryLoader, i44.ModuleMapNgFactoryLoader, [i0.Compiler, i44.MODULE_MAP]), i0.ɵmpd(1024, i25.ROUTES, function () { return [[{ path: "", component: i45.HomeComponent, data: i46.ɵ0 }, { path: "donors", component: i47.DonorsComponent, data: i46.ɵ1 }, { path: "lazy", loadChildren: "./lazy/lazy.module#LazyModule", data: i46.ɵ2 }, { path: "transferState", data: i46.ɵ3, children: [{ path: "", component: i48.TransferStateComponent }, { path: "with", component: i49.WithTransferStateComponent, resolve: { hits: i31.HitWithTransferStateResolver } }, { path: "without", component: i50.WithoutTransferStateComponent, resolve: { hits: i32.HitWithoutTransferStateResolver } }] }]]; }, []), i0.ɵmpd(1024, i25.Router, i25.ɵangular_packages_router_router_f, [i0.ApplicationRef, i25.UrlSerializer, i25.ChildrenOutletContexts, i11.Location, i0.Injector, i0.NgModuleFactoryLoader, i0.Compiler, i25.ROUTES, i25.ROUTER_CONFIGURATION, [2, i25.UrlHandlingStrategy], [2, i25.RouteReuseStrategy]]), i0.ɵmpd(1073742336, i25.RouterModule, i25.RouterModule, [[2, i25.ɵangular_packages_router_router_a], [2, i25.Router]]), i0.ɵmpd(1073742336, i20.HttpClientXsrfModule, i20.HttpClientXsrfModule, []), i0.ɵmpd(1073742336, i20.HttpClientModule, i20.HttpClientModule, []), i0.ɵmpd(1073742336, i46.AppModule, i46.AppModule, []), i0.ɵmpd(1073742336, i33.HttpModule, i33.HttpModule, []), i0.ɵmpd(1073742336, i15.NoopAnimationsModule, i15.NoopAnimationsModule, []), i0.ɵmpd(1073742336, i13.ServerModule, i13.ServerModule, []), i0.ɵmpd(1073742336, i44.ModuleMapLoaderModule, i44.ModuleMapLoaderModule, []), i0.ɵmpd(1073742336, i13.ServerTransferStateModule, i13.ServerTransferStateModule, []), i0.ɵmpd(1073742336, i51.ServiceWorkerModuleMock, i51.ServiceWorkerModuleMock, []), i0.ɵmpd(1073742336, i1.AppServerModule, i1.AppServerModule, []), i0.ɵmpd(256, i0.ɵAPP_ROOT, true, []), i0.ɵmpd(256, i19.FirebaseOptionsToken, { apiKey: "AIzaSyA4d00nt-C9EJ2VLtMoZTr5avzgtUbZ3e0", authDomain: "keralarescue-95468.firebaseapp.com", databaseURL: "https://keralarescue-95468.firebaseio.com", projectId: "keralarescue-95468", storageBucket: "keralarescue-95468.appspot.com", messagingSenderId: "463184367063" }, []), i0.ɵmpd(256, i19.FirebaseNameOrConfigToken, undefined, []), i0.ɵmpd(256, i20.ɵangular_packages_common_http_http_e, "XSRF-TOKEN", []), i0.ɵmpd(256, i20.ɵangular_packages_common_http_http_f, "X-XSRF-TOKEN", []), i0.ɵmpd(256, i21.USE_STORE, undefined, []), i0.ɵmpd(256, i21.USE_DEFAULT_LANG, undefined, []), i0.ɵmpd(256, i24.LAZY_MAPS_API_CONFIG, { apiKey: "AIzaSyA4d00nt-C9EJ2VLtMoZTr5avzgtUbZ3e0" }, []), i0.ɵmpd(256, i15.ANIMATION_MODULE_TYPE, "NoopAnimations", [])]); });
 exports.AppServerModuleNgFactory = AppServerModuleNgFactory;
 
 
@@ -605,6 +2312,123 @@ exports.DonorsComponent = DonorsComponent;
 
 /***/ }),
 
+/***/ "./src/app/geo-query/geo-query.component.css.shim.ngstyle.js":
+/*!*******************************************************************!*\
+  !*** ./src/app/geo-query/geo-query.component.css.shim.ngstyle.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * @fileoverview This file was generated by the Angular template compiler. Do not edit.
+ *
+ * @suppress {suspiciousCode,uselessCode,missingProperties,missingOverride,checkTypes}
+ * tslint:disable
+ */ 
+Object.defineProperty(exports, "__esModule", { value: true });
+var styles = ["agm-map[_ngcontent-%COMP%] {\n  height: 500px;\n}"];
+exports.styles = styles;
+
+
+/***/ }),
+
+/***/ "./src/app/geo-query/geo-query.component.ngfactory.js":
+/*!************************************************************!*\
+  !*** ./src/app/geo-query/geo-query.component.ngfactory.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * @fileoverview This file was generated by the Angular template compiler. Do not edit.
+ *
+ * @suppress {suspiciousCode,uselessCode,missingProperties,missingOverride,checkTypes}
+ * tslint:disable
+ */ 
+Object.defineProperty(exports, "__esModule", { value: true });
+var i0 = __webpack_require__(/*! ./geo-query.component.css.shim.ngstyle */ "./src/app/geo-query/geo-query.component.css.shim.ngstyle.js");
+var i1 = __webpack_require__(/*! @angular/core */ "@angular/core");
+var i2 = __webpack_require__(/*! ../../../node_modules/@agm/core/directives/map.ngfactory */ "./node_modules/@agm/core/directives/map.ngfactory.js");
+var i3 = __webpack_require__(/*! @agm/core/services/managers/circle-manager */ "@agm/core/services/managers/circle-manager");
+var i4 = __webpack_require__(/*! @agm/core/services/google-maps-api-wrapper */ "@agm/core/services/google-maps-api-wrapper");
+var i5 = __webpack_require__(/*! @agm/core/services/managers/polyline-manager */ "@agm/core/services/managers/polyline-manager");
+var i6 = __webpack_require__(/*! @agm/core/services/managers/polygon-manager */ "@agm/core/services/managers/polygon-manager");
+var i7 = __webpack_require__(/*! @agm/core/services/managers/kml-layer-manager */ "@agm/core/services/managers/kml-layer-manager");
+var i8 = __webpack_require__(/*! @agm/core/services/managers/data-layer-manager */ "@agm/core/services/managers/data-layer-manager");
+var i9 = __webpack_require__(/*! @agm/core/services/maps-api-loader/maps-api-loader */ "@agm/core/services/maps-api-loader/maps-api-loader");
+var i10 = __webpack_require__(/*! @agm/core/directives/map */ "@agm/core/directives/map");
+var i11 = __webpack_require__(/*! @agm/core/services/managers/marker-manager */ "@agm/core/services/managers/marker-manager");
+var i12 = __webpack_require__(/*! @agm/core/services/managers/info-window-manager */ "@agm/core/services/managers/info-window-manager");
+var i13 = __webpack_require__(/*! @agm/core/directives/marker */ "@agm/core/directives/marker");
+var i14 = __webpack_require__(/*! ../../../node_modules/@agm/core/directives/info-window.ngfactory */ "./node_modules/@agm/core/directives/info-window.ngfactory.js");
+var i15 = __webpack_require__(/*! @agm/core/directives/info-window */ "@agm/core/directives/info-window");
+var i16 = __webpack_require__(/*! ./geo-query.component */ "./src/app/geo-query/geo-query.component.ts");
+var styles_GeoQueryComponent = [i0.styles];
+var RenderType_GeoQueryComponent = i1.ɵcrt({ encapsulation: 0, styles: styles_GeoQueryComponent, data: {} });
+exports.RenderType_GeoQueryComponent = RenderType_GeoQueryComponent;
+function View_GeoQueryComponent_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 17, "agm-map", [], [[2, "sebm-google-map-container", null]], null, null, i2.View_AgmMap_0, i2.RenderType_AgmMap)), i1.ɵprd(4608, null, i3.CircleManager, i3.CircleManager, [i4.GoogleMapsAPIWrapper, i1.NgZone]), i1.ɵprd(4608, null, i5.PolylineManager, i5.PolylineManager, [i4.GoogleMapsAPIWrapper, i1.NgZone]), i1.ɵprd(4608, null, i6.PolygonManager, i6.PolygonManager, [i4.GoogleMapsAPIWrapper, i1.NgZone]), i1.ɵprd(4608, null, i7.KmlLayerManager, i7.KmlLayerManager, [i4.GoogleMapsAPIWrapper, i1.NgZone]), i1.ɵprd(4608, null, i8.DataLayerManager, i8.DataLayerManager, [i4.GoogleMapsAPIWrapper, i1.NgZone]), i1.ɵprd(512, null, i4.GoogleMapsAPIWrapper, i4.GoogleMapsAPIWrapper, [i9.MapsAPILoader, i1.NgZone]), i1.ɵdid(7, 770048, null, 0, i10.AgmMap, [i1.ElementRef, i4.GoogleMapsAPIWrapper], { longitude: [0, "longitude"], latitude: [1, "latitude"] }, null), i1.ɵprd(512, null, i11.MarkerManager, i11.MarkerManager, [i4.GoogleMapsAPIWrapper, i1.NgZone]), i1.ɵprd(512, null, i12.InfoWindowManager, i12.InfoWindowManager, [i4.GoogleMapsAPIWrapper, i1.NgZone, i11.MarkerManager]), (_l()(), i1.ɵeld(10, 0, null, 0, 7, "agm-marker", [], null, null, null, null, null)), i1.ɵdid(11, 1720320, null, 1, i13.AgmMarker, [i11.MarkerManager], { latitude: [0, "latitude"], longitude: [1, "longitude"] }, null), i1.ɵqud(603979776, 1, { infoWindow: 1 }), (_l()(), i1.ɵeld(13, 0, null, null, 4, "agm-info-window", [], null, null, null, i14.View_AgmInfoWindow_0, i14.RenderType_AgmInfoWindow)), i1.ɵdid(14, 770048, [[1, 4]], 0, i15.AgmInfoWindow, [i12.InfoWindowManager, i1.ElementRef], null, null), (_l()(), i1.ɵeld(15, 0, null, 0, 2, "h3", [], null, null, null, null, null)), (_l()(), i1.ɵeld(16, 0, null, null, 1, "strong", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" You're here "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.lng; var currVal_2 = _co.lat; _ck(_v, 7, 0, currVal_1, currVal_2); var currVal_3 = _co.lat; var currVal_4 = _co.lng; _ck(_v, 11, 0, currVal_3, currVal_4); _ck(_v, 14, 0); }, function (_ck, _v) { var currVal_0 = true; _ck(_v, 0, 0, currVal_0); }); }
+exports.View_GeoQueryComponent_0 = View_GeoQueryComponent_0;
+function View_GeoQueryComponent_Host_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "app-geo-query", [], null, null, null, View_GeoQueryComponent_0, RenderType_GeoQueryComponent)), i1.ɵdid(1, 114688, null, 0, i16.GeoQueryComponent, [], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
+exports.View_GeoQueryComponent_Host_0 = View_GeoQueryComponent_Host_0;
+var GeoQueryComponentNgFactory = i1.ɵccf("app-geo-query", i16.GeoQueryComponent, View_GeoQueryComponent_Host_0, {}, {}, []);
+exports.GeoQueryComponentNgFactory = GeoQueryComponentNgFactory;
+
+
+/***/ }),
+
+/***/ "./src/app/geo-query/geo-query.component.ts":
+/*!**************************************************!*\
+  !*** ./src/app/geo-query/geo-query.component.ts ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(/*! @angular/core */ "@angular/core");
+var GeoQueryComponent = /** @class */ (function () {
+    function GeoQueryComponent() {
+        this.lat = 51.678418;
+        this.lng = 7.809007;
+    }
+    GeoQueryComponent.prototype.ngOnInit = function () {
+        this.getUserLocation();
+    };
+    GeoQueryComponent.prototype.getUserLocation = function () {
+        var _this = this;
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                _this.lat = position.coords.latitude;
+                _this.lng = position.coords.longitude;
+            });
+        }
+    };
+    GeoQueryComponent.prototype.seedDatabase = function () {
+        var dummyPoints = [
+            [37.9, -122.1],
+            [38.7, -122.2],
+            [38.1, -122.3],
+            [38.3, -122.0],
+            [38.7, -122.1]
+        ];
+        dummyPoints.forEach(function (val, idx) {
+            var name = "dummy-location-" + idx;
+            console.log(idx);
+            // this.geo.setLocation(name, val);
+        });
+    };
+    return GeoQueryComponent;
+}());
+exports.GeoQueryComponent = GeoQueryComponent;
+
+
+/***/ }),
+
 /***/ "./src/app/home/home.component.ngfactory.js":
 /*!**************************************************!*\
   !*** ./src/app/home/home.component.ngfactory.js ***!
@@ -622,19 +2446,13 @@ exports.DonorsComponent = DonorsComponent;
  */ 
 Object.defineProperty(exports, "__esModule", { value: true });
 var i0 = __webpack_require__(/*! @angular/core */ "@angular/core");
-var i1 = __webpack_require__(/*! @angular/router */ "@angular/router");
-var i2 = __webpack_require__(/*! @angular/common */ "@angular/common");
+var i1 = __webpack_require__(/*! ../geo-query/geo-query.component.ngfactory */ "./src/app/geo-query/geo-query.component.ngfactory.js");
+var i2 = __webpack_require__(/*! ../geo-query/geo-query.component */ "./src/app/geo-query/geo-query.component.ts");
 var i3 = __webpack_require__(/*! ./home.component */ "./src/app/home/home.component.ts");
 var styles_HomeComponent = ["pre[_ngcontent-%COMP%] {background: lightgray; color: black}"];
 var RenderType_HomeComponent = i0.ɵcrt({ encapsulation: 0, styles: styles_HomeComponent, data: {} });
 exports.RenderType_HomeComponent = RenderType_HomeComponent;
-function View_HomeComponent_0(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "h1", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Home"])), (_l()(), i0.ɵeld(2, 0, null, null, 4, "p", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["This application is a demo of "])), (_l()(), i0.ɵeld(4, 0, null, null, 1, "a", [["href", "https://github.com/maciejtreder/ng-toolkit"], ["rel", "noopener"], ["target", "_blank"]], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Angular Universal Progressive Web App starter"])), (_l()(), i0.ɵted(-1, null, ["."])), (_l()(), i0.ɵeld(7, 0, null, null, 2, "p", [], null, null, null, null, null)), (_l()(), i0.ɵeld(8, 0, null, null, 1, "strong", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Don't forget to star it and share with others!"])), (_l()(), i0.ɵeld(10, 0, null, null, 1, "h2", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Getting started"])), (_l()(), i0.ɵeld(12, 0, null, null, 1, "pre", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["  npm install -g @ng-toolkit/init\n"])), (_l()(), i0.ɵeld(14, 0, null, null, 1, "pre", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["  ng new --collection @ng-toolkit/init myAwesomeApp\n  cd myAwesomeApp\n  npm start\n"])), (_l()(), i0.ɵeld(16, 0, null, null, 1, "h2", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["What's inside?"])), (_l()(), i0.ɵeld(18, 0, null, null, 1, "h3", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["PWA"])), (_l()(), i0.ɵeld(20, 0, null, null, 3, "p", [], null, null, null, null, null)), (_l()(), i0.ɵeld(21, 0, null, null, 1, "strong", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Progressive Web App"])), (_l()(), i0.ɵted(-1, null, [" is an installable website which lives on the user's home screen and works offline. It offers a full-screen experience and can re-engage users with web push notifications."])), (_l()(), i0.ɵeld(24, 0, null, null, 1, "h3", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Angular Universal"])), (_l()(), i0.ɵeld(26, 0, null, null, 3, "p", [], null, null, null, null, null)), (_l()(), i0.ɵeld(27, 0, null, null, 1, "strong", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Server-side rendering"])), (_l()(), i0.ɵted(-1, null, [", here called Angular Universal - is a technique of rendering application content on the initial request. What customer gets, is fully rendered website and application packed in the js file."])), (_l()(), i0.ɵeld(30, 0, null, null, 1, "p", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Thanks to Angular Universal you got:"])), (_l()(), i0.ɵeld(32, 0, null, null, 6, "ul", [], null, null, null, null, null)), (_l()(), i0.ɵeld(33, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Better perceived performance"])), (_l()(), i0.ɵeld(35, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Search Engine Optimization"])), (_l()(), i0.ɵeld(37, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Site preview"])), (_l()(), i0.ɵeld(39, 0, null, null, 4, "p", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Learn more about Angular Universal "])), (_l()(), i0.ɵeld(41, 0, null, null, 1, "a", [["href", "https://universal.angular.io/"], ["rel", "noopener"], ["target", "_blank"]], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["here"])), (_l()(), i0.ɵted(-1, null, ["."])), (_l()(), i0.ɵeld(44, 0, null, null, 1, "h3", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["AMP"])), (_l()(), i0.ɵeld(46, 0, null, null, 6, "p", [], null, null, null, null, null)), (_l()(), i0.ɵeld(47, 0, null, null, 1, "strong", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Accelerated Mobile Pages"])), (_l()(), i0.ɵted(-1, null, [" is an open-source initiative. The project enables the creation of web applications that are fast and high-performing across devices and platforms. You can learn more about AMP project "])), (_l()(), i0.ɵeld(50, 0, null, null, 1, "a", [["href", "https://www.ampproject.org/"], ["rel", "noopener"], ["target", "_blank"]], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["here"])), (_l()(), i0.ɵted(-1, null, ["."])), (_l()(), i0.ɵeld(53, 0, null, null, 1, "h3", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Serverless support"])), (_l()(), i0.ɵeld(55, 0, null, null, 3, "p", [], null, null, null, null, null)), (_l()(), i0.ɵeld(56, 0, null, null, 1, "strong", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Serverless computing"])), (_l()(), i0.ɵted(-1, null, [" is a cost-effective environment for web applications. You pay only for those resources which you are factually using, instead of running your hosting 24 hours for 7 days a week."])), (_l()(), i0.ɵeld(59, 0, null, null, 1, "p", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Most popular Serverless environemnts are:"])), (_l()(), i0.ɵeld(61, 0, null, null, 8, "ul", [], null, null, null, null, null)), (_l()(), i0.ɵeld(62, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["AWS Lambda"])), (_l()(), i0.ɵeld(64, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Google Cloud Functions"])), (_l()(), i0.ɵeld(66, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Azure Functions"])), (_l()(), i0.ɵeld(68, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Webtasks"])), (_l()(), i0.ɵeld(70, 0, null, null, 1, "h3", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["TransferState"])), (_l()(), i0.ɵeld(72, 0, null, null, 5, "p", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Decrease number of requests done by back-end and front-end. Read more on the "])), (_l()(), i0.ɵeld(74, 0, null, null, 2, "a", [["routerLink", "/transferState"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 75).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, null, null)), i0.ɵdid(75, 671744, null, 0, i1.RouterLinkWithHref, [i1.Router, i1.ActivatedRoute, i2.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(-1, null, ["TransferState page"])), (_l()(), i0.ɵted(-1, null, ["."])), (_l()(), i0.ɵeld(78, 0, null, null, 1, "h3", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Funding"])), (_l()(), i0.ɵeld(80, 0, null, null, 5, "p", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["This project is my 'after-hours' work. I am devoting my private time and resources for its "])), (_l()(), i0.ɵeld(82, 0, null, null, 2, "strong", [], null, null, null, null, null)), (_l()(), i0.ɵeld(83, 0, null, null, 1, "i", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["continuous"])), (_l()(), i0.ɵted(-1, null, [" evolution. If you like it, I would appreciate if you donor it!"])), (_l()(), i0.ɵeld(86, 0, null, null, 4, "p", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["List of donors can be found on the "])), (_l()(), i0.ɵeld(88, 0, null, null, 2, "a", [["routerLink", "donors"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 89).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, null, null)), i0.ɵdid(89, 671744, null, 0, i1.RouterLinkWithHref, [i1.Router, i1.ActivatedRoute, i2.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(-1, null, ["donors page"])), (_l()(), i0.ɵeld(91, 0, null, null, 1, "p", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Here is the list of pages where you can donor this project:"])), (_l()(), i0.ɵeld(93, 0, null, null, 9, "ul", [], null, null, null, null, null)), (_l()(), i0.ɵeld(94, 0, null, null, 2, "li", [], null, null, null, null, null)), (_l()(), i0.ɵeld(95, 0, null, null, 1, "a", [["href", "https://opencollective.com/ng-toolkit"]], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Open Collective"])), (_l()(), i0.ɵeld(97, 0, null, null, 2, "li", [], null, null, null, null, null)), (_l()(), i0.ɵeld(98, 0, null, null, 1, "a", [["href", "https://donorbox.org/ng-toolkit"]], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Donorbox"])), (_l()(), i0.ɵeld(100, 0, null, null, 2, "li", [], null, null, null, null, null)), (_l()(), i0.ɵeld(101, 0, null, null, 1, "a", [["href", "https://liberapay.com/maciejtreder/donate"]], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Liberapay"]))], function (_ck, _v) { var currVal_2 = "/transferState"; _ck(_v, 75, 0, currVal_2); var currVal_5 = "donors"; _ck(_v, 89, 0, currVal_5); }, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 75).target; var currVal_1 = i0.ɵnov(_v, 75).href; _ck(_v, 74, 0, currVal_0, currVal_1); var currVal_3 = i0.ɵnov(_v, 89).target; var currVal_4 = i0.ɵnov(_v, 89).href; _ck(_v, 88, 0, currVal_3, currVal_4); }); }
+function View_HomeComponent_0(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "app-geo-query", [], null, null, null, i1.View_GeoQueryComponent_0, i1.RenderType_GeoQueryComponent)), i0.ɵdid(1, 114688, null, 0, i2.GeoQueryComponent, [], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
 exports.View_HomeComponent_0 = View_HomeComponent_0;
 function View_HomeComponent_Host_0(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "home-view", [], null, null, null, View_HomeComponent_0, RenderType_HomeComponent)), i0.ɵdid(1, 49152, null, 0, i3.HomeComponent, [], null, null)], null, null); }
 exports.View_HomeComponent_Host_0 = View_HomeComponent_Host_0;
@@ -901,12 +2719,9 @@ var MenuComponent = /** @class */ (function () {
         this.isSafari = false;
         this.subscribeText = new rxjs_1.ReplaySubject();
         this.menuElements = [
-            { link: '/donors', icon: 'attach_money', text: 'Donors' },
-            { link: '/', icon: 'home', text: 'Home' },
-            { link: '/lazy', icon: 'free_breakfast', text: 'Lazy module' },
-            // {link: '/external', icon: 'call_merge', text: 'External module'}, //not works because of https://github.com/angular/angular-cli/issues/8284
-            { link: '/transferState', icon: 'call_merge', text: 'TransferState (API calls)' },
-            { link: 'https://github.com/maciejtreder/angular-universal-pwa', icon: 'code', text: 'Fork on github' },
+            { link: '/', icon: 'home', text: 'Relief camps nearby' }
+            // { link: '/', icon: 'home', text: 'Volunteers' }
+            // { link: '/home', icon: 'free_breakfast', text: 'Lazy module' }
         ];
         this.contextual = false;
     }
@@ -914,7 +2729,9 @@ var MenuComponent = /** @class */ (function () {
         var _this = this;
         this.isSafari = !!this.window.nativeWindow['safari'];
         this.ns.isSubscribed().subscribe(function (registered) {
-            registered ? _this.subscribeText.next('Unsubscribe from push') : _this.subscribeText.next('Subscribe to push');
+            registered
+                ? _this.subscribeText.next('Unsubscribe from push')
+                : _this.subscribeText.next('Subscribe to push');
             _this._isRegistered = registered;
         });
     };
@@ -1698,6 +3515,171 @@ module.exports = __webpack_require__(/*! /home/amalshehu/kerala-flood-rescue/src
 
 /***/ }),
 
+/***/ "@agm/core/core.module":
+/*!****************************************!*\
+  !*** external "@agm/core/core.module" ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/core.module");
+
+/***/ }),
+
+/***/ "@agm/core/directives/info-window":
+/*!***************************************************!*\
+  !*** external "@agm/core/directives/info-window" ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/directives/info-window");
+
+/***/ }),
+
+/***/ "@agm/core/directives/map":
+/*!*******************************************!*\
+  !*** external "@agm/core/directives/map" ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/directives/map");
+
+/***/ }),
+
+/***/ "@agm/core/directives/marker":
+/*!**********************************************!*\
+  !*** external "@agm/core/directives/marker" ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/directives/marker");
+
+/***/ }),
+
+/***/ "@agm/core/services/google-maps-api-wrapper":
+/*!*************************************************************!*\
+  !*** external "@agm/core/services/google-maps-api-wrapper" ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/services/google-maps-api-wrapper");
+
+/***/ }),
+
+/***/ "@agm/core/services/managers/circle-manager":
+/*!*************************************************************!*\
+  !*** external "@agm/core/services/managers/circle-manager" ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/services/managers/circle-manager");
+
+/***/ }),
+
+/***/ "@agm/core/services/managers/data-layer-manager":
+/*!*****************************************************************!*\
+  !*** external "@agm/core/services/managers/data-layer-manager" ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/services/managers/data-layer-manager");
+
+/***/ }),
+
+/***/ "@agm/core/services/managers/info-window-manager":
+/*!******************************************************************!*\
+  !*** external "@agm/core/services/managers/info-window-manager" ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/services/managers/info-window-manager");
+
+/***/ }),
+
+/***/ "@agm/core/services/managers/kml-layer-manager":
+/*!****************************************************************!*\
+  !*** external "@agm/core/services/managers/kml-layer-manager" ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/services/managers/kml-layer-manager");
+
+/***/ }),
+
+/***/ "@agm/core/services/managers/marker-manager":
+/*!*************************************************************!*\
+  !*** external "@agm/core/services/managers/marker-manager" ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/services/managers/marker-manager");
+
+/***/ }),
+
+/***/ "@agm/core/services/managers/polygon-manager":
+/*!**************************************************************!*\
+  !*** external "@agm/core/services/managers/polygon-manager" ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/services/managers/polygon-manager");
+
+/***/ }),
+
+/***/ "@agm/core/services/managers/polyline-manager":
+/*!***************************************************************!*\
+  !*** external "@agm/core/services/managers/polyline-manager" ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/services/managers/polyline-manager");
+
+/***/ }),
+
+/***/ "@agm/core/services/maps-api-loader/lazy-maps-api-loader":
+/*!**************************************************************************!*\
+  !*** external "@agm/core/services/maps-api-loader/lazy-maps-api-loader" ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/services/maps-api-loader/lazy-maps-api-loader");
+
+/***/ }),
+
+/***/ "@agm/core/services/maps-api-loader/maps-api-loader":
+/*!*********************************************************************!*\
+  !*** external "@agm/core/services/maps-api-loader/maps-api-loader" ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/services/maps-api-loader/maps-api-loader");
+
+/***/ }),
+
+/***/ "@agm/core/utils/browser-globals":
+/*!**************************************************!*\
+  !*** external "@agm/core/utils/browser-globals" ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@agm/core/utils/browser-globals");
+
+/***/ }),
+
 /***/ "@angular/animations":
 /*!**************************************!*\
   !*** external "@angular/animations" ***!
@@ -1959,6 +3941,17 @@ module.exports = require("@nguniversal/module-map-ngfactory-loader");
 /***/ (function(module, exports) {
 
 module.exports = require("@ngx-translate/core");
+
+/***/ }),
+
+/***/ "angularfire2":
+/*!*******************************!*\
+  !*** external "angularfire2" ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("angularfire2");
 
 /***/ }),
 
