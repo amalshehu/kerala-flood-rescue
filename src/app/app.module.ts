@@ -19,8 +19,18 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DistrictOverviewComponent } from './district-overview/district-overview.component';
 
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { AgmCoreModule } from '@agm/core';
+import { MapComponent } from './map/map.component';
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, SidenavComponent, DistrictOverviewComponent],
+  declarations: [
+    AppComponent,
+    DashboardComponent,
+    SidenavComponent,
+    MapComponent,
+    DistrictOverviewComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -29,11 +39,17 @@ import { DistrictOverviewComponent } from './district-overview/district-overview
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.mapApiKey
+    }),
     LayoutModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

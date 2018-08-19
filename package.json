@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@agm/core": "^1.0.0-beta.3",
     "@angular/animations": "^6.1.0",
     "@angular/cdk": "^6.2.0",
     "@angular/common": "^6.1.0",
@@ -22,7 +23,9 @@
     "@angular/material": "^6.4.5",
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
+    "@angular/pwa": "^0.7.4",
     "@angular/router": "^6.1.0",
+    "@angular/service-worker": "^6.1.0",
     "core-js": "^2.5.4",
     "rxjs": "^6.0.0",
     "zone.js": "~0.8.26"
