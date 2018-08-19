@@ -13,6 +13,10 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
+  showMenu: boolean = false;
+  showTable: boolean = false;
+  public isTlbOpen: any;
+  public isTlbClose: any;
   private title: string = this.titleService.getTitle();
   private metaDescription: string = this.metaService.getTag('name=description')
     .content;
@@ -81,6 +85,15 @@ export class AppComponent implements OnInit {
         .catch(err => {
           console.error('error when checking for update', err);
         });
+    }
+  }
+  sidenav() {
+    this.showMenu = !this.showMenu;
+    document.getElementById('nav').classList.toggle('sideNavExpand');
+    if (this.showMenu === false) {
+      document.getElementById('nav').style.width = '54px';
+    } else {
+      document.getElementById('nav').style.width = '200px';
     }
   }
 }

@@ -25,7 +25,9 @@ import { AgmCoreModule } from '@agm/core';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
 import { GeoService } from './geo.service';
-
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +43,9 @@ import { GeoService } from './geo.service';
     MatButtonModule,
     MatSnackBarModule,
     MatMenuModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatCardModule,
     // NgAisModule,
     TranslateModule.forChild(),
     CommonModule,

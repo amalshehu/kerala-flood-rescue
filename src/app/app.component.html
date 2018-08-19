@@ -1,12 +1,27 @@
-<header>
+<!-- <header>
   <h1>
     <menu [contextual]="true"></menu>
     Kerala Flood Rescue
   </h1>
   <menu [contextual]="false"></menu>
-</header>
+</header> -->
 
+<!-- layout start -->
+<div class="side-nav" id="nav">
+  <li>
+    <div (click)="sidenav()">
+      <i class="material-icons">
+        menu
+      </i>
+    </div>
+  </li>
 
-<div class="content">
+</div>
+<div class="card toolbar">
+  <p class="d-flex justify-content-end pt-2 pb-2 pr-2">
+  </p>
+</div>
+<div class="main-container">
   <router-outlet></router-outlet>
 </div>
+<!-- layout end -->
