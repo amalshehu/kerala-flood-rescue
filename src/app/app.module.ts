@@ -30,6 +30,9 @@ import { WindowRefService } from './window-ref.service';
 import { GroupBarChartComponent } from './group-bar-chart/group-bar-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DataTableComponent } from './data-table/data-table.component';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AdvancedPieChartComponent } from './advanced-pie-chart/advanced-pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,8 @@ import { DataTableComponent } from './data-table/data-table.component';
     MapComponent,
     GroupBarChartComponent,
     DataTableComponent,
-    DistrictOverviewComponent
+    DistrictOverviewComponent,
+    AdvancedPieChartComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +51,12 @@ import { DataTableComponent } from './data-table/data-table.component';
     MatCardModule,
     MatMenuModule,
     NgxChartsModule,
+    AngularFireModule.initializeApp(
+      environment.firebaseConfig,
+      'kerala-flood-rescue'
+    ),
     MatIconModule,
+    AngularFireDatabaseModule,
     MatSnackBarModule,
     MatButtonModule,
     AgmCoreModule.forRoot({
