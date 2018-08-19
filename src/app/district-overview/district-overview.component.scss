@@ -1,7 +1,10 @@
 .grid-container {
   width: 100%;
-  float: right;
   background: rgba(128, 128, 128, 0.050980392156862744);
+  h1 {
+    padding: 15px 10px 0px 15px !important;
+    margin-bottom: 0px;
+  }
 }
 
 .dashboard-card {
@@ -20,4 +23,17 @@
 
 .dashboard-card-content {
   text-align: center;
+}
+
+.district-overview {
+  h1 {
+    margin-left: 15px;
+    color: #1a0505b0;
+  }
+  .mat-card {
+    padding: 8px;
+  }
+  h5 {
+    color: #000000bd;
+  }
 }
