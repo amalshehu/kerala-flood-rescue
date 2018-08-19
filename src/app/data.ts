@@ -1,3 +1,18 @@
+export const piechartData = [
+  {
+    name: 'Men',
+    value: 85
+  },
+  {
+    name: 'Woman',
+    value: 72
+  },
+  {
+    name: 'Children',
+    value: 12
+  }
+];
+
 export const multi = [
   {
     name: `TVM (100)`,

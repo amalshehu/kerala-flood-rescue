@@ -30,6 +30,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DataTableComponent } from './data-table/data-table.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AdvancedPieChartComponent } from './advanced-pie-chart/advanced-pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     SidenavComponent,
     MapComponent,
     GroupBarChartComponent,
-    DataTableComponent
+    DataTableComponent,
+    AdvancedPieChartComponent
   ],
   imports: [
     BrowserModule,
