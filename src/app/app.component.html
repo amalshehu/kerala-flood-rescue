@@ -1,34 +1,12 @@
-<!-- <header>
+<header>
   <h1>
     <menu [contextual]="true"></menu>
     Kerala Flood Rescue
   </h1>
   <menu [contextual]="false"></menu>
-</header> -->
+</header>
 
-<nb-layout>
-  <nb-layout-header fixed>
-    <a href="#" (click)="toggle()">
-      <i class="material-icons">
-        menu
-      </i>
-    </a>
-  </nb-layout-header>
 
-  <nb-layout-header subheader>
-    <!-- <nb-actions>
-      <nb-action icon="nb-home"></nb-action>
-      <nb-action icon="nb-search"></nb-action>
-      <nb-action icon="nb-edit"></nb-action>
-    </nb-actions> -->
-
-  </nb-layout-header>
-  <nb-sidebar></nb-sidebar>
-
-  <nb-layout-column>
-    <router-outlet></router-outlet>
-  </nb-layout-column>
-</nb-layout>
 <div class="content">
-  <!-- <router-outlet></router-outlet> -->
+  <router-outlet></router-outlet>
 </div>

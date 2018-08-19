@@ -41,14 +41,3 @@ menu.contextual {
     padding-top: 136px;
   }
 }
-
-:host nb-layout-header a {
-  font-size: 2rem;
-  text-decoration: none;
-}
-:host nb-layout-column {
-  height: 50vw;
-}
-:host nb-layout-column:first-child {
-  background: #f4f4f7;
-}

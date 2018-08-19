@@ -34,8 +34,7 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private titleService: Title,
     private metaService: Meta,
-    private router: Router,
-    private sidebarService: NbSidebarService
+    private router: Router
   ) {
     this.translate.setDefaultLang(this.translate.getBrowserLang());
   }
@@ -92,10 +91,5 @@ export class AppComponent implements OnInit {
           console.error('error when checking for update', err);
         });
     }
-  }
-
-  toggle() {
-    this.sidebarService.toggle(true);
-    return false;
   }
 }
