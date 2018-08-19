@@ -25,7 +25,12 @@ import { AgmCoreModule } from '@agm/core';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
 import { GeoService } from './geo.service';
-import { NgAisModule } from 'angular-instantsearch';
+import { NbThemeModule } from '@nebular/theme';
+import {
+  NbSidebarModule,
+  NbLayoutModule,
+  NbSidebarService
+} from '@nebular/theme';
 
 // import { PrebootModule } from 'preboot';
 
@@ -47,6 +52,9 @@ import { NgAisModule } from 'angular-instantsearch';
     NgAisModule,
     TranslateModule.forChild(),
     CommonModule,
+    NbThemeModule.forRoot({ name: 'default' }),
+    NbSidebarModule,
+    NbLayoutModule,
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyA4d00nt-C9EJ2VLtMoZTr5avzgtUbZ3e0',
       authDomain: 'keralarescue-95468.firebaseapp.com',
@@ -109,8 +117,10 @@ import { NgAisModule } from 'angular-instantsearch';
     HitWithTransferStateResolver,
     HitWithoutTransferStateResolver,
     ExampleApi,
+    GeoService,
     Title,
-    Meta
+    Meta,
+    NbSidebarService
   ],
   bootstrap: [AppComponent]
 })

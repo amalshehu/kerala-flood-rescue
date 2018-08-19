@@ -1,23 +1,34 @@
-<header>
+<!-- <header>
   <h1>
     <menu [contextual]="true"></menu>
     Kerala Flood Rescue
   </h1>
   <menu [contextual]="false"></menu>
-</header>
+</header> -->
 
+<nb-layout>
+  <nb-layout-header fixed>
+    <a href="#" (click)="toggle()">
+      <i class="nb-menu"></i>
+    </a>
+  </nb-layout-header>
+
+  <nb-layout-header subheader>
+    <!-- <nb-actions>
+      <nb-action icon="nb-home"></nb-action>
+      <nb-action icon="nb-search"></nb-action>
+      <nb-action icon="nb-edit"></nb-action>
+    </nb-actions> -->
+
+  </nb-layout-header>
+  <nb-sidebar></nb-sidebar>
+
+  <nb-layout-column>
+    <div class="">
+      <router-outlet></router-outlet>
+    </div>
+  </nb-layout-column>
+</nb-layout>
 <div class="content">
-  <div id="search-box">
-    <!-- SearchBox widget will appear here -->
-  </div>
-  <div id="stats">
-    <!-- stats widget will appear here -->
-  </div>
-  <div id="hits">
-    <!-- Hits widget will appear here -->
-  </div>
-  <div id="pagination">
-    <!-- pagination widget will appear here -->
-  </div>
   <!-- <router-outlet></router-outlet> -->
 </div>

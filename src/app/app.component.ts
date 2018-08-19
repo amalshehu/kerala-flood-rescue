@@ -7,18 +7,15 @@ import { TranslateService } from '@ngx-translate/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import * as instantsearch from 'instantsearch.js';
-
+import { NbSidebarService } from '@nebular/theme';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public search: any;
   private title: string = this.titleService.getTitle();
-  private metaDescription: string = this.metaService.getTag('name=description')
-    .content;
+  private metaDescription: string = this.metaService.getTag('name=description').content;
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private snackBarService: SnackBar,
@@ -27,65 +24,13 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private titleService: Title,
     private metaService: Meta,
-    private router: Router
+    private router: Router,
+    private sidebarService: NbSidebarService
   ) {
     this.translate.setDefaultLang(this.translate.getBrowserLang());
   }
 
   public ngOnInit(): void {
-    this.search = instantsearch({
-      appId: 'Z3V5EBP19C',
-      apiKey: 'afc7b221d7f873591854c6a383d4ca49',
-      indexName: 'rescue_requests'
-    });
-    // search box widget
-    this.search.addWidget(
-      instantsearch.widgets.searchBox({
-        container: '#search-box',
-        autofocus: false,
-        placeholder: 'Search for actors',
-        poweredBy: true
-      })
-    );
-
-    // initialize hits widget
-    this.search.addWidget(
-      instantsearch.widgets.hits({
-        container: '#hits',
-        templates: {
-          empty: 'No results',
-          item: `<img src=https://image.tmdb.org/t/p/w300{{image_path}} width="50px">
-                <strong>Result {{objectID}}</strong>:
-                {{{_highlightResult.name.value}}}`
-        },
-        escapeHits: true
-      })
-    );
-
-    this.search.addWidget(
-      instantsearch.widgets.stats({
-        container: '#stats'
-      })
-    );
-
-    this.search.addWidget(
-      instantsearch.widgets.pagination({
-        container: '#pagination',
-        maxPages: 20
-      })
-    );
-
-    this.search.addWidget(
-      instantsearch.widgets.analytics({
-        pushFunction: (query, state, results) => {
-          console.log(query);
-          console.log(state);
-          console.log(results);
-        }
-      })
-    );
-    this.search.start();
-
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(event => {
@@ -95,6 +40,15 @@ export class AppComponent implements OnInit {
         const title: string = snapshot.data['title'];
         this.titleService.setTitle(this.title + ' | ' + title);
 
+
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(event => {
+        const snapshot: ActivatedRouteSnapshot = this.router.routerState
+          .snapshot.root.firstChild;
+
+        const title: string = snapshot.data['title'];
+        this.titleService.setTitle(this.title + ' | ' + title);
         const description: string = snapshot.data['description'];
         this.metaService.updateTag(
           {
@@ -137,5 +91,9 @@ export class AppComponent implements OnInit {
           console.error('error when checking for update', err);
         });
     }
+  }
+  toggle() {
+    this.sidebarService.toggle(true);
+    return false;
   }
 }
