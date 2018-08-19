@@ -17,9 +17,10 @@ import {
 import { LayoutModule } from '@angular/cdk/layout';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { DistrictOverviewComponent } from './district-overview/district-overview.component';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, SidenavComponent],
+  declarations: [AppComponent, DashboardComponent, SidenavComponent, DistrictOverviewComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

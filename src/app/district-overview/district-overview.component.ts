@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import {
   Breakpoints,
@@ -7,11 +7,12 @@ import {
 } from '@angular/cdk/layout';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-district-overview',
+  templateUrl: './district-overview.component.html',
+  styleUrls: ['./district-overview.component.scss']
 })
-export class DashboardComponent {
+export class DistrictOverviewComponent implements OnInit {
+  constructor(private breakpointObserver: BreakpointObserver) {}
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
@@ -32,5 +33,5 @@ export class DashboardComponent {
     })
   );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  ngOnInit() {}
 }
