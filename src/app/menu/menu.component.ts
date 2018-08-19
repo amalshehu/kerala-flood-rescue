@@ -5,6 +5,7 @@ import { Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'menu',
   templateUrl: 'menu.component.html',
   styleUrls: ['./menu.component.scss']
@@ -37,6 +38,7 @@ export class MenuComponent implements OnInit {
 
   public isRegistrationAvailable(): Observable<boolean> {
     if (this.isSafari) {
+      // tslint:disable-next-line:arrow-parens
       return this.ns.isSubscribed().pipe(map(registered => !registered));
     } else if (this.ns.isPushAvailable()) {
       return of(true);

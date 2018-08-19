@@ -87,4 +87,5 @@ export class AppComponent implements OnInit {
     } else {
       document.getElementById('nav').style.width = '200px';
     }
+  }
 }

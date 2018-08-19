@@ -91,8 +91,7 @@ import { Meta, Title } from '@angular/platform-browser';
     HitWithoutTransferStateResolver,
     ExampleApi,
     Title,
-    Meta,
-    NbSidebarService
+    Meta
   ],
   bootstrap: [AppComponent]
 })
