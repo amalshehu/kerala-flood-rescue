@@ -8,7 +8,6 @@ import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { NbSidebarService } from '@nebular/theme';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,9 +15,7 @@ import { NbSidebarService } from '@nebular/theme';
 })
 export class AppComponent implements OnInit {
   private title: string = this.titleService.getTitle();
-  private metaDescription: string = this.metaService.getTag('name=description')
-    .content;
-
+  private metaDescription: string = this.metaService.getTag('name=description').content;
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private snackBarService: SnackBar,
@@ -43,6 +40,15 @@ export class AppComponent implements OnInit {
         const title: string = snapshot.data['title'];
         this.titleService.setTitle(this.title + ' | ' + title);
 
+
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(event => {
+        const snapshot: ActivatedRouteSnapshot = this.router.routerState
+          .snapshot.root.firstChild;
+
+        const title: string = snapshot.data['title'];
+        this.titleService.setTitle(this.title + ' | ' + title);
         const description: string = snapshot.data['description'];
         this.metaService.updateTag(
           {
