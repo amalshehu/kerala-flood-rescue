@@ -18,9 +18,11 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { AgmCoreModule } from '@agm/core';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, SidenavComponent],
+  declarations: [AppComponent, DashboardComponent, SidenavComponent, MapComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -29,6 +31,9 @@ import { environment } from '../environments/environment';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.mapApiKey
+    }),
     LayoutModule,
     MatToolbarModule,
     MatSidenavModule,
