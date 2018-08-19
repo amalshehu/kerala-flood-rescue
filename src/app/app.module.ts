@@ -13,7 +13,10 @@ import {
   MatToolbarModule,
   MatSidenavModule,
   MatListModule,
-  MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule
+  MatSnackBarModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule
 } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { SidenavComponent } from './sidenav/sidenav.component';
@@ -25,6 +28,8 @@ import { WindowRefService } from './window-ref.service';
 import { GroupBarChartComponent } from './group-bar-chart/group-bar-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DataTableComponent } from './data-table/data-table.component';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 @NgModule({
   declarations: [
@@ -42,7 +47,12 @@ import { DataTableComponent } from './data-table/data-table.component';
     MatCardModule,
     MatMenuModule,
     NgxChartsModule,
+    AngularFireModule.initializeApp(
+      environment.firebaseConfig,
+      'kerala-flood-rescue'
+    ),
     MatIconModule,
+    AngularFireDatabaseModule,
     MatSnackBarModule,
     MatButtonModule,
     AgmCoreModule.forRoot({
