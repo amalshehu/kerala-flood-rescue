@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
   private title: string = this.titleService.getTitle();
   private metaDescription: string = this.metaService.getTag('name=description')
     .content;
-
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private snackBarService: SnackBar,
@@ -59,13 +58,6 @@ export class AppComponent implements OnInit {
     }
 
     if (this.swUpdate.isEnabled) {
-      // this.swUpdate.activated.filter(() => !localStorage.getItem('cached')).subscribe(() => {
-      //     localStorage.setItem('cached', 'displayed');
-      //     this.snackBarService.displayNotification({
-      //         message: 'Content is cached', action: 'Ok'
-      //     } as SnackBarNotification);
-      // });
-
       this.swUpdate.available.subscribe(evt => {
         this.snackBarService.displayNotification({
           message: 'New version of app is available!',
@@ -95,5 +87,4 @@ export class AppComponent implements OnInit {
     } else {
       document.getElementById('nav').style.width = '200px';
     }
-  }
 }

@@ -46,7 +46,6 @@ import { MatCardModule } from '@angular/material/card';
     MatSidenavModule,
     MatToolbarModule,
     MatCardModule,
-    // NgAisModule,
     TranslateModule.forChild(),
     CommonModule,
     AngularFireModule.initializeApp({
