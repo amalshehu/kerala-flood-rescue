@@ -13,7 +13,7 @@ import {
   MatToolbarModule,
   MatSidenavModule,
   MatListModule,
-  MatSnackBarModule
+  MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule
 } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { SidenavComponent } from './sidenav/sidenav.component';
@@ -24,6 +24,7 @@ import { MapComponent } from './map/map.component';
 import { WindowRefService } from './window-ref.service';
 import { GroupBarChartComponent } from './group-bar-chart/group-bar-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { DataTableComponent } from './data-table/data-table.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     DashboardComponent,
     SidenavComponent,
     MapComponent,
-    GroupBarChartComponent
+    GroupBarChartComponent,
+    DataTableComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,10 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatListModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
-    })
+    }),
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [WindowRefService],
   bootstrap: [AppComponent]

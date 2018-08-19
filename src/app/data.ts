@@ -1,6 +1,6 @@
 export const multi = [
   {
-    name: 'TVM',
+    name: `TVM (100)`,
     series: [
       {
         name: 'Men',

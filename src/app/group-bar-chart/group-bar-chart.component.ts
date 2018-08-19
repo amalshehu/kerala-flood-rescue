@@ -9,7 +9,7 @@ import { multi } from '../data';
 export class GroupBarChartComponent {
   single: any[];
   multi: any[];
-  view: any[] = [700, 400];
+  view: any[] = [1300, 400];
 
   // options
   showXAxis = true;
