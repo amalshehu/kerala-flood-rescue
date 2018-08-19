@@ -25,6 +25,7 @@ import { AgmCoreModule } from '@agm/core';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
 import { GeoService } from './geo.service';
+import { NgAisModule } from 'angular-instantsearch';
 
 // import { PrebootModule } from 'preboot';
 
@@ -43,6 +44,7 @@ import { GeoService } from './geo.service';
     MatButtonModule,
     MatSnackBarModule,
     MatMenuModule,
+    NgAisModule,
     TranslateModule.forChild(),
     CommonModule,
     AngularFireModule.initializeApp({
