@@ -9,7 +9,9 @@
 <nb-layout>
   <nb-layout-header fixed>
     <a href="#" (click)="toggle()">
-      <i class="nb-menu"></i>
+      <i class="material-icons">
+        menu
+      </i>
     </a>
   </nb-layout-header>
 
@@ -24,8 +26,6 @@
   <nb-sidebar></nb-sidebar>
 
   <nb-layout-column>
-    <div class="">
-      <router-outlet></router-outlet>
-    </div>
+    <router-outlet></router-outlet>
   </nb-layout-column>
 </nb-layout>
