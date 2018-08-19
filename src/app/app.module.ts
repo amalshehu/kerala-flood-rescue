@@ -107,6 +107,7 @@ import { GeoService } from './geo.service';
     HitWithTransferStateResolver,
     HitWithoutTransferStateResolver,
     ExampleApi,
+    GeoService,
     Title,
     Meta
   ],
