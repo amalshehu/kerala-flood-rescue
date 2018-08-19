@@ -1,7 +1,8 @@
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import "credentials";
+@import 'credentials';
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
@@ -13,9 +14,10 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
-  background: #222837 url('../assets/img/background.png') fixed top center;
-  background-size:cover;
-  color: white;
+  // background: #222837 url('../assets/img/background.png') fixed top center;
+  // background-size: cover;
+  // color: white;
+  background: #f4f4f7;
 }
 
 *:not(.material-icons) {
@@ -38,7 +40,8 @@ a {
   text-decoration: none;
 }
 
-.service_worker_snack { // can be removed when https://github.com/angular/material2/pull/4045 will be merged
+.service_worker_snack {
+  // can be removed when https://github.com/angular/material2/pull/4045 will be merged
   position: absolute;
   bottom: 10px;
   left: 10px;

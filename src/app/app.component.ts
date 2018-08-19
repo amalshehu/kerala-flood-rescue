@@ -7,13 +7,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { NbSidebarService } from '@nebular/theme';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
+  showMenu: boolean = false;
+  showTable: boolean = false;
+  public isTlbOpen: any;
+  public isTlbClose: any;
   private title: string = this.titleService.getTitle();
   private metaDescription: string = this.metaService.getTag('name=description')
     .content;
@@ -25,8 +28,7 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private titleService: Title,
     private metaService: Meta,
-    private router: Router,
-    private sidebarService: NbSidebarService
+    private router: Router
   ) {
     this.translate.setDefaultLang(this.translate.getBrowserLang());
   }
@@ -77,8 +79,12 @@ export class AppComponent implements OnInit {
         });
     }
   }
-  public toggle() {
-    this.sidebarService.toggle(true);
-    return false;
-  }
+  sidenav() {
+    this.showMenu = !this.showMenu;
+    document.getElementById('nav').classList.toggle('sideNavExpand');
+    if (this.showMenu === false) {
+      document.getElementById('nav').style.width = '54px';
+    } else {
+      document.getElementById('nav').style.width = '200px';
+    }
 }

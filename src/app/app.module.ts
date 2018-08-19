@@ -25,15 +25,9 @@ import { AgmCoreModule } from '@agm/core';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
 import { GeoService } from './geo.service';
-import { NbThemeModule } from '@nebular/theme';
-import {
-  NbSidebarModule,
-  NbLayoutModule,
-  NbSidebarService
-} from '@nebular/theme';
-
-// import { PrebootModule } from 'preboot';
-
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,11 +43,11 @@ import {
     MatButtonModule,
     MatSnackBarModule,
     MatMenuModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatCardModule,
     TranslateModule.forChild(),
     CommonModule,
-    NbThemeModule.forRoot({ name: 'default' }),
-    NbSidebarModule,
-    NbLayoutModule,
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyA4d00nt-C9EJ2VLtMoZTr5avzgtUbZ3e0',
       authDomain: 'keralarescue-95468.firebaseapp.com',
@@ -118,8 +112,7 @@ import {
     ExampleApi,
     GeoService,
     Title,
-    Meta,
-    NbSidebarService
+    Meta
   ],
   bootstrap: [AppComponent]
 })

@@ -6,26 +6,21 @@
   <menu [contextual]="false"></menu>
 </header> -->
 
-<nb-layout>
-  <nb-layout-header fixed>
-    <a href="#" (click)="toggle()">
-      <i class="nb-menu"></i>
-    </a>
-  </nb-layout-header>
-
-  <nb-layout-header subheader>
-    <!-- <nb-actions>
-      <nb-action icon="nb-home"></nb-action>
-      <nb-action icon="nb-search"></nb-action>
-      <nb-action icon="nb-edit"></nb-action>
-    </nb-actions> -->
-
-  </nb-layout-header>
-  <nb-sidebar></nb-sidebar>
-
-  <nb-layout-column>
-    <div class="">
-      <router-outlet></router-outlet>
+<!-- layout start -->
+<div class="side-nav" id="nav">
+  <li>
+    <div (click)="sidenav()">
+      <i class="material-icons">
+        menu
+      </i>
     </div>
-  </nb-layout-column>
-</nb-layout>
+  </li>
+</div>
+<div class="card toolbar">
+  <p class="d-flex justify-content-end pt-2 pb-2 pr-2">
+  </p>
+</div>
+<div class="main-container">
+  <router-outlet></router-outlet>
+</div>
+<!-- layout end -->

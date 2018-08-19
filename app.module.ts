@@ -20,12 +20,6 @@ import { ExampleApi } from './services/exampleApi.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Meta, Title } from '@angular/platform-browser';
-import { NbThemeModule } from '@nebular/theme';
-import {
-  NbSidebarModule,
-  NbLayoutModule,
-  NbSidebarService
-} from '@nebular/theme';
 
 // import { PrebootModule } from 'preboot';
 
@@ -45,9 +39,6 @@ import {
     MatMenuModule,
     TranslateModule.forChild(),
     CommonModule,
-    NbThemeModule.forRoot({ name: 'default' }),
-    NbSidebarModule,
-    NbLayoutModule,
     RouterModule.forRoot([
       {
         path: '',

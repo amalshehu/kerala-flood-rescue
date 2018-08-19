@@ -65,7 +65,8 @@
   <title>Kerala Flood Rescue</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script async custom-element="amp-install-serviceworker" src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script>
-<link rel="stylesheet" href="styles.bf621719e786a9352246.css"></head>
+  <link rel="stylesheet" href="styles.bf621719e786a9352246.css">
+</head>
 
 <body>
   <amp-install-serviceworker src="ngsw-worker.js" layout="nodisplay">
@@ -73,13 +74,13 @@
   <div id="content-wrapper">
     <app-root></app-root>
   </div>
-  <footer class="credentials">
-    <!-- Please respect MIT License and don't remove this footer. --->
+  <!-- <footer class="credentials"> 
+  Please respect MIT License and don't remove this footer.
     <p class="built">Waiting for data source...</p>
   </footer>
   <noscript>
     JavaScript is necessary to work with this application.
-  </noscript>
+  </noscript> -->
   <noscript id="deferred-styles">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,300">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
@@ -94,10 +95,16 @@
     };
     var raf = requestAnimationFrame || mozRequestAnimationFrame ||
       webkitRequestAnimationFrame || msRequestAnimationFrame;
-    if (raf) raf(function () { window.setTimeout(loadDeferredStyles, 0); });
+    if (raf) raf(function () {
+      window.setTimeout(loadDeferredStyles, 0);
+    });
     else window.addEventListener('load', loadDeferredStyles);
+
   </script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
-<script type="text/javascript" src="runtime.0cd0afdb03eb83001b6b.js"></script><script type="text/javascript" src="polyfills.70b1fb5f80dcac89c728.js"></script><script type="text/javascript" src="main.0b0439aa9f0c496b5aed.js"></script></body>
+  <script type="text/javascript" src="runtime.0cd0afdb03eb83001b6b.js"></script>
+  <script type="text/javascript" src="polyfills.70b1fb5f80dcac89c728.js"></script>
+  <script type="text/javascript" src="main.0b0439aa9f0c496b5aed.js"></script>
+</body>
 
 </html>
