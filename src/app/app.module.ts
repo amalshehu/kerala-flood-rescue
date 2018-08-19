@@ -11,7 +11,11 @@ import {
   MatButtonModule,
   MatToolbarModule,
   MatSidenavModule,
-  MatListModule
+  MatListModule,
+  MatSnackBarModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule
 } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { SidenavComponent } from './sidenav/sidenav.component';
@@ -22,11 +26,18 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './map/map.component';
+import { WindowRefService } from './window-ref.service';
+import { GroupBarChartComponent } from './group-bar-chart/group-bar-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { DataTableComponent } from './data-table/data-table.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
     MapComponent,
+    GroupBarChartComponent,
+    DataTableComponent,
     DistrictOverviewComponent
   ],
   imports: [
@@ -35,7 +46,9 @@ import { MapComponent } from './map/map.component';
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
+    NgxChartsModule,
     MatIconModule,
+    MatSnackBarModule,
     MatButtonModule,
     AgmCoreModule.forRoot({
       apiKey: environment.mapApiKey
@@ -47,9 +60,12 @@ import { MapComponent } from './map/map.component';
     FlexLayoutModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
-    })
+    }),
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
-  providers: [],
+  providers: [WindowRefService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
