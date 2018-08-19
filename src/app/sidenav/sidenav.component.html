@@ -9,9 +9,15 @@
       <hr>
     </div>
     <mat-nav-list>
-      <div fxLayoutAlign="center">
-        <a mat-list-item href="#">Dashboard</a>
+      <!-- <div fxLayoutAlign="center"> -->
+      <!-- <a mat-list-item href="#" class="dashboard-link">Dashboard</a> -->
+      <!-- </div> -->
+
+      <div fxLayoutAlign="center" class="dashboard-link">
+        <a href="#">Dashboard</a>
       </div>
+
+
 
       <a mat-list-item href="#">Link 1</a>
       <a mat-list-item href="#">Link 2</a>
@@ -19,7 +25,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar class="main-toolBar-custom">
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
