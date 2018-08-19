@@ -26,14 +26,14 @@
 }
 
 .district-overview {
-  h1 {
-    margin-left: 15px;
-    color: #1a0505b0;
-  }
   .mat-card {
     padding: 8px;
   }
   h5 {
     color: #000000bd;
+  }
+  .pie-chart-container {
+    height: 400px;
+    overflow-y: scroll;
   }
 }

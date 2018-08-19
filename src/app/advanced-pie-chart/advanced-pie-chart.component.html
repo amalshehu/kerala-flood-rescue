@@ -1,2 +1,4 @@
-<ngx-charts-advanced-pie-chart [view]="view" [scheme]="'forest'" [results]="piechartData" (select)="onSelect($event)">
-</ngx-charts-advanced-pie-chart>
+<mat-card *ngFor="let item of [1, 2, 3, 4]" class="d-flex custom-card mb-3">
+  <ngx-charts-advanced-pie-chart [scheme]="'forest'" [results]="piechartData" (select)="onSelect($event)">
+  </ngx-charts-advanced-pie-chart>
+</mat-card>
