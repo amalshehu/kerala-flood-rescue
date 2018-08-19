@@ -15,7 +15,8 @@ import { NbSidebarService } from '@nebular/theme';
 })
 export class AppComponent implements OnInit {
   private title: string = this.titleService.getTitle();
-  private metaDescription: string = this.metaService.getTag('name=description').content;
+  private metaDescription: string = this.metaService.getTag('name=description')
+    .content;
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private snackBarService: SnackBar,
@@ -40,15 +41,6 @@ export class AppComponent implements OnInit {
         const title: string = snapshot.data['title'];
         this.titleService.setTitle(this.title + ' | ' + title);
 
-
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(event => {
-        const snapshot: ActivatedRouteSnapshot = this.router.routerState
-          .snapshot.root.firstChild;
-
-        const title: string = snapshot.data['title'];
-        this.titleService.setTitle(this.title + ' | ' + title);
         const description: string = snapshot.data['description'];
         this.metaService.updateTag(
           {
@@ -64,13 +56,6 @@ export class AppComponent implements OnInit {
     }
 
     if (this.swUpdate.isEnabled) {
-      // this.swUpdate.activated.filter(() => !localStorage.getItem('cached')).subscribe(() => {
-      //     localStorage.setItem('cached', 'displayed');
-      //     this.snackBarService.displayNotification({
-      //         message: 'Content is cached', action: 'Ok'
-      //     } as SnackBarNotification);
-      // });
-
       this.swUpdate.available.subscribe(evt => {
         this.snackBarService.displayNotification({
           message: 'New version of app is available!',
@@ -92,7 +77,7 @@ export class AppComponent implements OnInit {
         });
     }
   }
-  toggle() {
+  public toggle() {
     this.sidebarService.toggle(true);
     return false;
   }

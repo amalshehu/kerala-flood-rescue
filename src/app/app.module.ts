@@ -49,7 +49,6 @@ import {
     MatButtonModule,
     MatSnackBarModule,
     MatMenuModule,
-    NgAisModule,
     TranslateModule.forChild(),
     CommonModule,
     NbThemeModule.forRoot({ name: 'default' }),
