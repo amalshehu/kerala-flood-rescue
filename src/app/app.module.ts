@@ -12,7 +12,8 @@ import {
   MatButtonModule,
   MatToolbarModule,
   MatSidenavModule,
-  MatListModule
+  MatListModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { SidenavComponent } from './sidenav/sidenav.component';
@@ -20,9 +21,15 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './map/map.component';
+import { WindowRefService } from './window-ref.service';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, SidenavComponent, MapComponent],
+  declarations: [
+    AppComponent,
+    DashboardComponent,
+    SidenavComponent,
+    MapComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -30,6 +37,7 @@ import { MapComponent } from './map/map.component';
     MatCardModule,
     MatMenuModule,
     MatIconModule,
+    MatSnackBarModule,
     MatButtonModule,
     AgmCoreModule.forRoot({
       apiKey: environment.mapApiKey
@@ -42,7 +50,7 @@ import { MapComponent } from './map/map.component';
       enabled: environment.production
     })
   ],
-  providers: [],
+  providers: [WindowRefService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
