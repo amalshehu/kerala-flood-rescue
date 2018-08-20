@@ -7,8 +7,24 @@ body {
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
+  background: #8080800a;
 }
 h1 {
   margin-left: 15px;
   color: #1a0505b0;
+}
+.custom-card {
+  .advanced-pie-legend .legend-items-container .legend-items .legend-item {
+    margin-right: 40px;
+  }
+  .advanced-pie-legend .total-value {
+    font-size: 22px;
+    margin-top: 5px;
+  }
+  .advanced-pie-legend {
+    margin-left: 15px;
+  }
+}
+.ngx-charts {
+  width: 100%;
 }
