@@ -1,3 +1,4 @@
+import { districts } from './../data';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -28,28 +29,25 @@ export class UpdateCampComponent implements OnInit {
   options$: any;
   constructor(public fb: FormBuilder, private store: Store<any>) {
     this.updateCampFormInit();
-    this.districtList$ = this.store.pipe(select(fromApp.getDistrictList));
+    // this.districtList$ = this.store.pipe(select(fromApp.getDistrictList));
     this.store.pipe(select(fromApp.getSelectedDistrictOption)).subscribe(op => {
       this.options = op;
     });
   }
-  districts: District[] = [
-    { value: 'steak-0', viewValue: 'Kollam' },
-    { value: 'steak-0', viewValue: 'Kottayam' }
-  ];
+  districts: District[] = districts;
 
   ngOnInit() {
     this.filteredOptions = this.updateCampGroup
       .get('selectCamp')
       .valueChanges.pipe(
         startWith(''),
-        map(value => this._filter(value))
+        map(val => (val.length >= 1 ? this._filter(val) : []))
       );
   }
   onDistrictSelect(e) {
     // this.store.dispatch(new appActions.UpdateCamp(e.value));
     this.store.dispatch(new appActions.UpdateCampOption(e.value));
-    this.store.pipe(select(fromApp.getSelectedDistrictOption));
+    // this.store.pipe(select(fromApp.getSelectedDistrictOption));
   }
   updateCampSubmit(value) {
     console.log(value);

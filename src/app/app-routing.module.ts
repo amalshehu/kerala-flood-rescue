@@ -12,7 +12,7 @@ const routes: Routes = [
   //   path: '',
   //   loadChildren: '../app/dashboard/dashboard.module.ts#DashboardModule'
   // },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'update-camp', pathMatch: 'full' },
   { path: 'home', component: DashboardComponent }
 ];
 

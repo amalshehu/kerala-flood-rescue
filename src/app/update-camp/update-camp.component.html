@@ -4,7 +4,7 @@
     <form [formGroup]="updateCampGroup" class="d-flex flex-column" (ngSubmit)="updateCampSubmit(updateCampGroup.value)">
       <mat-form-field>
         <mat-select placeholder="Select District" formControlName="selectDistrict" (selectionChange)="onDistrictSelect($event)">
-          <mat-option *ngFor="let district of districtList$ | async" [value]="district.value">
+          <mat-option *ngFor="let district of districts " [value]="district.value">
             {{district.viewValue}}
           </mat-option>
         </mat-select>
