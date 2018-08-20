@@ -1,8 +1,13 @@
 .custom-card {
   padding: 10px 0px 28px 0px;
+
+  @media (min-width: 991px) and (max-width: 1024px) {
+    overflow: scroll;
+  }
+
   h2 {
     position: absolute;
-    left: 189px;
+    left: 274px;
     top: 32px;
     font-size: 22px;
   }

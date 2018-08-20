@@ -10,5 +10,18 @@
     overflow-y: scroll;
     background: #2c050524;
     overflow-x: hidden;
+
+    @media (max-width: 991px) {
+      overflow-y: initial;
+      height: auto;
+    }
+  }
+  @media (max-width: 991px) {
+    .pl-style {
+      padding-right: 0px;
+    }
+    .pr-style {
+      padding-left: 0;
+    }
   }
 }
