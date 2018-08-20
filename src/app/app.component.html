@@ -1,5 +1,5 @@
 <!-- <app-sidenav></app-sidenav> -->
-<!-- <app-group-bar-chart></app-group-bar-chart> -->
+<app-group-bar-chart [data]="campsCount$ | async"></app-group-bar-chart>
 <!-- <app-map></app-map> -->
 <!-- <app-dashboard></app-dashboard> -->
 <!-- <app-data-table></app-data-table> -->
@@ -8,4 +8,6 @@
     {{ item | json }}
   </li>
 </ul> -->
-<app-advanced-pie-chart></app-advanced-pie-chart>
+<!-- <app-advanced-pie-chart></app-advanced-pie-chart> -->
+
+<!-- {{ campsCount$ | async | json }} -->

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { multi } from '../data';
+import { Component, Input } from '@angular/core';
+import { multi, single } from '../data';
 
 @Component({
   selector: 'app-group-bar-chart',
@@ -7,6 +7,8 @@ import { multi } from '../data';
   styleUrls: ['./group-bar-chart.component.scss']
 })
 export class GroupBarChartComponent {
+  @Input()
+  data;
   single: any[];
   multi: any[];
   view: any[] = [1300, 400];
@@ -19,14 +21,14 @@ export class GroupBarChartComponent {
   showXAxisLabel = true;
   xAxisLabel = 'District';
   showYAxisLabel = true;
-  yAxisLabel = 'Number of people';
+  yAxisLabel = 'Camps';
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
   constructor() {
-    Object.assign(this, { multi });
+    Object.assign(this, { single });
   }
 
   onSelect(event) {

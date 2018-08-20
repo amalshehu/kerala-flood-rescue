@@ -13,10 +13,10 @@ import { environment } from '../../environments/environment';
 import { AppActionTypes } from '../app.actions';
 
 export interface State {
-  app: any;
+  camp: any;
 }
 export const reducers: ActionReducerMap<State> = {
-  app: reducer
+  camp: reducer
 };
 export const initialState: any = {
   camps: null
@@ -45,3 +45,23 @@ export function reducer(state = initialState, action: AppActions): State {
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
   : [];
+
+// Selector functions
+const getCampFeatureState = createFeatureSelector<any>('camp');
+
+export const getCampOverallCount = createSelector(
+  getCampFeatureState,
+  state => {
+    const camps = state.camps;
+    if (!camps) {
+      return [];
+    }
+    return camps.reduce((acc, val) => {
+      acc.push({
+        name: val[0].District.substring(0, 4).toUpperCase(),
+        value: val.length
+      });
+      return acc;
+    }, []);
+  }
+);
