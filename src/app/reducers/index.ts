@@ -20,7 +20,8 @@ export const reducers: ActionReducerMap<State> = {
 };
 export const initialState: any = {
   camps: null,
-  districtNames: []
+  districtNames: [],
+  selectedDistrictId: 'Idukki - ഇടുക്കി'
 };
 export function reducer(state = initialState, action: AppActions): State {
   switch (action.type) {
@@ -37,7 +38,12 @@ export function reducer(state = initialState, action: AppActions): State {
         districtIds: Object.keys(filtered),
         error: ''
       };
-
+    case AppActionTypes.UpdateCampOption:
+      debugger;
+      return {
+        ...state,
+        selectedDistrictId: action.payload
+      };
     // case AppActionTypes.LoadCampFail:
     //   return {
     //     ...state,
@@ -73,6 +79,20 @@ export const getCampOverallCount = createSelector(
   }
 );
 
+export const getSelectedDistrictOption = createSelector(
+  getCampFeatureState,
+  state => {
+    const camps = state.camps;
+    if (!camps) {
+      return [];
+    }
+    const currentDistrict = state.camps[state.selectedDistrictId];
+    return currentDistrict.reduce((acc, val) => {
+      acc.push(val.Center);
+      return acc;
+    }, []);
+  }
+);
 export const getDistrictList = createSelector(getCampFeatureState, state => {
   const camps = state.camps;
   if (!camps) {
