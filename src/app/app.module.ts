@@ -17,35 +17,26 @@ import {
   MatPaginatorModule,
   MatSortModule
 } from '@angular/material';
-import { LayoutModule } from '@angular/cdk/layout';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { DistrictOverviewComponent } from './district-overview/district-overview.component';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './map/map.component';
 import { WindowRefService } from './window-ref.service';
-import { GroupBarChartComponent } from './group-bar-chart/group-bar-chart.component';
+
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { DataTableComponent } from './data-table/data-table.component';
+
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AdvancedPieChartComponent } from './advanced-pie-chart/advanced-pie-chart.component';
+
 import { AppRouteRoutingModule } from 'src/app/app-routing.module';
 import { RouterModule } from '@angular/router';
+import { DashboardModule } from 'src/app/dashboard/dashboard.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SidenavComponent,
-    MapComponent,
-    GroupBarChartComponent,
-    DataTableComponent,
-    DistrictOverviewComponent,
-    AdvancedPieChartComponent
-  ],
+  declarations: [AppComponent, SidenavComponent, MapComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -64,7 +55,6 @@ import { RouterModule } from '@angular/router';
     AgmCoreModule.forRoot({
       apiKey: environment.mapApiKey
     }),
-    LayoutModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
@@ -76,7 +66,8 @@ import { RouterModule } from '@angular/router';
     MatPaginatorModule,
     MatSortModule,
     AppRouteRoutingModule,
-    RouterModule
+    RouterModule,
+    DashboardModule
   ],
   providers: [WindowRefService],
   bootstrap: [AppComponent]
