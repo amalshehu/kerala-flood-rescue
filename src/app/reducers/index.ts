@@ -19,14 +19,22 @@ export const reducers: ActionReducerMap<State> = {
   camp: reducer
 };
 export const initialState: any = {
-  camps: null
+  camps: null,
+  districtNames: []
 };
 export function reducer(state = initialState, action: AppActions): State {
   switch (action.type) {
     case AppActionTypes.LoadCampSuccess:
+      const data = action.payload;
+      const filtered = data.reduce((acc, val) => {
+        acc[val[0].District] = val;
+        return acc;
+      }, {});
+
       return {
         ...state,
-        camps: action.payload,
+        camps: filtered,
+        districtIds: Object.keys(filtered),
         error: ''
       };
 
@@ -52,16 +60,29 @@ const getCampFeatureState = createFeatureSelector<any>('camp');
 export const getCampOverallCount = createSelector(
   getCampFeatureState,
   state => {
-    const camps = state.camps;
-    if (!camps) {
+    if (!state.camps) {
       return [];
     }
-    return camps.reduce((acc, val) => {
+    return state.districtIds.reduce((acc, val) => {
       acc.push({
-        name: val[0].District.substring(0, 4).toUpperCase(),
-        value: val.length
+        name: val,
+        value: state.camps[val].length
       });
       return acc;
     }, []);
   }
 );
+
+// export const getDistrictCount = createSelector(getCampFeatureState, state => {
+//   const camps = state.camps;
+//   if (!camps) {
+//     return [];
+//   }
+//   return camps.reduce((acc, val) => {
+//     acc.push({
+//       name: val[0].District.substring(0, 4).toUpperCase(),
+//       value: val.length
+//     });
+//     return acc;
+//   }, []);
+// });
