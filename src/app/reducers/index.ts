@@ -39,7 +39,6 @@ export function reducer(state = initialState, action: AppActions): State {
         error: ''
       };
     case AppActionTypes.UpdateCampOption:
-      debugger;
       return {
         ...state,
         selectedDistrictId: action.payload
@@ -88,7 +87,9 @@ export const getSelectedDistrictOption = createSelector(
     }
     const currentDistrict = state.camps[state.selectedDistrictId];
     return currentDistrict.reduce((acc, val) => {
-      acc.push(val.Center);
+      if (val.Center && val.Center.length > 1) {
+        acc.push(val.Center);
+      }
       return acc;
     }, []);
   }

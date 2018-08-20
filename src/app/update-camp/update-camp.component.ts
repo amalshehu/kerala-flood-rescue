@@ -8,6 +8,7 @@ import { Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import * as fromApp from '../reducers/index';
 import * as appActions from '../app.actions';
+import { of } from 'rxjs';
 
 export interface District {
   value: string;
@@ -21,12 +22,16 @@ export interface District {
 export class UpdateCampComponent implements OnInit {
   updateCampGroup: FormGroup;
   data: any;
-  options: string[] = ['One', 'Two', 'Three'];
+  options: string[];
   filteredOptions: Observable<string[]>;
   districtList$;
   options$: any;
   constructor(public fb: FormBuilder, private store: Store<any>) {
     this.updateCampFormInit();
+    this.districtList$ = this.store.pipe(select(fromApp.getDistrictList));
+    this.store.pipe(select(fromApp.getSelectedDistrictOption)).subscribe(op => {
+      this.options = op;
+    });
   }
   districts: District[] = [
     { value: 'steak-0', viewValue: 'Kollam' },
@@ -40,12 +45,14 @@ export class UpdateCampComponent implements OnInit {
         startWith(''),
         map(value => this._filter(value))
       );
-    this.districtList$ = this.store.pipe(select(fromApp.getDistrictList));
-    this.options$ = this.store.pipe(select(fromApp.getSelectedDistrictOption));
   }
   onDistrictSelect(e) {
     // this.store.dispatch(new appActions.UpdateCamp(e.value));
     this.store.dispatch(new appActions.UpdateCampOption(e.value));
+    this.store.pipe(select(fromApp.getSelectedDistrictOption));
+  }
+  updateCampSubmit(value) {
+    console.log(value);
   }
   updateCampFormInit() {
     this.updateCampGroup = this.fb.group({
