@@ -46,6 +46,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 import { FormsModule } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { FormsModule } from '@angular/forms';
     MatMenuModule,
     NgxChartsModule,
     FormsModule,
+    MatProgressSpinnerModule,
     AngularFireModule.initializeApp(
       environment.firebaseConfig,
       'kerala-flood-rescue'
