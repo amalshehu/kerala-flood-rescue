@@ -31,6 +31,11 @@ import { DataTableComponent } from './data-table/data-table.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AdvancedPieChartComponent } from './advanced-pie-chart/advanced-pie-chart.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './app.effects';
 
 @NgModule({
   declarations: [
@@ -69,7 +74,10 @@ import { AdvancedPieChartComponent } from './advanced-pie-chart/advanced-pie-cha
     }),
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([AppEffects])
   ],
   providers: [WindowRefService],
   bootstrap: [AppComponent]

@@ -136,5 +136,8 @@
       }
     }
   },
-  "defaultProject": "kerala-rescue-dashboard"
+  "defaultProject": "kerala-rescue-dashboard",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
