@@ -1,16 +1,16 @@
 <div class="update-camp d-flex align-items-center justify-content-center">
   <mat-card>
     <mat-toolbar>Rescue Updation</mat-toolbar>
-    <form class="example-form d-flex flex-column">
+    <form [formGroup]="updateCampGroup" class="d-flex flex-column" (ngSubmit)="updateCampSubmit(updateCampGroup.value)">
       <mat-form-field>
-        <mat-select placeholder="Select District">
-          <mat-option *ngFor="let food of foods" [value]="food.value">
-            {{food.viewValue}}
+        <mat-select placeholder="Select District" formControlName="selectDistrict">
+          <mat-option *ngFor="let district of districts" [value]="district.value">
+            {{district.viewValue}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <input type="text" placeholder="Select Camp" aria-label="Number" matInput [matAutocomplete]="auto">
+        <input type="text" placeholder="Select Camp" formControlName="selectCamp" aria-label="Number" matInput [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
             {{option}}
@@ -18,16 +18,16 @@
         </mat-autocomplete>
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Men" value="">
+        <input matInput placeholder="Men" formControlName="men">
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Women" value="">
+        <input matInput placeholder="Women" formControlName="women">
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Children" value="">
+        <input matInput placeholder="Children" formControlName="children">
       </mat-form-field>
       <div class="d-flex justify-content-center mt-3">
-        <button mat-button class="accent">Send</button>
+        <button mat-button class="accent" type="submit">Send</button>
       </div>
     </form>
   </mat-card>
