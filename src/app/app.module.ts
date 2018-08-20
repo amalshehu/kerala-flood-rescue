@@ -35,6 +35,12 @@ import { AppRouteRoutingModule } from 'src/app/app-routing.module';
 import { RouterModule } from '@angular/router';
 import { DashboardModule } from 'src/app/dashboard/dashboard.module';
 import { UpdateCampModule } from 'src/app/update-camp/update-camp.module';
+import { AdvancedPieChartComponent } from './advanced-pie-chart/advanced-pie-chart.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './app.effects';
 
 @NgModule({
   declarations: [AppComponent, SidenavComponent, MapComponent],
@@ -70,6 +76,9 @@ import { UpdateCampModule } from 'src/app/update-camp/update-camp.module';
     RouterModule,
     DashboardModule,
     UpdateCampModule
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([AppEffects])
   ],
   providers: [WindowRefService],
   bootstrap: [AppComponent]

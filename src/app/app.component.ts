@@ -1,9 +1,12 @@
+import * as fromApp from './reducers/index';
 import { SnackBarService, SnackBarNotification } from './snack-bar.service';
 import { Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { WindowRefService } from './window-ref.service';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+// import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+// import { Observable } from 'rxjs';
+import * as appActions from './app.actions';
 
 @Component({
   selector: 'app-root',
@@ -12,20 +15,17 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   title = 'kerala-rescue-dashboard';
-  dbRef: AngularFireList<any>;
-  items: any;
+  campsCount$: any;
   constructor(
     private swUpdate: SwUpdate,
     private windowRef: WindowRefService,
     private snackBarService: SnackBarService,
-    private db: AngularFireDatabase
+    private store: Store<fromApp.State>
   ) {
-    this.dbRef = db.list('reliefcamps');
-    this.dbRef.valueChanges().subscribe(x => {
-      this.items = x;
-    });
+    this.store.dispatch(new appActions.LoadCamp());
   }
   ngOnInit(): void {
+    this.campsCount$ = this.store.pipe(select(fromApp.getCampOverallCount));
     // if (this.swUpdate.isEnabled) {
     //   this.swUpdate.available.subscribe(evt => {
     //     this.snackBarService.displayNotification({
