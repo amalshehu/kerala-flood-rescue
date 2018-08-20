@@ -5,6 +5,8 @@ import { map, startWith } from 'rxjs/operators';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { Store, select } from '@ngrx/store';
+import * as fromApp from '../reducers/index';
 
 export interface District {
   value: string;
@@ -20,7 +22,9 @@ export class UpdateCampComponent implements OnInit {
   data: any;
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<string[]>;
-  constructor(public fb: FormBuilder) {
+  districtList$;
+  any;
+  constructor(public fb: FormBuilder, private store: Store<any>) {
     this.updateCampSubmit(this.data);
   }
   districts: District[] = [
@@ -33,8 +37,8 @@ export class UpdateCampComponent implements OnInit {
     //   startWith(''),
     //   map(value => this._filter(value))
     // );
+    this.districtList$ = this.store.pipe(select(fromApp.getDistrictList));
   }
-
   updateCampSubmit(formData) {
     this.updateCampGroup = this.fb.group({
       selectDistrict: [''],

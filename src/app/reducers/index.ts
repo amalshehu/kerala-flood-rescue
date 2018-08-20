@@ -73,16 +73,16 @@ export const getCampOverallCount = createSelector(
   }
 );
 
-// export const getDistrictCount = createSelector(getCampFeatureState, state => {
-//   const camps = state.camps;
-//   if (!camps) {
-//     return [];
-//   }
-//   return camps.reduce((acc, val) => {
-//     acc.push({
-//       name: val[0].District.substring(0, 4).toUpperCase(),
-//       value: val.length
-//     });
-//     return acc;
-//   }, []);
-// });
+export const getDistrictList = createSelector(getCampFeatureState, state => {
+  const camps = state.camps;
+  if (!camps) {
+    return [];
+  }
+  return state.districtIds.reduce((acc, val) => {
+    acc.push({
+      viewValue: val.split(' ')[0],
+      value: val
+    });
+    return acc;
+  }, []);
+});
