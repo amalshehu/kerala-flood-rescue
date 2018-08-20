@@ -34,6 +34,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AppRouteRoutingModule } from 'src/app/app-routing.module';
 import { RouterModule } from '@angular/router';
 import { DashboardModule } from 'src/app/dashboard/dashboard.module';
+import { UpdateCampModule } from 'src/app/update-camp/update-camp.module';
 
 @NgModule({
   declarations: [AppComponent, SidenavComponent, MapComponent],
@@ -67,7 +68,8 @@ import { DashboardModule } from 'src/app/dashboard/dashboard.module';
     MatSortModule,
     AppRouteRoutingModule,
     RouterModule,
-    DashboardModule
+    DashboardModule,
+    UpdateCampModule
   ],
   providers: [WindowRefService],
   bootstrap: [AppComponent]
