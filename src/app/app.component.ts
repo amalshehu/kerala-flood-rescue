@@ -25,7 +25,6 @@ export class AppComponent implements OnInit {
     this.store.dispatch(new appActions.LoadCamp());
   }
   ngOnInit(): void {
-    this.campsCount$ = this.store.pipe(select(fromApp.getCampOverallCount));
     // if (this.swUpdate.isEnabled) {
     //   this.swUpdate.available.subscribe(evt => {
     //     this.snackBarService.displayNotification({

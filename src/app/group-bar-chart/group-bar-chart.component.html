@@ -1,4 +1,8 @@
-<ngx-charts-bar-vertical [view]="view" [scheme]="'forest'" [results]="data" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis"
-  [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"
-  (select)="onSelect($event)">
-</ngx-charts-bar-vertical>
+<!-- bar chart start -->
+<mat-card>
+  <ngx-charts-bar-vertical [scheme]="'forest'" [results]="data" [gradient]="'true'" [xAxis]="showXAxis" [yAxis]="showYAxis"
+    [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"
+    (select)="onSelect($event)">
+  </ngx-charts-bar-vertical>
+</mat-card>
+<!-- bar chart end -->

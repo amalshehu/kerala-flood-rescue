@@ -11,7 +11,7 @@ export class GroupBarChartComponent {
   data;
   single: any[];
   multi: any[];
-  view: any[] = [1300, 400];
+  view: any[] = [];
 
   // options
   showXAxis = true;

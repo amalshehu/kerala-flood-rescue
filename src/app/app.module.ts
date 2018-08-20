@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import {
   MatGridListModule,
   MatCardModule,
@@ -18,19 +17,29 @@ import {
   MatPaginatorModule,
   MatSortModule
 } from '@angular/material';
-import { LayoutModule } from '@angular/cdk/layout';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './map/map.component';
 import { WindowRefService } from './window-ref.service';
-import { GroupBarChartComponent } from './group-bar-chart/group-bar-chart.component';
+
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { DataTableComponent } from './data-table/data-table.component';
+
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+
+import { DashboardComponent } from 'src/app/dashboard/dashboard.component';
 import { AdvancedPieChartComponent } from './advanced-pie-chart/advanced-pie-chart.component';
+import { DistrictOverviewComponent } from './district-overview/district-overview.component';
+import { DataTableComponent } from './data-table/data-table.component';
+import { GroupBarChartComponent } from './group-bar-chart/group-bar-chart.component';
+
+import { AppRouteRoutingModule } from 'src/app/app-routing.module';
+import { RouterModule } from '@angular/router';
+import { UpdateCampModule } from 'src/app/update-camp/update-camp.module';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -40,12 +49,13 @@ import { AppEffects } from './app.effects';
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
     SidenavComponent,
     MapComponent,
-    GroupBarChartComponent,
+    DashboardComponent,
+    AdvancedPieChartComponent,
+    DistrictOverviewComponent,
     DataTableComponent,
-    AdvancedPieChartComponent
+    GroupBarChartComponent
   ],
   imports: [
     BrowserModule,
@@ -65,16 +75,19 @@ import { AppEffects } from './app.effects';
     AgmCoreModule.forRoot({
       apiKey: environment.mapApiKey
     }),
-    LayoutModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    FlexLayoutModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     }),
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    AppRouteRoutingModule,
+    RouterModule,
+    UpdateCampModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects])

@@ -1,0 +1,14 @@
+.district-overview {
+  .mat-card {
+    padding: 8px;
+  }
+  h5 {
+    color: #000000bd;
+  }
+  .pie-chart-container {
+    height: 509px;
+    overflow-y: scroll;
+    background: #2c050524;
+    overflow-x: hidden;
+  }
+}
