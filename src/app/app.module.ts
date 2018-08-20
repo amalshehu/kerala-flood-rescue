@@ -45,6 +45,7 @@ import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { AppEffects } from './app.effects';
     MatCardModule,
     MatMenuModule,
     NgxChartsModule,
+    FormsModule,
     AngularFireModule.initializeApp(
       environment.firebaseConfig,
       'kerala-flood-rescue'
