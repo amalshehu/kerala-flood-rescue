@@ -28,6 +28,7 @@ export class GroupBarChartComponent {
   };
 
   constructor() {
+    // console.log('jj', this.data);
     Object.assign(this, { single });
   }
 

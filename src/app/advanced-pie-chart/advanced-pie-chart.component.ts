@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AdvancedPieChartComponent {
   piechartData: any[];
-  view: any[] = [500, 200];
+  view: any[] = [700, 200];
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
