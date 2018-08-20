@@ -4,7 +4,9 @@
 <div class="main-container">
   <div class="d-flex flex-column">
     <h1 class="mat-h2">Relief Camp Overview </h1>
-    <app-group-bar-chart style="width:100%"></app-group-bar-chart>
+    <!-- <app-group-bar-chart "></app-group-bar-chart> -->
+    <app-group-bar-chart [data]="campsCount$ | async">
+    </app-group-bar-chart>
   </div>
   <app-district-overview></app-district-overview>
 </div>

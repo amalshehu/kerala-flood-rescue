@@ -31,11 +31,15 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
+import { DashboardComponent } from 'src/app/dashboard/dashboard.component';
+import { AdvancedPieChartComponent } from './advanced-pie-chart/advanced-pie-chart.component';
+import { DistrictOverviewComponent } from './district-overview/district-overview.component';
+import { DataTableComponent } from './data-table/data-table.component';
+import { GroupBarChartComponent } from './group-bar-chart/group-bar-chart.component';
+
 import { AppRouteRoutingModule } from 'src/app/app-routing.module';
 import { RouterModule } from '@angular/router';
-import { DashboardModule } from 'src/app/dashboard/dashboard.module';
 import { UpdateCampModule } from 'src/app/update-camp/update-camp.module';
-import { AdvancedPieChartComponent } from './advanced-pie-chart/advanced-pie-chart.component';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -43,7 +47,16 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 
 @NgModule({
-  declarations: [AppComponent, SidenavComponent, MapComponent],
+  declarations: [
+    AppComponent,
+    SidenavComponent,
+    MapComponent,
+    DashboardComponent,
+    AdvancedPieChartComponent,
+    DistrictOverviewComponent,
+    DataTableComponent,
+    GroupBarChartComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -74,8 +87,7 @@ import { AppEffects } from './app.effects';
     MatSortModule,
     AppRouteRoutingModule,
     RouterModule,
-    DashboardModule,
-    UpdateCampModule
+    UpdateCampModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects])
