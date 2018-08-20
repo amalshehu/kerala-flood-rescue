@@ -2,5 +2,23 @@
   height: 100vh;
   .mat-card {
     width: 391px;
+    @media (max-width: 450px) {
+      width: 95%;
+    }
+    padding: 0;
+    form {
+      padding: 16px 18px 28px 18px;
+    }
+  }
+  button {
+    background: #191f21;
+    border: none;
+    padding: 8px 56px 8px 56px;
+    color: white;
+    // border-radius: 39px;
+  }
+  .mat-toolbar {
+    background: #1a1f21;
+    color: white;
   }
 }
