@@ -33,6 +33,8 @@ import { DataTableComponent } from './data-table/data-table.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AdvancedPieChartComponent } from './advanced-pie-chart/advanced-pie-chart.component';
+import { AppRouteRoutingModule } from 'src/app/app-routing.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import { AdvancedPieChartComponent } from './advanced-pie-chart/advanced-pie-cha
     }),
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    AppRouteRoutingModule,
+    RouterModule
   ],
   providers: [WindowRefService],
   bootstrap: [AppComponent]

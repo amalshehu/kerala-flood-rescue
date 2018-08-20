@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { UpdateCampComponent } from 'src/app/update-camp/update-camp.component';
 
-const routes: Routes = [];
-
+const updateCamp: Routes = [
+  { path: 'update-camp', component: UpdateCampComponent }
+];
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(updateCamp)],
   exports: [RouterModule]
 })
-export class UpdateCampRouteRoutingModule { }
+export class UpdateCampRouteRoutingModule {}
